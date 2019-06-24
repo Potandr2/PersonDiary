@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Interfaces", "I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.BusinessLogic", "BusinessLogic\PersonDiary.BusinessLogic.csproj", "{79D754FF-658E-4832-A34B-940332CB9467}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.DataLayer", "PersonDiary.DataLayer\PersonDiary.DataLayer.csproj", "{792E9342-2E01-4379-B25A-EEF4A188BDA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.DataLayer.EFCore", "PersonDiary.DataLayer\PersonDiary.DataLayer.EFCore.csproj", "{792E9342-2E01-4379-B25A-EEF4A188BDA2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.BusinessLogic.Test", "PersonDiary.BusinessLogic.Test\PersonDiary.BusinessLogic.Test.csproj", "{1451C286-BE87-4640-BDFE-1CD72ED9540E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Archivator", "PersonDiary.Archivator\PersonDiary.Archivator.csproj", "{68583BCA-D169-428A-8E37-6D288B084D9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Angular.EFCore", "PersonDiary.Angular\PersonDiary.Angular.EFCore.csproj", "{F6226012-AF94-4AAE-8336-52CF5E6222C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{68583BCA-D169-428A-8E37-6D288B084D9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68583BCA-D169-428A-8E37-6D288B084D9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68583BCA-D169-428A-8E37-6D288B084D9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

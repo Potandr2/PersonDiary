@@ -7,7 +7,7 @@ using PersonDiary.Contracts.LifeEventContract;
 using LifeEventContract = PersonDiary.Contracts.LifeEventContract.LifeEvent;
 using AutoMapper;
 
-namespace LifeEventDiary.BusinessLogic
+namespace PersonDiary.BusinessLogic
 {
     public class LifeEventModel
     {

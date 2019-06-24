@@ -16,7 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\PersonDiary.BusinessLogic.csproj" />
     <ProjectReference Include="..\Interfaces\PersonDiary.Interfaces.csproj" />
-    <ProjectReference Include="..\PersonDiary.DataLayer\PersonDiary.DataLayer.csproj" />
+    <ProjectReference Include="..\PersonDiary.DataLayer\PersonDiary.DataLayer.EFCore.csproj" />
   </ItemGroup>
 
 </Project>

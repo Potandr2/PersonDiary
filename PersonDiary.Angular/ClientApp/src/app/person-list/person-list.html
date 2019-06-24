@@ -1,0 +1,18 @@
+<h1>list list</h1>
+<p *ngIf="!uploads"><em>Loading...</em></p>
+<table class='table' *ngIf="uploads">
+  <thead>
+    <tr>
+      <th>Uploads</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let upload of uploads">
+      <td>
+        <a [routerLink]='["/upload-edit",upload.id]'>
+          <span class='glyphicon glyphicon-th-list'></span>  {{ upload.fileName }}
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
