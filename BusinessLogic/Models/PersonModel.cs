@@ -41,7 +41,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.Person = mapper.Map<PersonContract>(
-                    repoPerson.GetItems(request.WithLifeEvents).FirstOrDefault(p => p.Id == request.Id)
+                    repoPerson.GetItems(request.withLifeEvents).FirstOrDefault(p => p.Id == request.Id)
                 );
             }
             catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };

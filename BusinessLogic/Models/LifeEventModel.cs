@@ -30,7 +30,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.LifeEvent = mapper.Map<LifeEventContract>(
-                    repoLifeEvent.GetItems().FirstOrDefault(p => p.Id == request.Id)
+                    repoLifeEvent.GetItem(request.Id)
                 );
             }
             catch (Exception e) { resp.Messages.Add(new  Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };

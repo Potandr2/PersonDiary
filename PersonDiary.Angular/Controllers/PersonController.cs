@@ -9,6 +9,8 @@ using PersonDiary.Interfaces;
 using AutoMapper;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.PersonContract;
+using Newtonsoft.Json;
+
 
 namespace PersonDiary.Angular.Controllers
 {
@@ -16,44 +18,47 @@ namespace PersonDiary.Angular.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        PersonModel model;
+        private readonly IUnitOfWork unit;
+        private readonly IMapper mapper;
+        
         public PersonController(IUnitOfWork unit, IMapper mapper)
         {
-            model = new PersonModel(unit, mapper);
+            this.unit = unit;
+            this.mapper = mapper;
         }
         // GET: api/Person
         [HttpGet]
-        public GetPersonListResponse Get(GetPersonListRequest request)
+        public GetPersonListResponse Get(string json)
         {
-            return model.GetItems(request);
+            return new PersonModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetPersonListRequest>(json));
         }
 
         // GET: api/Person/5
         [HttpGet("{id}")]
-        public GetPersonResponse Get(GetPersonRequest request)
+        public GetPersonResponse Get(int id)
         {
-            return model.GetItem(request);
+            return new PersonModel(unit, mapper).GetItem(new GetPersonRequest() { Id=id, withLifeEvents =true });
         }
 
         // POST: api/Person
         [HttpPost]
         public UpdatePersonResponse Post([FromBody]  UpdatePersonRequest request)
         {
-            return model.Create(request);
+            return new PersonModel(unit, mapper).Create(request);
         }
 
         // PUT: api/Person/5
         [HttpPut("{id}")]
         public UpdatePersonResponse Put(int id, [FromBody] UpdatePersonRequest request)
         {
-            return model.Update(request);
+            return new PersonModel(unit, mapper).Update(request);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public DeletePersonResponse  Delete(DeletePersonRequest request)
         {
-            return model.Delete(request);
+            return new PersonModel(unit, mapper).Delete(request);
         }
     }
 }

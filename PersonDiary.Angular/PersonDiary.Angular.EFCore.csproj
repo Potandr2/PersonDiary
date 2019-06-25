@@ -25,8 +25,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\entities\entities.ts" />
-    <None Remove="ClientApp\src\app\person-list\person-list.ts" />
+    <None Remove="ClientApp\src\app\lifeevent\lifeevent-edit.ts" />
+    <None Remove="ClientApp\src\app\lifeevent\lifeevent-list.ts" />
+    <None Remove="ClientApp\src\app\models\lifeevent.ts" />
+    <None Remove="ClientApp\src\app\models\Person.ts" />
+    <None Remove="ClientApp\src\app\person\person-edit.ts" />
+    <None Remove="ClientApp\src\app\person\person-list.ts" />
+    <None Remove="ClientApp\src\app\services\lifeevent.service.ts" />
+    <None Remove="ClientApp\src\app\services\person.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,15 +42,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\data-service\" />
-    <Folder Include="ClientApp\src\app\lifeevent-list\" />
-    <Folder Include="ClientApp\src\app\lifeevent\" />
-    <Folder Include="ClientApp\src\app\person\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\entities\entities.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\person-list\person-list.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\lifeevent.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\person.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\lifeevent\lifeevent-edit.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\lifeevent\lifeevent-list.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\lifeevent.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\person.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\person\person-edit.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\person\person-list.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

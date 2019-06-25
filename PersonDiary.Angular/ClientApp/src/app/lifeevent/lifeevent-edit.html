@@ -1,0 +1,18 @@
+<h1>LifeEvent of {{lifeevent.personFullName}}</h1>
+
+
+<div class="form-group">
+  <label>Id</label>
+  <input type="text" value="{{lifeevent.id}}" class="form-control" disabled />
+</div>
+<div class="form-group">
+  <label>Name</label>
+  <input type="text" [(ngModel)]="lifeevent.name" class="form-control" />
+</div>
+<div class="form-group">
+  <label>Date</label>
+  <input type="text" [(ngModel)]="lifeevent.eventDate" class="form-control" />
+</div>
+<div class="form-group">
+  <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+</div>

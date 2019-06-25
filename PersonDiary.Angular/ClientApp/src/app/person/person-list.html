@@ -1,0 +1,30 @@
+<h1>Persons list</h1>
+<p *ngIf="!persons"><em>Loading...</em></p>
+<table class='table' *ngIf="persons">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Surname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let person of persons">
+      <td>
+        <a [routerLink]='["/person-edit",person.id]'>
+          <span class='glyphicon glyphicon-th-list'></span>  {{ person.id }}
+        </a>
+      </td>
+      <td>
+        <a [routerLink]='["/person-edit",person.id]'>
+          <span class='glyphicon glyphicon-th-list'></span>  {{ person.name }}
+        </a>
+      </td>
+      <td>
+        <a [routerLink]='["/person-edit",person.id]'>
+          <span class='glyphicon glyphicon-th-list'></span>  {{ person.surname }}
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

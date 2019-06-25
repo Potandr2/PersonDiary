@@ -13,7 +13,7 @@ namespace PersonDiary.Mapping
             CreateMap<PersonContract , Person>();
             CreateMap<Person, PersonContract>();
             CreateMap<LifeEventContract, LifeEvent>();
-            CreateMap<LifeEvent, LifeEventContract>();
+            CreateMap<LifeEvent, LifeEventContract>().ForMember(dist=>dist.PersonFullName,opt=>opt.MapFrom(src=>$"{src.Person.Name} {src.Person.Surname}"));
         }
     }
 }

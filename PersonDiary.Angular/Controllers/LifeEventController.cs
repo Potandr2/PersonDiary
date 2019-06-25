@@ -8,6 +8,7 @@ using PersonDiary.Interfaces;
 using AutoMapper;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.LifeEventContract;
+using Newtonsoft.Json;
 
 namespace LifeEventDiary.Angular.EFCore.Controllers
 {
@@ -15,44 +16,46 @@ namespace LifeEventDiary.Angular.EFCore.Controllers
     [ApiController]
     public class LifeEventController : ControllerBase
     {
-        LifeEventModel model;
+        private readonly IUnitOfWork unit;
+        private readonly IMapper mapper;
         public LifeEventController(IUnitOfWork unit, IMapper mapper)
         {
-            model = new LifeEventModel(unit, mapper);
+            this.unit = unit;
+            this.mapper = mapper;
         }
         // GET: api/LifeEvent
         [HttpGet]
-        public GetLifeEventListResponse Get(GetLifeEventListRequest request)
+        public GetLifeEventListResponse Get()
         {
-            return model.GetItems(request);
+            return new LifeEventModel(unit, mapper).GetItems(new GetLifeEventListRequest());
         }
 
         // GET: api/LifeEvent/5
         [HttpGet("{id}")]
-        public GetLifeEventResponse Get(GetLifeEventRequest request)
+        public GetLifeEventResponse Get(int id)
         {
-            return model.GetItem(request);
+            return new LifeEventModel(unit, mapper).GetItem(new GetLifeEventRequest() { Id = id });
         }
 
         // POST: api/LifeEvent
         [HttpPost]
         public UpdateLifeEventResponse Post([FromBody]  UpdateLifeEventRequest request)
         {
-            return model.Create(request);
+            return new LifeEventModel(unit, mapper).Create(request);
         }
 
         // PUT: api/LifeEvent/5
         [HttpPut("{id}")]
         public UpdateLifeEventResponse Put(int id, [FromBody] UpdateLifeEventRequest request)
         {
-            return model.Update(request);
+            return new LifeEventModel(unit, mapper).Update(request);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public DeleteLifeEventResponse Delete(DeleteLifeEventRequest request)
         {
-            return model.Delete(request);
+            return new LifeEventModel(unit, mapper).Delete(request);
         }
     }
 }
