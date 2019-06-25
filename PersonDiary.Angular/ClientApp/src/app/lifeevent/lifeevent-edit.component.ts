@@ -8,7 +8,7 @@ import { LifeEventService } from '../services/lifeevent.service';
 
 @Component({
   selector: 'app-lifeevent-edit',
-  templateUrl: './lifeevent-edit.html'
+  templateUrl: './lifeevent-edit.component.html'
 })
 export class LifeEventEditComponent implements OnInit {
   public id: number;

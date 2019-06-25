@@ -8,7 +8,7 @@ import { PersonService } from '../services/person.service';
 
 @Component({
   selector: 'app-person-edit',
-  templateUrl: './person-edit.html'
+  templateUrl: './person-edit.component.html'
 })
 export class PersonEditComponent implements OnInit {
   public id: any;

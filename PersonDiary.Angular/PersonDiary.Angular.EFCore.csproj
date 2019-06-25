@@ -25,12 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\lifeevent\lifeevent-edit.ts" />
-    <None Remove="ClientApp\src\app\lifeevent\lifeevent-list.ts" />
+    <None Remove="ClientApp\src\app\lifeevent\lelist.component.ts" />
+    <None Remove="ClientApp\src\app\lifeevent\lifeevent-edit.component.ts" />
     <None Remove="ClientApp\src\app\models\lifeevent.ts" />
     <None Remove="ClientApp\src\app\models\Person.ts" />
-    <None Remove="ClientApp\src\app\person\person-edit.ts" />
-    <None Remove="ClientApp\src\app\person\person-list.ts" />
+    <None Remove="ClientApp\src\app\person\person-edit.component.ts" />
+    <None Remove="ClientApp\src\app\person\person-list.component.ts" />
     <None Remove="ClientApp\src\app\services\lifeevent.service.ts" />
     <None Remove="ClientApp\src\app\services\person.service.ts" />
   </ItemGroup>
@@ -42,14 +42,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\lifeevent\lelist.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\lifeevent.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\person.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\lifeevent\lifeevent-edit.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\lifeevent\lifeevent-list.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\lifeevent\lifeevent-edit.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\lifeevent.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\person.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\person\person-edit.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\person\person-list.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\person\person-edit.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\person\person-list.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

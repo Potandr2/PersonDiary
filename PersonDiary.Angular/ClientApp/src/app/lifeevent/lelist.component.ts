@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LifeEvent } from '../models/lifeevent';
 import { LifeEventService } from '../services/lifeevent.service';
 
 @Component({
-  selector: 'app-lifevent-list',
-  templateUrl: './lifevent-list.html'
+  selector: 'app-lelist',
+  templateUrl: './lelist.component.html'
 })
-export class LifeEventListComponent {
-  public lifeevents: LifeEvent[];
+export class LeListComponent {
+  public leevents: LifeEvent[];
 
   constructor(http: HttpClient, private dataService: LifeEventService) {
 
     this.dataService.getLifeEvents().subscribe((data: any) => {
-      this.lifeevents = data.lifeevent;
+      this.leevents = data.lifeEvents;
     },
       error => console.error(error)
     );
