@@ -22,7 +22,7 @@
       </td>
       <td>
         <a [routerLink]='["/lifeevent-edit",leevent.id]'>
-          <span class='glyphicon glyphicon-th-list'></span>  {{ leevent.dateEvent }}
+          <span class='glyphicon glyphicon-th-list'></span>  {{ leevent.eventDate | date }}
         </a>
       </td>
     </tr>

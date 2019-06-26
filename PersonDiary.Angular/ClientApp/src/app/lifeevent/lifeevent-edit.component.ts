@@ -6,6 +6,7 @@ import { Person } from '../models/person';
 import { LifeEvent } from '../models/lifeevent';
 import { LifeEventService } from '../services/lifeevent.service';
 
+
 @Component({
   selector: 'app-lifeevent-edit',
   templateUrl: './lifeevent-edit.component.html'

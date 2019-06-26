@@ -11,7 +11,9 @@ import { LifeEventService } from './services/lifeevent.service';
 import { PersonListComponent } from './person/person-list.component';
 import { PersonEditComponent } from './person/person-edit.component';
 import { LifeEventEditComponent } from './lifeevent/lifeevent-edit.component';
-import { LeListComponent } from './lifeevent/lelist.component';
+import { LifeEventListComponent } from './lifeevent/lifeevent.list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import { LeListComponent } from './lifeevent/lelist.component';
     PersonListComponent,
     PersonEditComponent,
     LifeEventEditComponent,
-    LeListComponent
+    LifeEventListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,8 +34,10 @@ import { LeListComponent } from './lifeevent/lelist.component';
       { path: 'person-list', component: PersonListComponent },
       { path: 'person-edit/:id', component: PersonEditComponent },
       { path: 'lifeevent-edit/:id', component: LifeEventEditComponent },
-      { path: 'lelist', component: LeListComponent },
-    ])
+      { path: 'lifeevent-list', component: LifeEventListComponent },
+    ]),
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [PersonService,LifeEventService],
   bootstrap: [AppComponent]

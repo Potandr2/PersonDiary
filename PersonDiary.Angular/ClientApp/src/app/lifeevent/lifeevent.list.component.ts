@@ -5,9 +5,9 @@ import { LifeEventService } from '../services/lifeevent.service';
 
 @Component({
   selector: 'app-lelist',
-  templateUrl: './lelist.component.html'
+  templateUrl: './lifeevent.list.component.html'
 })
-export class LeListComponent {
+export class LifeEventListComponent {
   public leevents: LifeEvent[];
 
   constructor(http: HttpClient, private dataService: LifeEventService) {
