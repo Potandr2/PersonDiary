@@ -23,6 +23,8 @@ export class LifeEventEditComponent implements OnInit {
 
         this.dataService.getLifeEvent(this.id).subscribe((data: any) => {
           this.lifeevent = data.lifeEvent;
+          //this.lifeevent.eventdate = new Date(data.lifeEvent.eventDate);
+         
         });
       }
     );
@@ -32,7 +34,9 @@ export class LifeEventEditComponent implements OnInit {
 
   }
   save() {
-    this.dataService.updateLifeEvent(this.lifeevent).subscribe((data: LifeEvent) => {});
+    this.dataService.updateLifeEvent(this.lifeevent).subscribe((data: any) => {
+
+    });
   }
 }
 

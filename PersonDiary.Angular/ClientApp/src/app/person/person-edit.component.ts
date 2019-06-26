@@ -36,8 +36,8 @@ export class PersonEditComponent implements OnInit {
 
   }
   save() {
-    this.dataService.updatePerson(this.person).subscribe((data: Person) => {
-     
+    this.dataService.updatePerson(this.person).subscribe((data: any) => {
+    
     });
 
    

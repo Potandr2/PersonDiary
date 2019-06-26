@@ -21,11 +21,11 @@ export class PersonService {
   }
 
   createPerson(person: Person) {
-    return this.http.post(this.url + '/' + person.id, person);
+    return this.http.post(this.url + '/' + person.id, { person });
   }
 
   updatePerson(person: Person) {
-    return this.http.put(this.url + '/' + person.id, person);
+    return this.http.put(this.url + '/' + person.id, { person });
   }
 
   deletePerson(id: number) {
