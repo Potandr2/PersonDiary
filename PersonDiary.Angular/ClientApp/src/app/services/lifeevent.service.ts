@@ -22,7 +22,7 @@ export class LifeEventService {
 
   createLifeEvent(lifeevent: LifeEvent) {
     lifeevent.eventdate = CommonUtils.correctDate2UTC(lifeevent.eventdate);
-    return this.http.post(this.url + '/' + lifeevent.id, { lifeevent });
+    return this.http.post(this.url, { lifeevent });
   }
 
   updateLifeEvent(lifeevent: LifeEvent) {

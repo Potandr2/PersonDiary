@@ -25,13 +25,14 @@ export class LifeEventEditComponent {
   constructor(http: HttpClient, private activateRoute: ActivatedRoute, private dataService: LifeEventService, private router: Router) {
     this.subscription = activateRoute.params.subscribe(
       params => {
-        if (this.router.url.indexOf('lifeevent-create') >-1) {
+        if (this.router.url.includes("lifeevent-create")) {
           this.personid = params['id'];
           this.lifeevent = new LifeEvent();
+          this.lifeevent.personid = this.personid;
         } else {
           this.id = params['id'];
           this.dataService.getLifeEvent(this.id).subscribe((data: any) => {
-            this.lifeevent = data.lifeEvent;
+            this.lifeevent = data.lifeevent;
           });
         }
       }
@@ -39,7 +40,7 @@ export class LifeEventEditComponent {
   }
   
   save() {
-    if (this.router.url.indexOf('lifeevent-create') > -1) {
+    if (this.router.url.toString().includes('lifeevent-create')) {
       this.dataService.createLifeEvent(this.lifeevent).subscribe((data: any) => {
         this.show_alert = data.messages.filter(m => m.type == 1).length > 0;
         if (this.show_alert) { this.messages = CommonUtils.getErorrMessagesText(data.messages); }

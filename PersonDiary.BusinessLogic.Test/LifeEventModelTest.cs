@@ -59,7 +59,7 @@ namespace LifeEventDiary.BusinessLogic.Test
             LifeEvent_last.Name += updated;
 
             modelLifeEvent.Update(new UpdateLifeEventRequest() { LifeEvent = LifeEvent_last });
-            var LifeEvent_check = modelLifeEvent.GetItem(new GetLifeEventRequest() { Id = LifeEvent_last.Id }).LifeEvent;
+            var LifeEvent_check = modelLifeEvent.GetItem(new GetLifeEventRequest() { Id = LifeEvent_last.Id }).lifeevent;
             Assert.IsTrue(LifeEvent_check.Name.Contains(updated) );
         }
         [Test, Order(2)]

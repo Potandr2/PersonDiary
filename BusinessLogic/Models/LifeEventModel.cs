@@ -29,7 +29,7 @@ namespace PersonDiary.BusinessLogic
             var resp = new GetLifeEventResponse();
             try
             {
-                resp.LifeEvent = mapper.Map<LifeEventContract>(
+                resp.lifeevent = mapper.Map<LifeEventContract>(
                     repoLifeEvent.GetItem(request.Id)
                 );
             }

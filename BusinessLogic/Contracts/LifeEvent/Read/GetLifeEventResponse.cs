@@ -7,6 +7,6 @@ namespace PersonDiary.Contracts.LifeEventContract
 {
     public class GetLifeEventResponse: Response
     {
-        public LifeEvent LifeEvent { get; set; }
+        public LifeEvent lifeevent { get; set; }
     }
 }

@@ -4,6 +4,8 @@ var CommonUtils = /** @class */ (function () {
     function CommonUtils() {
     }
     CommonUtils.correctDate2UTC = function (date) {
+        if (typeof date === "string")
+            date = new Date(date);
         return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
     };
     CommonUtils.getErorrMessagesText = function (messages) {

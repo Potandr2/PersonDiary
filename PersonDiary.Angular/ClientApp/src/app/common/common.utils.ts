@@ -1,5 +1,6 @@
 export class CommonUtils {
   static correctDate2UTC(date: Date) {
+    if (typeof date === "string") date = new Date(date);
     return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   }
   static getErorrMessagesText(messages: any) {
