@@ -44,7 +44,7 @@ namespace LifeEventDiary.BusinessLogic.Test
                 LifeEvent = new LifeEventContract()
                 {
                     Name = $"LifeEventCreateTest_Name{suffix}",
-                    EventDate = DateTime.Now,
+                    Eventdate = DateTime.Now,
                     PersonId=person_last.Id
                 }
             }); ;

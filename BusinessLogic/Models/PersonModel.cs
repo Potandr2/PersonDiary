@@ -81,7 +81,7 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
             return resp;
         }
-        public void UploadBiography()
+        public void Upload()
         {
         }
     }

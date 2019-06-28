@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Person } from '../models/Person';
 import { LifeEvent } from '../models/LifeEvent';
+import { CommonUtils } from '../common/common.utils';
 
 @Injectable()
 export class LifeEventService {
@@ -20,12 +21,12 @@ export class LifeEventService {
   }
 
   createLifeEvent(lifeevent: LifeEvent) {
-    lifeevent.eventDate = this.correct2UTC(lifeevent.eventDate);
+    lifeevent.eventdate = CommonUtils.correctDate2UTC(lifeevent.eventdate);
     return this.http.post(this.url + '/' + lifeevent.id, { lifeevent });
   }
 
   updateLifeEvent(lifeevent: LifeEvent) {
-    lifeevent.eventDate = this.correct2UTC(lifeevent.eventDate);
+    lifeevent.eventdate = CommonUtils.correctDate2UTC(lifeevent.eventdate);
     return this.http.put(this.url + '/' + lifeevent.id, { lifeevent });
   }
 
@@ -33,9 +34,6 @@ export class LifeEventService {
     return this.http.delete(this.url + '/' + id);
   }
 
-  correct2UTC(date: Date) {
-    var now_utc = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    return now_utc;
-  }
+  
 
 }

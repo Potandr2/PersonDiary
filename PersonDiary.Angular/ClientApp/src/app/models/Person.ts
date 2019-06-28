@@ -5,6 +5,7 @@ interface Person {
   name: string;
   surname: string;
   lifeevents: LifeEvent[];
+  hasfile: boolean;
 }
 
 export { Person}

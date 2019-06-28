@@ -1,5 +1,6 @@
-<h1>LifeEvent of {{lifeevent.personFullName}}</h1>
-
+<p *ngIf="!lifeevent;else body"><em>Loading...</em></p>
+<ng-template #body>
+  <h1>LifeEvent of {{lifeevent.personfullname}}</h1>
 
   <div class="form-group">
     <label>Id</label>
@@ -7,15 +8,21 @@
   </div>
   <div class="form-group">
     <label>Name</label>
-    <input type="text" [(ngModel)]="lifeevent.name" class="form-control" />
+    <input type="text" [(ngModel)]="lifeevent.name" class="form-control" (ngModelChange)="changed()" />
   </div>
   <div class="row">
     <div class="form-group  col-12 col-sm-6 col-md-4">
       <label>Date 2</label>
-      <input class="form-control" placeholder="Datepicker" bsDatepicker [isOpen]="isOpen" [(ngModel)]="lifeevent.eventDate" />
+      <input class="form-control" placeholder="Datepicker" bsDatepicker [isOpen]="isOpen" [(ngModel)]="lifeevent.eventdate" (ngModelChange)="changed()" />
     </div>
   </div>
   <div class="form-group">
-      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+    <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
   </div>
-
+  <alert type="danger" *ngIf="show_alert">
+    <strong>Error!</strong> {{messages}}.
+  </alert>
+  <alert type="success" *ngIf="show_ok">
+    <strong>Success!</strong> event successfully saved.
+  </alert>
+  </ng-template>

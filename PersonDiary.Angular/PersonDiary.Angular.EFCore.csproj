@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\common\common.utils.ts" />
     <None Remove="ClientApp\src\app\lifeevent\lifeevent-edit.component.ts" />
     <None Remove="ClientApp\src\app\lifeevent\lifeevent.list.component.ts" />
     <None Remove="ClientApp\src\app\models\lifeevent.ts" />
@@ -42,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\common\common.utils.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\lifeevent\lifeevent.list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\lifeevent.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\person.service.ts" />

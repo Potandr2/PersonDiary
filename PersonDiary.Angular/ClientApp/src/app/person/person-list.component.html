@@ -1,5 +1,8 @@
 <h1>Persons list</h1>
 <p *ngIf="!persons"><em>Loading...</em></p>
+<div class="form-group">
+  <input type="button" value="Add" (click)="save()" class="btn btn-success" />
+</div>
 <table class='table' *ngIf="persons">
   <thead>
     <tr>

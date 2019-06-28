@@ -11,9 +11,9 @@ namespace PersonDiary.Mapping
         {
             // Add as many of these lines as you need to map your objects
             CreateMap<PersonContract , Person>();
-            CreateMap<Person, PersonContract>();
+            CreateMap<Person, PersonContract>().ForMember(dist => dist.HasFile , opt => opt.MapFrom(src => src.Biography != null));
             CreateMap<LifeEventContract, LifeEvent>();
-            CreateMap<LifeEvent, LifeEventContract>().ForMember(dist=>dist.PersonFullName,opt=>opt.MapFrom(src=>$"{src.Person.Name} {src.Person.Surname}"));
+            CreateMap<LifeEvent, LifeEventContract>().ForMember(dist=>dist.Personfullname,opt=>opt.MapFrom(src=>$"{src.Person.Name} {src.Person.Surname}"));
         }
     }
 }

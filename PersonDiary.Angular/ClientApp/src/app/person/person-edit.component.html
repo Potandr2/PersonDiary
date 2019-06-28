@@ -1,5 +1,5 @@
-<p *ngIf="!person"><em>Loading...</em></p>
-<div *ngIf="person">
+<p *ngIf="!person;else body"><em>Loading...</em></p>
+<ng-template #body>
   <h1>Person {{person.id}}</h1>
   <div class="form-group">
     <label>Name</label>
@@ -8,6 +8,9 @@
   <div class="form-group">
     <label>Surname</label>
     <input type="text" [(ngModel)]="person.surname" class="form-control" />
+  </div>
+  <div class="form-group">
+    <app-file-upload [PersonId]="person.id"></app-file-upload>
   </div>
   <div class="form-group">
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
@@ -23,7 +26,7 @@
     <tbody>
       <tr *ngFor="let lifeevent of lifeevents">
         <td>
-          {{ lifeevent.id }}          
+          {{ lifeevent.id }}
         </td>
         <td>
           <a [routerLink]='["/lifeevent-edit",lifeevent.id]'>
@@ -34,4 +37,4 @@
       </tr>
     </tbody>
   </table>
-</div>
+</ng-template>

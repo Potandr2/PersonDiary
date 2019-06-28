@@ -1,8 +1,8 @@
 interface LifeEvent {
   id: number;
   name: string;
-  eventDate: Date;
-  personFullName: string;
+  eventdate: Date;
+  personfullname: string;
   personid: number;
 }
 export { LifeEvent }

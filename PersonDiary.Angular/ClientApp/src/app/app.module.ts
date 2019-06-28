@@ -8,13 +8,15 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { PersonService } from './services/person.service';
 import { LifeEventService } from './services/lifeevent.service';
+import { FileUploadService } from './services/file-upload.service';
 import { PersonListComponent } from './person/person-list.component';
 import { PersonEditComponent } from './person/person-edit.component';
 import { LifeEventEditComponent } from './lifeevent/lifeevent-edit.component';
 import { LifeEventListComponent } from './lifeevent/lifeevent.list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { FileUploadComponent } from './common/file-upload/file-upload.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     PersonListComponent,
     PersonEditComponent,
     LifeEventEditComponent,
-    LifeEventListComponent
+    LifeEventListComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,9 +40,10 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       { path: 'lifeevent-list', component: LifeEventListComponent },
     ]),
     BrowserAnimationsModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    AlertModule.forRoot()
   ],
-  providers: [PersonService,LifeEventService],
+  providers: [PersonService, LifeEventService, FileUploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

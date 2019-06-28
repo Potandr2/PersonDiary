@@ -11,6 +11,7 @@ namespace PersonDiary.Contracts.PersonContract
         public string Name { get; set; }
         public string Surname { get; set; }
         public List<LifeEvent> LifeEvents { get; set; }
+        public bool HasFile { get; set; }
 
     }
 }

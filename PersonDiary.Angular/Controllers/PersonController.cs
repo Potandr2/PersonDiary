@@ -12,6 +12,8 @@ using PersonDiary.Contracts.PersonContract;
 using Newtonsoft.Json;
 
 
+
+
 namespace PersonDiary.Angular.Controllers
 {
     [Route("api/[controller]")]
@@ -19,8 +21,8 @@ namespace PersonDiary.Angular.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IUnitOfWork unit;
-        private readonly IMapper mapper;
-        
+        private readonly IMapper mapper;       
+
         public PersonController(IUnitOfWork unit, IMapper mapper)
         {
             this.unit = unit;
@@ -37,7 +39,7 @@ namespace PersonDiary.Angular.Controllers
         [HttpGet("{id}")]
         public GetPersonResponse Get(int id)
         {
-            return new PersonModel(unit, mapper).GetItem(new GetPersonRequest() { Id=id, withLifeEvents =true });
+            return new PersonModel(unit, mapper).GetItem(new GetPersonRequest() { Id = id, withLifeEvents = true });
         }
 
         // POST: api/Person
@@ -56,9 +58,10 @@ namespace PersonDiary.Angular.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public DeletePersonResponse  Delete(DeletePersonRequest request)
+        public DeletePersonResponse Delete(DeletePersonRequest request)
         {
             return new PersonModel(unit, mapper).Delete(request);
         }
+
     }
 }

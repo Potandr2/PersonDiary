@@ -46,8 +46,8 @@ namespace PersonDiary.BusinessLogic.Test
                     Name = $"PersonCreateTest_Name{suffix}",
                     Surname = $"PersonCreateTest_Surame{suffix}",
                     LifeEvents = new List<LifeEventContract>() {
-                        new LifeEventContract() { Name = $"CreateTest_LifeEvent1_{suffix}", EventDate = DateTime.Now },
-                        new LifeEventContract() { Name = $"CreateTest_LifeEvent2_{suffix}", EventDate = DateTime.Now }
+                        new LifeEventContract() { Name = $"CreateTest_LifeEvent1_{suffix}", Eventdate = DateTime.Now },
+                        new LifeEventContract() { Name = $"CreateTest_LifeEvent2_{suffix}", Eventdate = DateTime.Now }
                     }
                 }
             });
