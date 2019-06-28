@@ -1,4 +1,4 @@
-interface LifeEvent {
+class LifeEvent {
   id: number;
   name: string;
   eventdate: Date;

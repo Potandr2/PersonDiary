@@ -1,33 +1,35 @@
 <h1>Persons list</h1>
-<p *ngIf="!persons"><em>Loading...</em></p>
-<div class="form-group">
-  <input type="button" value="Add" (click)="save()" class="btn btn-success" />
-</div>
-<table class='table' *ngIf="persons">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Surname</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let person of persons">
-      <td>
-        <a [routerLink]='["/person-edit",person.id]'>
-          <span class='glyphicon glyphicon-th-list'></span>  {{ person.id }}
-        </a>
-      </td>
-      <td>
-        <a [routerLink]='["/person-edit",person.id]'>
-          <span class='glyphicon glyphicon-th-list'></span>  {{ person.name }}
-        </a>
-      </td>
-      <td>
-        <a [routerLink]='["/person-edit",person.id]'>
-          <span class='glyphicon glyphicon-th-list'></span>  {{ person.surname }}
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<p *ngIf="!persons; else body"><em>Loading...</em></p>
+<ng-template #body>
+  <div class="form-group">
+    <input type="button" value="Add" (click)="add()" class="btn btn-success" />
+  </div>
+  <table class='table' *ngIf="persons">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Surname</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let person of persons">
+        <td>
+          <a [routerLink]='["/person-edit",person.id]'>
+            <span class='glyphicon glyphicon-th-list'></span>  {{ person.id }}
+          </a>
+        </td>
+        <td>
+          <a [routerLink]='["/person-edit",person.id]'>
+            <span class='glyphicon glyphicon-th-list'></span>  {{ person.name }}
+          </a>
+        </td>
+        <td>
+          <a [routerLink]='["/person-edit",person.id]'>
+            <span class='glyphicon glyphicon-th-list'></span>  {{ person.surname }}
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

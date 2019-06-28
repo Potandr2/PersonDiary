@@ -6,6 +6,7 @@ import { Person } from '../models/person';
 import { LifeEvent } from '../models/lifeevent';
 import { LifeEventService } from '../services/lifeevent.service';
 import { CommonUtils } from '../common/common.utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lifeevent-edit',
@@ -13,6 +14,7 @@ import { CommonUtils } from '../common/common.utils';
 })
 export class LifeEventEditComponent {
   public id: number;
+  public personid: number;
   public lifeevent: LifeEvent;
   public show_alert: boolean = false;
   public show_ok: boolean = false;
@@ -20,23 +22,36 @@ export class LifeEventEditComponent {
   private subscription: Subscription;
   
 
-  constructor(http: HttpClient, private activateRoute: ActivatedRoute, private dataService: LifeEventService) {
+  constructor(http: HttpClient, private activateRoute: ActivatedRoute, private dataService: LifeEventService, private router: Router) {
     this.subscription = activateRoute.params.subscribe(
       params => {
-        this.id = params['id'];
-        this.dataService.getLifeEvent(this.id).subscribe((data: any) => {
-          this.lifeevent = data.lifeEvent;
-        });
+        if (this.router.url.indexOf('lifeevent-create') >-1) {
+          this.personid = params['id'];
+          this.lifeevent = new LifeEvent();
+        } else {
+          this.id = params['id'];
+          this.dataService.getLifeEvent(this.id).subscribe((data: any) => {
+            this.lifeevent = data.lifeEvent;
+          });
+        }
       }
     );
   }
   
   save() {
-    this.dataService.updateLifeEvent(this.lifeevent).subscribe((data: any) => {
-      this.show_alert = data.messages.filter(m => m.type == 1).length > 0;
-      if (this.show_alert) { this.messages = CommonUtils.getErorrMessagesText(data.messages); }
-      this.show_ok = !this.show_alert;
-    });
+    if (this.router.url.indexOf('lifeevent-create') > -1) {
+      this.dataService.createLifeEvent(this.lifeevent).subscribe((data: any) => {
+        this.show_alert = data.messages.filter(m => m.type == 1).length > 0;
+        if (this.show_alert) { this.messages = CommonUtils.getErorrMessagesText(data.messages); }
+        this.show_ok = !this.show_alert;
+      });
+    } else {
+      this.dataService.updateLifeEvent(this.lifeevent).subscribe((data: any) => {
+        this.show_alert = data.messages.filter(m => m.type == 1).length > 0;
+        if (this.show_alert) { this.messages = CommonUtils.getErorrMessagesText(data.messages); }
+        this.show_ok = !this.show_alert;
+      });
+    }
   }
   changed() {
     this.show_alert = false;

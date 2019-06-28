@@ -15,26 +15,31 @@
   <div class="form-group">
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
   </div>
-  <table class='table' *ngIf="lifeevents">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let lifeevent of lifeevents">
-        <td>
-          {{ lifeevent.id }}
-        </td>
-        <td>
-          <a [routerLink]='["/lifeevent-edit",lifeevent.id]'>
-            <span class='glyphicon glyphicon-th-list'></span>  {{ lifeevent.name }}
-          </a>
-        </td>
-        <td>{{ lifeevent.eventDate | date }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <ng-template [ngIf]="lifeevents">
+    <div class="form-group">
+      <input type="button" value="Add" (click)="add_lifeevent()" class="btn btn-success" />
+    </div>
+    <table class='table' *ngIf="lifeevents">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lifeevent of lifeevents">
+          <td>
+            {{ lifeevent.id }}
+          </td>
+          <td>
+            <a [routerLink]='["/lifeevent-edit",lifeevent.id]'>
+              <span class='glyphicon glyphicon-th-list'></span>  {{ lifeevent.name }}
+            </a>
+          </td>
+          <td>{{ lifeevent.eventDate | date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
 </ng-template>

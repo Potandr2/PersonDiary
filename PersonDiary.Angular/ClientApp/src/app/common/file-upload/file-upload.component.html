@@ -1,4 +1,5 @@
-<div class="form-group">
+
+<div class="form-group" *ngIf="person.id">
   <label for="file">Choose File</label>
   
   <input #file type="file" multiple (change)="upload(file.files)" class="custom-file-input"/>

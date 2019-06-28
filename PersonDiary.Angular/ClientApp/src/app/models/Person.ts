@@ -1,6 +1,6 @@
 import { LifeEvent } from '../models/lifeevent';
 
-interface Person {
+class Person {
   id: number;
   name: string;
   surname: string;
