@@ -9,15 +9,17 @@
     <label>Surname</label>
     <input type="text" [(ngModel)]="person.surname" class="form-control" />
   </div>
-  <div class="form-group">
-    <app-file-upload [PersonId]="person.id"></app-file-upload>
+  <div class="row">
+    <div class="form-group   col-12 col-sm-6 col-md-4">
+      <app-file-upload [PersonId]="person.id"></app-file-upload>
+    </div>
   </div>
   <div class="form-group">
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
   </div>
   <ng-template [ngIf]="lifeevents">
     <div class="form-group">
-      <input type="button" value="Add" (click)="add_lifeevent()" class="btn btn-success" />
+      <input type="button" value="Add" (click)="add_lifeevent()" class="btn btn-primary" />
     </div>
     <table class='table' *ngIf="lifeevents">
       <thead>

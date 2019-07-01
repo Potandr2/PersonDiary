@@ -1,14 +1,19 @@
+<p *ngIf="!PersonId;else body"><em>Loading...</em></p>
+<ng-template #body>
+    <label for="file">Choose File</label>
+    <div class="input-container">
+      <input #file type="file" multiple (change)="upload(file.files)" class="custom-file-input" />
+      <button class="browse-btn" (click)="browse()">
+        Browse Files
+      </button>
+      <span class="file-info">Upload a file</span>
+    </div>
+    <br />
+    <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">
+      {{progress}}%
+    </span>
 
-<div class="form-group" *ngIf="person.id">
-  <label for="file">Choose File</label>
-  
-  <input #file type="file" multiple (change)="upload(file.files)" class="custom-file-input"/>
-  <br />
-  <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">
-    {{progress}}%
-  </span>
-
-  <span style="font-weight:bold;color:green;" *ngIf="message">
-    {{message}}
-  </span>
-</div>
+    <span style="font-weight:bold;color:green;" *ngIf="message">
+      {{message}}
+    </span>
+</ng-template>

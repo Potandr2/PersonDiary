@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse, HttpParams } from '@angular/common/http'
 import { FileUploadService } from '../../services/file-upload.service';
 
 
 @Component({
   selector: 'app-file-upload',
-  templateUrl: './file-upload.component.html'
+  templateUrl: './file-upload.component.html',
+  styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent {
   @Input() PersonId: number;
@@ -13,6 +14,9 @@ export class FileUploadComponent {
   public message: string;
 
   private url: string = `api/personfile`;
+
+  @ViewChild("file") file: ElementRef;
+
   constructor(private http: HttpClient) { }
 
   upload(files) {
@@ -37,6 +41,11 @@ export class FileUploadComponent {
         this.message = event.body.toString();
     });
   }
+
+  browse() {
+    this.file.nativeElement.click();
+  }
+
 
 }
 
