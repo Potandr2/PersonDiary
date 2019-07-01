@@ -81,8 +81,38 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
             return resp;
         }
-        public void Upload()
+        public PersonUploadResponse Upload(PersonUploadRequest request)
         {
+            var resp = new PersonUploadResponse();
+            try
+            {
+                var person = unit.Persons.GetItem(request.PersonId);
+                person.Biography = request.Biography;
+                unit.Persons.Update(person);
+                unit.Save();
+            }catch(Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            return resp;
         }
+        public byte[] Download(GetPersonRequest request)
+        {
+            var resp = new PersonDownloadResponse();
+            var person = unit.Persons.GetItem(request.Id);
+            return person.Biography;
+
+        }
+        public UpdatePersonResponse DeleteBiography(UpdatePersonRequest request)
+        {
+            var resp = new UpdatePersonResponse();
+            try
+            {
+                var person = unit.Persons.GetItem(request.Person.Id);
+                person.Biography = null;
+                unit.Persons.Update(person);
+                unit.Save();
+            }
+            catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            return resp;
+        }
+
     }
 }

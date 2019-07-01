@@ -41,9 +41,9 @@ namespace PersonDiary.Angular.EFCore.Controllers
 
         // GET: api/PersonFile/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public byte[] Get(GetPersonRequest request)
         {
-            return "value";
+            return new PersonModel(unit, mapper).Download(request);
         }
 
         // POST: api/PersonFile
@@ -51,18 +51,41 @@ namespace PersonDiary.Angular.EFCore.Controllers
         [Consumes("application/json","multipart/form-data")]
         public PersonUploadResponse Post(string json)
         {
+
             PersonUploadRequest request = JsonConvert.DeserializeObject<PersonUploadRequest>(json);
+            return UploadBiography(request);
+        }
+               
+
+        // PUT: api/PersonFile/5
+        [HttpPut("{id}")]
+        public PersonUploadResponse Put(int id)
+        {
+
+            PersonUploadRequest request = new PersonUploadRequest() { PersonId =id };
+            return UploadBiography(request);
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+
+        private PersonUploadResponse UploadBiography(PersonUploadRequest request)
+        {
             try
             {
                 var file = Request.Form.Files[0];
-               
+
                 if (file.Length > 0)
                 {
                     byte[] imageData = null;
                     // считываем переданный файл в массив байтов
                     using (var binaryReader = new BinaryReader(file.OpenReadStream()))
                     {
-                        imageData = binaryReader.ReadBytes((int)file.Length);
+                        request.Biography = binaryReader.ReadBytes((int)file.Length);
+                        return new PersonModel(unit, mapper).Upload(request);
                     }
                 }
                 return new PersonUploadResponse();
@@ -70,21 +93,9 @@ namespace PersonDiary.Angular.EFCore.Controllers
             catch (Exception e)
             {
                 var resp = new PersonUploadResponse();
-                resp.Messages.Add(new Contracts.Message() { Text=e.Message, Type = Contracts.MessageTypeEnum.Error  });
+                resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error });
                 return resp;
             }
-        }
-
-        // PUT: api/PersonFile/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

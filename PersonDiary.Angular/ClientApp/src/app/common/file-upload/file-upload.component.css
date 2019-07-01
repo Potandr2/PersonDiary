@@ -3,7 +3,7 @@ body {
 }
 
 .input-container {
-  margin: 3em auto;
+  margin: 0px 0px;
   max-width: 300px;
   background-color: #EDEDED;
   border: 1px solid #DFDFDF;
@@ -21,7 +21,7 @@ input[type='file'] {
 .browse-btn {
   background: #03A595;
   color: #fff;
-  min-height: 35px;
+  min-height: 30px;
   padding: 10px;
   border: none;
   border-top-left-radius: 5px;
