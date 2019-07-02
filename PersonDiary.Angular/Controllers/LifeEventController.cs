@@ -53,9 +53,9 @@ namespace LifeEventDiary.Angular.EFCore.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public DeleteLifeEventResponse Delete(DeleteLifeEventRequest request)
+        public DeleteLifeEventResponse Delete(int id)
         {
-            return new LifeEventModel(unit, mapper).Delete(request);
+            return new LifeEventModel(unit, mapper).Delete(new DeleteLifeEventRequest() { Id=id});
         }
     }
 }

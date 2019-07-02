@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PersonDiary.Contracts.LifeEventContract
 {
-    public class UpdateLifeEventResponse:Response
+    public class UpdateLifeEventResponse:Response<UpdateLifeEventResponse>
     {
     }
 }

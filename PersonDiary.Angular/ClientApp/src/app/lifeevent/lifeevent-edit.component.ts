@@ -33,6 +33,7 @@ export class LifeEventEditComponent {
           this.id = params['id'];
           this.dataService.getLifeEvent(this.id).subscribe((data: any) => {
             this.lifeevent = data.lifeevent;
+            this.personid = data.lifeevent.personId;
           });
         }
       }
@@ -57,6 +58,14 @@ export class LifeEventEditComponent {
   changed() {
     this.show_alert = false;
     this.show_ok = false;
+  }
+  delete() {
+    this.dataService.deleteLifeEvent(this.lifeevent.id).subscribe((data: any) => {
+      this.show_alert = data.messages.filter(m => m.type == 1).length > 0;
+      if (this.show_alert) { this.messages = CommonUtils.getErorrMessagesText(data.messages); }
+      else { this.router.navigate(['/person-edit', this.personid]); }
+      
+    });
   }
 }
 

@@ -1,23 +1,41 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http'
+import { HttpClient, HttpClientModule, HttpRequest, HttpEventType, HttpResponse, HttpParams, HttpEvent, HttpResponseBase } from '@angular/common/http'
 import { Observable } from 'rxjs';
+
+
 
 @Injectable()
 export class FileUploadService {
 
-  private url = "/api/person/upload";
+  private url = "api/personfile";
 
   constructor(private http: HttpClient) {
   }
 
-  postFile(fileToUpload: File): Observable<boolean> {
-    const endpoint = this.url;
-    const formData: FormData = new FormData();
-    formData.append('fileKey', fileToUpload, fileToUpload.name);
-    return this.http
-      .post(endpoint, formData)
-      .map(() => { return true; });
-      //.catch((e) => { });
+  postFile(PersonId:number,files:any): Observable<any> {
+    if (files.length === 0)
+      return;
+
+    const formData = new FormData();
+
+    for (let file of files)
+      formData.append(file.name, file);
+
+    const params = new HttpParams().set('json', JSON.stringify({ PersonId: PersonId }));
+    const uploadReq = new HttpRequest('POST', this.url, formData, {
+      reportProgress: true,
+      params: params
+    });
+
+    return this.http.request(uploadReq);    
   }
+
+  getFile(id: number): Observable<any> {
+    return this.http.get(this.url + '/' + id, { responseType: 'blob' });
+  }
+  deleteFile(id: number): Observable<any> {
+    return this.http.delete(this.url + '/' + id);
+  }
+
 
 }

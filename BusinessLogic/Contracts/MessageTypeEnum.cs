@@ -2,7 +2,8 @@
 {
     public enum MessageTypeEnum
     {
-        Info = 0,
+        Warning = 0,
         Error = 1
+        
     }
 }

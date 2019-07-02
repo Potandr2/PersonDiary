@@ -37,15 +37,22 @@ export class PersonEditComponent  {
  
   save() {
     (this.person.id) ?
-      this.dataService.updatePerson(this.person).subscribe((data: any) => {
-
-      }) :
-      this.dataService.createPerson(this.person).subscribe((data: any) => { });
-
-   
+      this.dataService.updatePerson(this.person).subscribe((data: any) => { }) :
+      this.dataService.createPerson(this.person).subscribe((data: any) => {
+        //this.router.navigate(['/person-edit', data.person.id]);
+        this.person = data.person;
+        this.lifeevents = data.person.lifeEvents;
+      });
   }
   add_lifeevent() {
     this.router.navigate(['/lifeevent-create', this.person.id]); 
+  }
+  delete() {
+    this.dataService.deletePerson(this.person.id).subscribe((data: any) => {
+      let show_alert:boolean = data.messages.filter(m => m.type == 1).length > 0;
+      if (!show_alert) { this.router.navigate(['/person-list']); }
+
+    });
   }
 }
 

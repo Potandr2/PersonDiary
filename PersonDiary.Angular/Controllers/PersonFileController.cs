@@ -36,22 +36,22 @@ namespace PersonDiary.Angular.EFCore.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            throw new NotImplementedException("file list not implemented");
+            //return new string[] { "value1", "value2" };
         }
 
         // GET: api/PersonFile/5
         [HttpGet("{id}")]
-        public byte[] Get(GetPersonRequest request)
+        public FileResult Get(int id)
         {
-            return new PersonModel(unit, mapper).Download(request);
+            byte[] bytes = new PersonModel(unit, mapper).Download(new GetPersonRequest(){ Id = id });
+            return File(bytes, "application/octet-stream","biographi.docx");
         }
-
         // POST: api/PersonFile
         [HttpPost]
         [Consumes("application/json","multipart/form-data")]
         public PersonUploadResponse Post(string json)
         {
-
             PersonUploadRequest request = JsonConvert.DeserializeObject<PersonUploadRequest>(json);
             return UploadBiography(request);
         }
@@ -61,15 +61,15 @@ namespace PersonDiary.Angular.EFCore.Controllers
         [HttpPut("{id}")]
         public PersonUploadResponse Put(int id)
         {
-
             PersonUploadRequest request = new PersonUploadRequest() { PersonId =id };
             return UploadBiography(request);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public DeletePersonResponse Delete(int id)
         {
+            return new PersonModel(unit, mapper).DeleteBiography(new DeletePersonRequest() { Id = id });
         }
 
         private PersonUploadResponse UploadBiography(PersonUploadRequest request)
@@ -78,17 +78,15 @@ namespace PersonDiary.Angular.EFCore.Controllers
             {
                 var file = Request.Form.Files[0];
 
-                if (file.Length > 0)
+                if (file.Length == 0) return new PersonUploadResponse().AddMessage(new Contracts.Message("Zero files proveided")); 
+                if (!file.FileName.Contains(".doc")) return new PersonUploadResponse().AddMessage(new Contracts.Message("Only .doc/docx file types allowed"));
+
+                // считываем переданный файл в массив байтов
+                using (var binaryReader = new BinaryReader(file.OpenReadStream()))
                 {
-                    byte[] imageData = null;
-                    // считываем переданный файл в массив байтов
-                    using (var binaryReader = new BinaryReader(file.OpenReadStream()))
-                    {
-                        request.Biography = binaryReader.ReadBytes((int)file.Length);
-                        return new PersonModel(unit, mapper).Upload(request);
-                    }
+                    request.Biography = binaryReader.ReadBytes((int)file.Length);
+                    return new PersonModel(unit, mapper).Upload(request);
                 }
-                return new PersonUploadResponse();
             }
             catch (Exception e)
             {

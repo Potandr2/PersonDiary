@@ -1,19 +1,27 @@
-<p *ngIf="!PersonId;else body"><em>Loading...</em></p>
-<ng-template #body>
+  <div class="form-group" *ngIf="HasFile">
+    <a href="api/personfile/1" class="btn btn-primary btn-sm">Download biography</a>
+    <button (click)="deleteFile()" class="btn btn-danger btn-sm">Delete biography</button>
+  </div>
+  <ng-template [ngIf]="!HasFile">
     <label for="file">Choose File</label>
     <div class="input-container">
-      <input #file type="file" multiple (change)="upload(file.files)" class="custom-file-input" />
+      <input #file type="file" (change)="upload(file.files)" accept=".doc,.docx" class="custom-file-input" />
       <button class="browse-btn" (click)="browse()">
         Browse Files
       </button>
-      <span class="file-info">Upload a file</span>
+      <span class="file-info">Upload biographi</span>
     </div>
     <br />
     <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">
       {{progress}}%
     </span>
+    <alert type="success" *ngIf="success_message">
+      <strong>Success!</strong> {{success_message}}
+    </alert>
+    <alert type="warning" *ngIf="warning_message">
+      <strong>Warning!</strong> {{warning_message}}
+    </alert>
+  </ng-template>
 
-    <span style="font-weight:bold;color:green;" *ngIf="message">
-      {{message}}
-    </span>
-</ng-template>
+
+

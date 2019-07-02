@@ -58,9 +58,9 @@ namespace PersonDiary.Angular.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public DeletePersonResponse Delete(DeletePersonRequest request)
+        public DeletePersonResponse Delete(int id)
         {
-            return new PersonModel(unit, mapper).Delete(request);
+            return new PersonModel(unit, mapper).Delete(new DeletePersonRequest() { Id=id });
         }
 
     }

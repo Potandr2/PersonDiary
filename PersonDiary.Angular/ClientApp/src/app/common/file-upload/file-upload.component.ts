@@ -1,7 +1,9 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEventType, HttpResponse, HttpParams } from '@angular/common/http'
+import { HttpEventType  } from '@angular/common/http'
 import { FileUploadService } from '../../services/file-upload.service';
+import { Router } from '@angular/router';
 
+const HttpStatusOk: number = 200;
 
 @Component({
   selector: 'app-file-upload',
@@ -10,40 +12,50 @@ import { FileUploadService } from '../../services/file-upload.service';
 })
 export class FileUploadComponent {
   @Input() PersonId: number;
+  @Input() HasFile: boolean;
   public progress: number;
-  public message: string;
-
-  private url: string = `api/personfile`;
+  public success_message: string;
+  public warning_message: string;
 
   @ViewChild("file") file: ElementRef;
 
-  constructor(private http: HttpClient) { }
+  constructor(private fileservice: FileUploadService, private router: Router) {
+
+  }
 
   upload(files) {
-    if (files.length === 0)
+    if (files[0].name.indexOf(".doc") == -1) {
+      this.warning_message = "Only .doc/.docx file types allowed";
       return;
-
-    const formData = new FormData();
-
-    for (let file of files)
-      formData.append(file.name, file);
-
-    const params = new HttpParams().set('json', JSON.stringify({ PersonId: this.PersonId }));
-    const uploadReq = new HttpRequest('POST', this.url, formData, {
-      reportProgress: true,
-      params:params
-    });
-
-    this.http.request(uploadReq).subscribe(event => {
+    }
+    this.fileservice.postFile(this.PersonId,files).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress)
         this.progress = Math.round(100 * event.loaded / event.total);
-      else if (event.type === HttpEventType.Response)
-        this.message = event.body.messages.length==0?"Upload is Ok":"Upload failed";
+      else if (event.type === HttpEventType.Response) {
+        if ((<any>event.body).messages.length == 0) {
+          this.warning_message = null;
+          this.success_message = "File uploaded successfully";
+          this.HasFile = true;
+        } else {
+          this.warning_message = "Upload failed";
+          this.success_message = null;
+        };
+        
+      }
     });
   }
 
   browse() {
+    this.success_message = null;
     this.file.nativeElement.click();
+  }
+  deleteFile() {
+    this.fileservice.deleteFile(this.PersonId).subscribe(data => {
+      if (data.messages.length == 0){
+        this.HasFile = false;
+      }
+    });
+    
   }
 
 

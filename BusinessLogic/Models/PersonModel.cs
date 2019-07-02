@@ -54,6 +54,7 @@ namespace PersonDiary.BusinessLogic
                 var item = mapper.Map<Entities.Person>(request.Person);
                 repoPerson.Create(item);
                 unit.Save();
+                resp.Person = mapper.Map<Person>(repoPerson.GetItem(item.Id));
             }
             catch(Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
             return resp;
@@ -100,12 +101,12 @@ namespace PersonDiary.BusinessLogic
             return person.Biography;
 
         }
-        public UpdatePersonResponse DeleteBiography(UpdatePersonRequest request)
+        public DeletePersonResponse DeleteBiography(DeletePersonRequest request)
         {
-            var resp = new UpdatePersonResponse();
+            var resp = new DeletePersonResponse();
             try
             {
-                var person = unit.Persons.GetItem(request.Person.Id);
+                var person = unit.Persons.GetItem(request.Id);
                 person.Biography = null;
                 unit.Persons.Update(person);
                 unit.Save();
