@@ -11,7 +11,7 @@
   <div class="row">
     <div class="form-group  col-12 col-sm-6 col-md-4">
       <label>Date</label>
-      <input class="form-control" placeholder="Datepicker" bsDatepicker [isOpen]="isOpen" [(ngModel)]="lifeevent.eventdate" (ngModelChange)="changed()" required #eventdate="ngModel" />
+      <input class="form-control" placeholder="Enter event date pls" bsDatepicker [isOpen]="isOpen" [(ngModel)]="lifeevent.eventdate" (ngModelChange)="changed()" required #eventdate="ngModel" />
       <alert type="danger" [hidden]="eventdate.valid || eventdate.untouched">
         <strong>Error!</strong> Field Date must be filled.
       </alert>
@@ -20,7 +20,7 @@
   </div>
   <div class="form-group">
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" [disabled]="name.invalid || eventdate.invalid" />
-    <input type="button" value="Delete" (click)="delete()" class="btn btn-danger"  />
+    <input type="button" value="Delete" (click)="delete()" class="btn btn-danger"  *ngIf="lifeevent.id"/>
   </div>
   <alert type="danger" *ngIf="show_alert">
     <strong>Error!</strong> {{messages}}.

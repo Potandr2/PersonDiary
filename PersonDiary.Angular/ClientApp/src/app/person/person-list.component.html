@@ -16,17 +16,17 @@
       <tr *ngFor="let person of persons">
         <td>
           <a [routerLink]='["/person-edit",person.id]'>
-            <span class='glyphicon glyphicon-th-list'></span>  {{ person.id }}
+            {{ person.id }}
           </a>
         </td>
         <td>
           <a [routerLink]='["/person-edit",person.id]'>
-            <span class='glyphicon glyphicon-th-list'></span>  {{ person.name }}
+            {{ person.name }}
           </a>
         </td>
         <td>
           <a [routerLink]='["/person-edit",person.id]'>
-            <span class='glyphicon glyphicon-th-list'></span>  {{ person.surname }}
+            {{ person.surname }}
           </a>
         </td>
       </tr>

@@ -3,20 +3,26 @@
   <h1>Person №{{person.id}}</h1>
   <div class="form-group">
     <label>Name</label>
-    <input type="text" [(ngModel)]="person.name" class="form-control" />
+    <input type="text" [(ngModel)]="person.name" class="form-control" #name="ngModel" required />
+    <alert type="danger" [hidden]="name.valid || name.untouched">
+      <strong>Error!</strong> Field Name must be filled.
+    </alert>
   </div>
   <div class="form-group">
     <label>Surname</label>
-    <input type="text" [(ngModel)]="person.surname" class="form-control" />
+    <input type="text" [(ngModel)]="person.surname" class="form-control" #surname="ngModel" required/>
+    <alert type="danger" [hidden]="surname.valid || surname.untouched">
+      <strong>Error!</strong> Field Surame must be filled.
+    </alert>
   </div>
   <div class="row">
     <div class="form-group col-12 col-sm-6 col-md-4">
-      <app-file-upload [PersonId]="person.id" [HasFile]="person.hasFile"></app-file-upload>
+      <app-file-upload [PersonId]="person.id" [HasFile]="person.hasFile" *ngIf="person.id"></app-file-upload>
     </div>
   </div>
   <div class="form-group">
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
-    <input type="button" value="Delete person" (click)="delete()" class="btn btn-danger" />
+    <input type="button" value="Delete person" (click)="delete()" class="btn btn-danger" *ngIf="person.id" />
   </div>
   <ng-template [ngIf]="lifeevents">
     <div class="form-group">
