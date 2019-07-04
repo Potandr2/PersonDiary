@@ -29,7 +29,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.Persons = mapper.Map<List<PersonContract>>(
-                    repoPerson.GetItems(request.withLifeEvents).ToList()
+                    repoPerson.GetItems().ToList()
                     );
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
@@ -42,7 +42,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.Person = mapper.Map<PersonContract>(
-                    repoPerson.GetItems(request.withLifeEvents).FirstOrDefault(p => p.Id == request.Id)
+                    repoPerson.GetItem(request.Id)
                 );
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };

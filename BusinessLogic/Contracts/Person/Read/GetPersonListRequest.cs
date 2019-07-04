@@ -2,6 +2,7 @@
 {
     public class GetPersonListRequest : Request
     {
-        public bool withLifeEvents { get; set; }
+        public int PageNo { get; set; }
+        public int PageCapacity { get; set; }
     }
 }

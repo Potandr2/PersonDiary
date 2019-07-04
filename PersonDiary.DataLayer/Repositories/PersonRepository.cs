@@ -4,6 +4,7 @@ using PersonDiary.Entities;
 using PersonDiary.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PersonDiary.Repositories
 {
@@ -14,22 +15,14 @@ namespace PersonDiary.Repositories
         {
             this.db = db;
         }
-        public IEnumerable<Person> GetItems(bool withLifeEvents)
-        {
-            if (withLifeEvents)
-                return db.Persons.Include(p => p.LifeEvents);
-            //.Select(p => new Person() { Id = p.Id,  Name = p.Name, Surname   = p.Surname, LifeEvents  = new List<LifeEvent>(p.LifeEvents) });
-            else
-                return db.Persons;
-
-        }
+       
         public IEnumerable<Person> GetItems()
         {
             return db.Persons;
         }
         public Person GetItem(int id)
         {
-            return db.Persons.Find(id);
+            return db.Persons.Include(p => p.LifeEvents).FirstOrDefault(p => p.Id == id);
         }
         public void Create(Person item)
         {
