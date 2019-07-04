@@ -1,17 +1,16 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
 using PersonDiary.Interfaces;
 using PersonDiary.Mapping;
 using PersonDiary.Repositories;
 
-
-
-namespace PersonDiary.Angular
+namespace PersonDiary.React.EFCore
 {
     public class Startup
     {
@@ -25,8 +24,8 @@ namespace PersonDiary.Angular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
             //set automapper service
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -35,14 +34,12 @@ namespace PersonDiary.Angular
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            // In production, the Angular files will be served from this directory
+            // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "ClientApp/build";
             });
         }
 
@@ -56,6 +53,7 @@ namespace PersonDiary.Angular
             else
             {
                 app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -69,17 +67,14 @@ namespace PersonDiary.Angular
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-            
+
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
         }

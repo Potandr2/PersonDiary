@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Archivator", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Angular.EFCore", "PersonDiary.Angular\PersonDiary.Angular.EFCore.csproj", "{F6226012-AF94-4AAE-8336-52CF5E6222C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonDiary.React.EFCore", "PersonDiary.React.EFCore\PersonDiary.React.EFCore.csproj", "{8EF60A7C-D264-43CC-862F-AE36FA91F29B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EF60A7C-D264-43CC-862F-AE36FA91F29B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EF60A7C-D264-43CC-862F-AE36FA91F29B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EF60A7C-D264-43CC-862F-AE36FA91F29B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EF60A7C-D264-43CC-862F-AE36FA91F29B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
