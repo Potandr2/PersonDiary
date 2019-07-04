@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using PersonDiary.Interfaces;
+﻿using AutoMapper;
 using PersonDiary.Contracts.PersonContract;
+using PersonDiary.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using PersonContract = PersonDiary.Contracts.PersonContract.Person;
-using AutoMapper;
 
 
 namespace PersonDiary.BusinessLogic
@@ -14,7 +14,7 @@ namespace PersonDiary.BusinessLogic
         private readonly IUnitOfWork unit;
         private IPersonRepository repoPerson;
         private IMapper mapper;
-        public PersonModel(IUnitOfWork unit,IMapper mapper)
+        public PersonModel(IUnitOfWork unit, IMapper mapper)
         {
             if (unit == null)
                 throw new ArgumentNullException("Unit and persons repository is null");
@@ -26,12 +26,13 @@ namespace PersonDiary.BusinessLogic
         public GetPersonListResponse GetItems(GetPersonListRequest request)
         {
             var resp = new GetPersonListResponse();
-            try {
+            try
+            {
                 resp.Persons = mapper.Map<List<PersonContract>>(
                     repoPerson.GetItems(request.withLifeEvents).ToList()
                     );
             }
-            catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
 
         }
@@ -44,19 +45,20 @@ namespace PersonDiary.BusinessLogic
                     repoPerson.GetItems(request.withLifeEvents).FirstOrDefault(p => p.Id == request.Id)
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
         public UpdatePersonResponse Create(UpdatePersonRequest request)
         {
             var resp = new UpdatePersonResponse();
-            try { 
+            try
+            {
                 var item = mapper.Map<Entities.Person>(request.Person);
                 repoPerson.Create(item);
                 unit.Save();
                 resp.Person = mapper.Map<Person>(repoPerson.GetItem(item.Id));
             }
-            catch(Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
         public UpdatePersonResponse Update(UpdatePersonRequest request)
@@ -68,7 +70,7 @@ namespace PersonDiary.BusinessLogic
                 unit.Persons.Update(item);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
         public DeletePersonResponse Delete(DeletePersonRequest request)
@@ -79,7 +81,7 @@ namespace PersonDiary.BusinessLogic
                 repoPerson.Delete(request.Id);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
         public PersonUploadResponse Upload(PersonUploadRequest request)
@@ -91,7 +93,8 @@ namespace PersonDiary.BusinessLogic
                 person.Biography = request.Biography;
                 unit.Persons.Update(person);
                 unit.Save();
-            }catch(Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            }
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
         public byte[] Download(GetPersonRequest request)
@@ -111,7 +114,7 @@ namespace PersonDiary.BusinessLogic
                 unit.Persons.Update(person);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Contracts.Message() { Text = e.Message, Type = Contracts.MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
 

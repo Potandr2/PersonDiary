@@ -2,7 +2,7 @@
 
 namespace PersonDiary.Interfaces
 {
-    public interface ILifeEventRepository: IRepository<LifeEvent>
+    public interface ILifeEventRepository : IRepository<LifeEvent>
     {
     }
 }

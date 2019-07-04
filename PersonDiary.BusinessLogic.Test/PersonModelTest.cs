@@ -61,7 +61,7 @@ namespace PersonDiary.BusinessLogic.Test
             var person_last = model_tmp.GetItems(new GetPersonListRequest()).Persons.Last();
             person_last.Name += updated;
             person_last.Surname += updated;
-            
+
             modelPerson.Update(new UpdatePersonRequest() { Person = person_last });
             var person_check = modelPerson.GetItem(new GetPersonRequest() { Id = person_last.Id }).Person;
             Assert.IsTrue(person_check.Name.Contains(updated) && person_check.Surname.Contains(updated));
@@ -71,7 +71,7 @@ namespace PersonDiary.BusinessLogic.Test
         {
             Create();
             var person_last = modelPerson.GetItems(new GetPersonListRequest()).Persons.Last();
-            modelPerson.Delete(new DeletePersonRequest() { Id= person_last.Id } );
+            modelPerson.Delete(new DeletePersonRequest() { Id = person_last.Id });
             Assert.IsNull(repoPerson.GetItem(person_last.Id));
         }
         [Test, Order(3)]

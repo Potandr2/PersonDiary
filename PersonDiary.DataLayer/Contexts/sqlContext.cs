@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PersonDiary.Entities;
+using System;
 
 namespace PersonDiary.Contexts
 {
@@ -39,6 +39,6 @@ namespace PersonDiary.Contexts
             //modelBuilder.Entity<LifeEvent>().HasOne(le => le.Person).WithMany(p => p.LifeEvents).OnDelete(DeleteBehavior.Cascade);
             base.OnModelCreating(modelBuilder);
         }
-        
+
     }
 }

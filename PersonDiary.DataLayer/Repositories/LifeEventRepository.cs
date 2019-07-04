@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using PersonDiary.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
 using PersonDiary.Contexts;
 using PersonDiary.Entities;
-using Microsoft.EntityFrameworkCore;
+using PersonDiary.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PersonDiary.Repositories
@@ -21,7 +21,7 @@ namespace PersonDiary.Repositories
         }
         public LifeEvent GetItem(int id)
         {
-            return db.LifeEvents.Include(le => le.Person).FirstOrDefault(le=>le.Id == id);
+            return db.LifeEvents.Include(le => le.Person).FirstOrDefault(le => le.Id == id);
         }
         public void Create(LifeEvent item)
         {

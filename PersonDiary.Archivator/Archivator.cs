@@ -1,14 +1,15 @@
-﻿using System;
-using PersonDiary.Interfaces;
+﻿using PersonDiary.Interfaces;
 
 namespace PersonDiary.Archivator
 {
-    public class Archivator:IArchivator
+    public class Archivator : IArchivator
     {
-        public byte[] Pack(byte[] file) {
+        public byte[] Pack(byte[] file)
+        {
             return null;
         }
-        public byte[] Unpack(byte[] archive) {
+        public byte[] Unpack(byte[] archive)
+        {
             return null;
         }
     }

@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
 using NUnit.Framework;
+using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.LifeEventContract;
 using PersonDiary.Contracts.PersonContract;
 using PersonDiary.Interfaces;
 using PersonDiary.Mapping;
-using PersonDiary.BusinessLogic;
 using PersonDiary.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using LifeEventContract = PersonDiary.Contracts.LifeEventContract.LifeEvent;
-using PersonContract = PersonDiary.Contracts.PersonContract.Person;
 
 namespace LifeEventDiary.BusinessLogic.Test
 {
@@ -45,7 +43,7 @@ namespace LifeEventDiary.BusinessLogic.Test
                 {
                     Name = $"LifeEventCreateTest_Name{suffix}",
                     Eventdate = DateTime.Now,
-                    PersonId=person_last.Id
+                    PersonId = person_last.Id
                 }
             }); ;
             Assert.IsTrue(resp.Messages.Count == 0);
@@ -60,7 +58,7 @@ namespace LifeEventDiary.BusinessLogic.Test
 
             modelLifeEvent.Update(new UpdateLifeEventRequest() { LifeEvent = LifeEvent_last });
             var LifeEvent_check = modelLifeEvent.GetItem(new GetLifeEventRequest() { Id = LifeEvent_last.Id }).lifeevent;
-            Assert.IsTrue(LifeEvent_check.Name.Contains(updated) );
+            Assert.IsTrue(LifeEvent_check.Name.Contains(updated));
         }
         [Test, Order(2)]
         public void Delete()
@@ -77,6 +75,6 @@ namespace LifeEventDiary.BusinessLogic.Test
             var cntModel = modelLifeEvent.GetItems(new GetLifeEventListRequest()).LifeEvents.Count;
             Assert.AreEqual(cntRepo, cntModel);
         }
-        
+
     }
 }

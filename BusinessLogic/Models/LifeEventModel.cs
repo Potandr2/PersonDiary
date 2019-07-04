@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using PersonDiary.Interfaces;
+﻿using AutoMapper;
 using PersonDiary.Contracts;
-using System.Collections.Generic;
 using PersonDiary.Contracts.LifeEventContract;
+using PersonDiary.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using LifeEventContract = PersonDiary.Contracts.LifeEventContract.LifeEvent;
-using AutoMapper;
 
 namespace PersonDiary.BusinessLogic
 {
@@ -23,7 +23,7 @@ namespace PersonDiary.BusinessLogic
 
             this.mapper = mapper;
         }
-        
+
         public GetLifeEventResponse GetItem(GetLifeEventRequest request)
         {
             var resp = new GetLifeEventResponse();
@@ -33,7 +33,7 @@ namespace PersonDiary.BusinessLogic
                     repoLifeEvent.GetItem(request.Id)
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new  Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
         public GetLifeEventListResponse GetItems(GetLifeEventListRequest request)
@@ -43,7 +43,7 @@ namespace PersonDiary.BusinessLogic
             {
                 resp.LifeEvents = mapper.Map<List<LifeEventContract>>(
                     repoLifeEvent.GetItems().ToList()
-                    );
+                );
             }
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
@@ -84,8 +84,6 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
-        public void UploadBiography()
-        {
-        }
+        
     }
 }

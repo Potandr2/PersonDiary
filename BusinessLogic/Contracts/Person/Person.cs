@@ -1,7 +1,5 @@
-﻿using System;
+﻿using PersonDiary.Contracts.LifeEventContract;
 using System.Collections.Generic;
-using System.Text;
-using PersonDiary.Contracts.LifeEventContract;
 
 namespace PersonDiary.Contracts.PersonContract
 {

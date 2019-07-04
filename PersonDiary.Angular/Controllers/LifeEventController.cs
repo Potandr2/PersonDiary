@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PersonDiary.Interfaces;
-using AutoMapper;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.LifeEventContract;
-using Newtonsoft.Json;
+using PersonDiary.Interfaces;
 
 namespace LifeEventDiary.Angular.EFCore.Controllers
 {
@@ -55,7 +49,7 @@ namespace LifeEventDiary.Angular.EFCore.Controllers
         [HttpDelete("{id}")]
         public DeleteLifeEventResponse Delete(int id)
         {
-            return new LifeEventModel(unit, mapper).Delete(new DeleteLifeEventRequest() { Id=id});
+            return new LifeEventModel(unit, mapper).Delete(new DeleteLifeEventRequest() { Id = id });
         }
     }
 }

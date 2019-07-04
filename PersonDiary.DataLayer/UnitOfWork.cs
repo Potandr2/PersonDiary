@@ -1,6 +1,5 @@
 ﻿using PersonDiary.Contexts;
 using PersonDiary.Interfaces;
-using PersonDiary.Repositories;
 using System;
 
 namespace PersonDiary.Repositories

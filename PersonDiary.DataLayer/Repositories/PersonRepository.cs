@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using PersonDiary.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
 using PersonDiary.Contexts;
 using PersonDiary.Entities;
-using Microsoft.EntityFrameworkCore;
+using PersonDiary.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace PersonDiary.Repositories
 {
@@ -22,7 +21,7 @@ namespace PersonDiary.Repositories
             //.Select(p => new Person() { Id = p.Id,  Name = p.Name, Surname   = p.Surname, LifeEvents  = new List<LifeEvent>(p.LifeEvents) });
             else
                 return db.Persons;
-            
+
         }
         public IEnumerable<Person> GetItems()
         {

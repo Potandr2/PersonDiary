@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonDiary.Contracts.LifeEventContract
+﻿namespace PersonDiary.Contracts.LifeEventContract
 {
-    public class GetLifeEventListRequest:Request
+    public class GetLifeEventListRequest : Request
     {
-       
+
     }
 }

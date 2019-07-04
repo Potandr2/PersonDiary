@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonDiary.Contracts
+﻿namespace PersonDiary.Contracts
 {
     public class Message
     {
         public Message() { }
-        public Message(string text) {
+        public Message(string text)
+        {
             this.Type = MessageTypeEnum.Error;
             this.Text = text;
         }

@@ -1,27 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PersonDiary.Entities;
-using PersonDiary.Interfaces;
-using AutoMapper;
+using Newtonsoft.Json;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.PersonContract;
-using Newtonsoft.Json;
-
-
-
+using PersonDiary.Interfaces;
 
 namespace PersonDiary.Angular.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class PersonController : ControllerBase
     {
         private readonly IUnitOfWork unit;
-        private readonly IMapper mapper;       
+        private readonly IMapper mapper;
 
         public PersonController(IUnitOfWork unit, IMapper mapper)
         {
@@ -60,7 +52,7 @@ namespace PersonDiary.Angular.Controllers
         [HttpDelete("{id}")]
         public DeletePersonResponse Delete(int id)
         {
-            return new PersonModel(unit, mapper).Delete(new DeletePersonRequest() { Id=id });
+            return new PersonModel(unit, mapper).Delete(new DeletePersonRequest() { Id = id });
         }
 
     }
