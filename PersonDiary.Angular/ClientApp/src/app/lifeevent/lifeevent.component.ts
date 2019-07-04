@@ -10,8 +10,8 @@ import { CommonUtils } from '../common/common.utils';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-lifeevent-edit',
-  templateUrl: './lifeevent-edit.component.html'
+  selector: 'app-lifeevent',
+  templateUrl: './lifeevent.component.html'
 })
 export class LifeEventEditComponent {
   public id: number;
@@ -67,12 +67,12 @@ export class LifeEventEditComponent {
     this.dataService.deleteLifeEvent(this.lifeevent.id).subscribe((data: any) => {
       this.show_alert = data.messages.filter(m => m.type == 1).length > 0;
       if (this.show_alert) { this.messages = CommonUtils.getErorrMessagesText(data.messages); }
-      else { this.router.navigate(['/person-edit', this.personid]); }
+      else { this.router.navigate(['/person', this.personid]); }
       
     });
   }
   goPerson() {
-    this.router.navigate(['/person-edit', this.personid]); 
+    this.router.navigate(['/person', this.personid]); 
   }
 }
 

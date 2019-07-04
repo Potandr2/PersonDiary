@@ -1,5 +1,4 @@
 import { Component} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Person } from '../models/person';
@@ -9,8 +8,8 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-person-edit',
-  templateUrl: './person-edit.component.html'
+  selector: 'app-person',
+  templateUrl: './person.component.html'
 })
 export class PersonEditComponent  {
   public id: any;
@@ -39,7 +38,6 @@ export class PersonEditComponent  {
     (this.person.id) ?
       this.dataService.updatePerson(this.person).subscribe((data: any) => { }) :
       this.dataService.createPerson(this.person).subscribe((data: any) => {
-        //this.router.navigate(['/person-edit', data.person.id]);
         this.person = data.person;
         this.lifeevents = data.person.lifeEvents;
       });
@@ -50,7 +48,7 @@ export class PersonEditComponent  {
   delete() {
     this.dataService.deletePerson(this.person.id).subscribe((data: any) => {
       let show_alert:boolean = data.messages.filter(m => m.type == 1).length > 0;
-      if (!show_alert) { this.router.navigate(['/person-list']); }
+      if (!show_alert) { this.router.navigate(['/persons']); }
 
     });
   }

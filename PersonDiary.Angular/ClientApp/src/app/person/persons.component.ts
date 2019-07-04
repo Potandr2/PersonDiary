@@ -5,8 +5,8 @@ import { PersonService } from '../services/person.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-person-list',
-  templateUrl: './person-list.component.html'
+  selector: 'app-persons',
+  templateUrl: './persons.component.html'
 })
 export class PersonListComponent {
   public persons: Person[];
@@ -21,6 +21,6 @@ export class PersonListComponent {
   }
 
   add() {
-    this.router.navigate(['/person-edit']);
+    this.router.navigate(['/person']);
   }
 }

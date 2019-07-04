@@ -1,0 +1,30 @@
+<h1>Life Event list</h1>
+<p *ngIf="!lifeevents"><em>Loading...</em></p>
+<table class='table' *ngIf="lifeevents">
+  <thead>
+    <tr>
+      <th>Person</th>
+      <th>Event</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let lifeevent of lifeevents">
+      <td>
+        <a [routerLink]='["/lifeevent",lifeevent.id]'>
+          <app-person-fullname [id]="lifeevent.personId"></app-person-fullname>
+        </a>
+      </td>
+      <td>
+        <a [routerLink]='["/lifeevent",lifeevent.id]'>
+          {{ lifeevent.name }}
+        </a>
+      </td>
+      <td>
+        <a [routerLink]='["/lifeevent",lifeevent.id]'>
+           {{ lifeevent.eventdate | date }}
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

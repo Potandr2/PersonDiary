@@ -1,5 +1,5 @@
   <div class="form-group" *ngIf="HasFile">
-    <a href="api/personfile/1" class="btn btn-primary btn-sm">Download biography</a>
+    <a href="api/personfile/{{PersonId}}" class="btn btn-primary btn-sm">Download biography</a>
     <button (click)="deleteFile()" class="btn btn-danger btn-sm">Delete biography</button>
   </div>
   <ng-template [ngIf]="!HasFile">

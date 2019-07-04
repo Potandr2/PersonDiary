@@ -1,9 +1,7 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef} from '@angular/core';
 import { HttpEventType  } from '@angular/common/http'
-import { FileUploadService } from '../../services/file-upload.service';
+import { FileUploadService } from '../../services/fileupload.service';
 import { Router } from '@angular/router';
-
-const HttpStatusOk: number = 200;
 
 @Component({
   selector: 'app-file-upload',

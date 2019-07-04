@@ -8,15 +8,17 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { PersonService } from './services/person.service';
 import { LifeEventService } from './services/lifeevent.service';
-import { FileUploadService } from './services/file-upload.service';
-import { PersonListComponent } from './person/person-list.component';
-import { PersonEditComponent } from './person/person-edit.component';
-import { LifeEventEditComponent } from './lifeevent/lifeevent-edit.component';
-import { LifeEventListComponent } from './lifeevent/lifeevent.list.component';
+import { FileUploadService } from './services/fileupload.service';
+import { PersonListComponent } from './person/persons.component';
+import { PersonEditComponent } from './person/person.component';
+import { PersonFullNameComponent } from './person/person-fullname.component';
+import { LifeEventEditComponent } from './lifeevent/lifeevent.component';
+import { LifeEventListComponent } from './lifeevent/lifeevents.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { FileUploadComponent } from './common/file-upload/file-upload.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +26,7 @@ import { FileUploadComponent } from './common/file-upload/file-upload.component'
     HomeComponent,
     PersonListComponent,
     PersonEditComponent,
+    PersonFullNameComponent,
     LifeEventEditComponent,
     LifeEventListComponent,
     FileUploadComponent
@@ -34,13 +37,13 @@ import { FileUploadComponent } from './common/file-upload/file-upload.component'
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'person-list', component: PersonListComponent },
-      { path: 'person-edit/:id', component: PersonEditComponent },
-      { path: 'person-edit', component: PersonEditComponent },
-      { path: 'lifeevent-edit/:id', component: LifeEventEditComponent },
+      { path: 'persons', component: PersonListComponent },
+      { path: 'person/:id', component: PersonEditComponent },
+      { path: 'person', component: PersonEditComponent },
+      { path: 'lifeevents', component: LifeEventListComponent },
+      { path: 'lifeevent/:id', component: LifeEventEditComponent },
       { path: 'lifeevent-create/:id', component: LifeEventEditComponent },
-      { path: 'lifeevent-edit', component: LifeEventEditComponent },
-      { path: 'lifeevent-list', component: LifeEventListComponent },
+      { path: 'lifeevent', component: LifeEventEditComponent },
     ]),
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),

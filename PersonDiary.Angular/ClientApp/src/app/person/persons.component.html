@@ -15,17 +15,17 @@
     <tbody>
       <tr *ngFor="let person of persons">
         <td>
-          <a [routerLink]='["/person-edit",person.id]'>
+          <a [routerLink]='["/person",person.id]'>
             {{ person.id }}
           </a>
         </td>
         <td>
-          <a [routerLink]='["/person-edit",person.id]'>
+          <a [routerLink]='["/person",person.id]'>
             {{ person.name }}
           </a>
         </td>
         <td>
-          <a [routerLink]='["/person-edit",person.id]'>
+          <a [routerLink]='["/person",person.id]'>
             {{ person.surname }}
           </a>
         </td>

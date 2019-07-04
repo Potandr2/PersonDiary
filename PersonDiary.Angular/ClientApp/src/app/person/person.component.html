@@ -41,12 +41,12 @@
       <tbody>
         <tr *ngFor="let lifeevent of lifeevents">
           <td>
-            <a [routerLink]='["/lifeevent-edit",lifeevent.id]'>
+            <a [routerLink]='["/lifeevent",lifeevent.id]'>
                {{ lifeevent.name }}
             </a>
           </td>
           <td>
-            <a [routerLink]='["/lifeevent-edit",lifeevent.id]'>
+            <a [routerLink]='["/lifeevent",lifeevent.id]'>
               {{ lifeevent.eventdate | date }}
             </a>
           </td>
