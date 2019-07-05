@@ -12,7 +12,7 @@ export class PersonService {
   }
 
   getPersons() {
-    const p = new HttpParams().append('json', JSON.stringify({ withLifeEvents: true }));
+    const p = new HttpParams().append('json', JSON.stringify({ PageNo:0,PageSize:10 }));
     return this.http.get(this.url, { params: p });
   }
 

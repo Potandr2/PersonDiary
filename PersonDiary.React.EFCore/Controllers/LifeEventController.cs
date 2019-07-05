@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.LifeEventContract;
+using Newtonsoft.Json;
 using PersonDiary.Interfaces;
+using System.Threading.Tasks;
 
 namespace PersonDiary.React.EFCore.Controllers
 {
@@ -19,37 +21,37 @@ namespace PersonDiary.React.EFCore.Controllers
         }
         // GET: api/LifeEvent
         [HttpGet]
-        public GetLifeEventListResponse Get()
+        public async Task<GetLifeEventListResponse> Get(string json)
         {
-            return new LifeEventModel(unit, mapper).GetItems(new GetLifeEventListRequest());
+            return await Task.Run(() => new LifeEventModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json)));
         }
 
         // GET: api/LifeEvent/5
         [HttpGet("{id}")]
-        public GetLifeEventResponse Get(int id)
+        public async Task<GetLifeEventResponse> Get(int id)
         {
-            return new LifeEventModel(unit, mapper).GetItem(new GetLifeEventRequest() { Id = id });
+            return await Task.Run(()=>new LifeEventModel(unit, mapper).GetItem(new GetLifeEventRequest() { Id = id }));
         }
 
         // POST: api/LifeEvent
         [HttpPost]
-        public UpdateLifeEventResponse Post([FromBody]  UpdateLifeEventRequest request)
+        public async Task<UpdateLifeEventResponse> Post([FromBody]  UpdateLifeEventRequest request)
         {
-            return new LifeEventModel(unit, mapper).Create(request);
+            return await Task.Run(()=>new LifeEventModel(unit, mapper).Create(request));
         }
 
         // PUT: api/LifeEvent/5
         [HttpPut("{id}")]
-        public UpdateLifeEventResponse Put(int id, [FromBody] UpdateLifeEventRequest request)
+        public async Task<UpdateLifeEventResponse> Put(int id, [FromBody] UpdateLifeEventRequest request)
         {
-            return new LifeEventModel(unit, mapper).Update(request);
+            return await Task.Run(()=>new LifeEventModel(unit, mapper).Update(request));
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public DeleteLifeEventResponse Delete(int id)
+        public async Task<DeleteLifeEventResponse> Delete(int id)
         {
-            return new LifeEventModel(unit, mapper).Delete(new DeleteLifeEventRequest() { Id = id });
+            return await Task.Run(()=>new LifeEventModel(unit, mapper).Delete(new DeleteLifeEventRequest() { Id = id }));
         }
     }
 }

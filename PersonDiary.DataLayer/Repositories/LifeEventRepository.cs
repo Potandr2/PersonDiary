@@ -15,9 +15,9 @@ namespace PersonDiary.Repositories
         {
             this.db = db;
         }
-        public IEnumerable<LifeEvent> GetItems()
+        public IEnumerable<LifeEvent> GetItems(int PageNo, int PageSize)
         {
-            return db.LifeEvents;
+            return db.LifeEvents.OrderByDescending(p => p.Id).Skip(PageNo * PageSize).Take(PageSize); ;
         }
         public LifeEvent GetItem(int id)
         {
@@ -40,6 +40,10 @@ namespace PersonDiary.Repositories
         public void Save()
         {
             db.SaveChanges();
+        }
+        public int Count
+        {
+            get { return db.LifeEvents.Count(); }
         }
         private bool disposed = false;
         public virtual void Dispose(bool disposing)

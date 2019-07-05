@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.PersonContract;
 using PersonDiary.Interfaces;
+using System.Threading.Tasks;
 
 namespace PersonDiary.React.EFCore.Controllers
 {
@@ -22,37 +23,37 @@ namespace PersonDiary.React.EFCore.Controllers
         }
         // GET: api/Person
         [HttpGet]
-        public GetPersonListResponse Get(string json)
+        public async Task<GetPersonListResponse> Get(string json)
         {
-            return new PersonModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetPersonListRequest>(json));
+            return await Task.Run(()=> new PersonModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetPersonListRequest>(json)));
         }
 
         // GET: api/Person/5
         [HttpGet("{id}")]
-        public GetPersonResponse Get(int id)
+        public async Task<GetPersonResponse> Get(int id)
         {
-            return new PersonModel(unit, mapper).GetItem(new GetPersonRequest() { Id = id, withLifeEvents = true });
+            return await Task.Run(()=> new PersonModel(unit, mapper).GetItem(new GetPersonRequest() { Id = id, withLifeEvents = true }));
         }
 
         // POST: api/Person
         [HttpPost]
-        public UpdatePersonResponse Post([FromBody]  UpdatePersonRequest request)
+        public async Task<UpdatePersonResponse> Post([FromBody]  UpdatePersonRequest request)
         {
-            return new PersonModel(unit, mapper).Create(request);
+            return await Task.Run(()=> new PersonModel(unit, mapper).Create(request));
         }
 
         // PUT: api/Person/5
         [HttpPut("{id}")]
-        public UpdatePersonResponse Put(int id, [FromBody] UpdatePersonRequest request)
+        public async Task<UpdatePersonResponse> Put(int id, [FromBody] UpdatePersonRequest request)
         {
-            return new PersonModel(unit, mapper).Update(request);
+            return await Task.Run(()=>new PersonModel(unit, mapper).Update(request));
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public DeletePersonResponse Delete(int id)
+        public async Task<DeletePersonResponse> Delete(int id)
         {
-            return new PersonModel(unit, mapper).Delete(new DeletePersonRequest() { Id = id });
+            return await Task.Run(() => new PersonModel(unit, mapper).Delete(new DeletePersonRequest() { Id = id }));
         }
 
     }

@@ -9,10 +9,10 @@ export const actionCreators = {
     requestPersons: startDateIndex => async (dispatch) => {
 
         dispatch({ type: requestPersonsType, startDateIndex });
-
-        const url = 'api/person/';
+        const url = `api/person/?json=${JSON.stringify({PageNo:0,PageSize:10})}`;
         const response = await fetch(url);
-        const persons = await response.json();
+        const resp_person = await response.json();
+        const persons = resp_person.persons;
 
         dispatch({ type: receivePersonsType, startDateIndex, persons });
     },

@@ -42,7 +42,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.LifeEvents = mapper.Map<List<LifeEventContract>>(
-                    repoLifeEvent.GetItems().ToList()
+                    repoLifeEvent.GetItems(request.PageNo,request.PageSize).ToList()
                 );
             }
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };

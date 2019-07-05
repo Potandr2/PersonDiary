@@ -29,7 +29,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.Persons = mapper.Map<List<PersonContract>>(
-                    repoPerson.GetItems().ToList()
+                    repoPerson.GetItems(request.PageNo,request.PageSize).ToList()
                     );
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };

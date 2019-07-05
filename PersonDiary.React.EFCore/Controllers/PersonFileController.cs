@@ -8,6 +8,7 @@ using PersonDiary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace PersonDiary.React.EFCore.Controllers
 {
@@ -34,31 +35,30 @@ namespace PersonDiary.React.EFCore.Controllers
 
         // GET: api/PersonFile/5
         [HttpGet("{id}")]
-        public FileResult Get(int id)
+        public async Task<FileResult> Get(int id)
         {
             byte[] bytes = new PersonModel(unit, mapper).Download(new GetPersonRequest() { Id = id });
-            return File(bytes, "application/octet-stream", "biographi.docx");
+            return await Task.Run(()=>File(bytes, "application/octet-stream", "biographi.docx"));
         }
         // POST: api/PersonFile
         [HttpPost]
         [Consumes("application/json", "multipart/form-data")]
-        public PersonUploadResponse Post(string json)
+        public async Task<PersonUploadResponse> Post(string json)
         {
             PersonUploadRequest request = JsonConvert.DeserializeObject<PersonUploadRequest>(json);
-            return UploadBiography(request);
+            return await UploadBiographyAsync(request);
         }
         // PUT: api/PersonFile/5
         [HttpPut("{id}")]
-        public PersonUploadResponse Put(int id)
+        public async Task<PersonUploadResponse> Put(int id)
         {
-            PersonUploadRequest request = new PersonUploadRequest() { PersonId = id };
-            return UploadBiography(request);
+            return await UploadBiographyAsync(new PersonUploadRequest() { PersonId = id });
         }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public DeletePersonResponse Delete(int id)
+        public async Task<DeletePersonResponse> Delete(int id)
         {
-            return new PersonModel(unit, mapper).DeleteBiography(new DeletePersonRequest() { Id = id });
+            return await Task.Run(()=>new PersonModel(unit, mapper).DeleteBiography(new DeletePersonRequest() { Id = id }));
         }
         private PersonUploadResponse UploadBiography(PersonUploadRequest request)
         {
@@ -78,6 +78,10 @@ namespace PersonDiary.React.EFCore.Controllers
             {
                 return new PersonUploadResponse().AddMessage(new Contracts.Message(e.Message));
             }
+        }
+        private  Task<PersonUploadResponse> UploadBiographyAsync(PersonUploadRequest request)
+        {
+            return Task.Run(() => UploadBiography(request));
         }
     }
 }

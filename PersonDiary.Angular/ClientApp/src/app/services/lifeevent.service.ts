@@ -13,7 +13,8 @@ export class LifeEventService {
   }
 
   getLifeEvents() {
-    return this.http.get(this.url);
+    const p = new HttpParams().append('json', JSON.stringify({ PageNo: 0, PageSize: 10 }));
+    return this.http.get(this.url, { params: p });
   }
 
   getLifeEvent(id: number) {

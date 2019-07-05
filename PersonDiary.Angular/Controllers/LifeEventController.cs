@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.LifeEventContract;
+using Newtonsoft.Json;
 using PersonDiary.Interfaces;
 using System.Threading.Tasks;
 
@@ -20,9 +21,9 @@ namespace LifeEventDiary.Angular.EFCore.Controllers
         }
         // GET: api/LifeEvent
         [HttpGet]
-        public async Task<GetLifeEventListResponse> Get()
+        public async Task<GetLifeEventListResponse> Get(string json)
         {
-            return await Task.Run(()=>new LifeEventModel(unit, mapper).GetItems(new GetLifeEventListRequest()));
+            return await Task.Run(() => new LifeEventModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json)));
         }
 
         // GET: api/LifeEvent/5
