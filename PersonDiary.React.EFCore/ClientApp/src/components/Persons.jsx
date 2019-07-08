@@ -2,6 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { actionCreators } from '../store/Person.store';
 
 class Persons extends Component {
@@ -44,9 +45,9 @@ function renderPersonsTable(props) {
             <tbody>
                 {props.persons.map(person =>
                     <tr key={person.id}>
-                        <td>{person.id}</td>
-                        <td>{person.name}</td>
-                        <td>{person.surname}</td>
+                        <td><Link to={"/person/" + person.id}>{person.id}</Link></td>
+                        <td><NavLink to={"/person/" + person.id}>{person.name}</NavLink></td>
+                        <td><NavLink to={"/person/" + person.id}>{ person.surname }</NavLink></td>
                     </tr>
                 )}
             </tbody>
