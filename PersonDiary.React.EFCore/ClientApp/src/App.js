@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 import Persons from './components/Persons';
+import Person from './components/Person';
 import Lifeevents from './components/Lifeevents';
 
 export default () => (
@@ -13,6 +14,7 @@ export default () => (
     <Route path='/counter' component={Counter} />
     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
     <Route path='/persons/:startDateIndex?' component={Persons} />
+    <Route path='/person/:id' component={Person} />
     <Route path='/lifeevents/:startDateIndex?' component={Lifeevents} />
   </Layout>
 );
