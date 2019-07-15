@@ -15,9 +15,9 @@ namespace PersonDiary.Repositories
         {
             this.db = db;
         }
-
-        public IEnumerable<Person> GetItems(int PageNo=0, int PageSize=30)
+        public IEnumerable<Person> GetItems(int PageNo, int PageSize)
         {
+           
             return db.Persons.OrderByDescending(p => p.Id).Skip(PageNo * PageSize).Take(PageSize);
         }
         public Person GetItem(int id)

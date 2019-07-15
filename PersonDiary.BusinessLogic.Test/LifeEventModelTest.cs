@@ -33,7 +33,7 @@ namespace LifeEventDiary.BusinessLogic.Test
         [Test, Order(0)]
         public void Create()
         {
-            var person_last = new PersonModel(new UnitOfWork(), mapper).GetItems(new GetPersonListRequest()).Persons.Last();
+            var person_last = new PersonModel(new UnitOfWork(), mapper).GetItems(new GetPersonListRequest() { PageSize = RepositoryDefaults.PageSize }).Persons.Last();
 
             var suffix = DateTime.Now.ToString("dd.MM.yyyy_mm_HH_ss");
 
@@ -53,7 +53,7 @@ namespace LifeEventDiary.BusinessLogic.Test
         {
             var model_tmp = new LifeEventModel(new UnitOfWork(), mapper);
             var updated = "_Updated";
-            var LifeEvent_last = model_tmp.GetItems(new GetLifeEventListRequest()).LifeEvents.Last();
+            var LifeEvent_last = model_tmp.GetItems(new GetLifeEventListRequest() { PageSize = RepositoryDefaults.PageSize }).LifeEvents.Last();
             LifeEvent_last.Name += updated;
 
             modelLifeEvent.Update(new UpdateLifeEventRequest() { LifeEvent = LifeEvent_last });
@@ -64,15 +64,15 @@ namespace LifeEventDiary.BusinessLogic.Test
         public void Delete()
         {
             Create();
-            var LifeEvent_last = modelLifeEvent.GetItems(new GetLifeEventListRequest()).LifeEvents.Last();
+            var LifeEvent_last = modelLifeEvent.GetItems(new GetLifeEventListRequest() { PageSize = RepositoryDefaults.PageSize }).LifeEvents.Last();
             modelLifeEvent.Delete(new DeleteLifeEventRequest() { Id = LifeEvent_last.Id });
             Assert.IsNull(repoLifeEvent.GetItem(LifeEvent_last.Id));
         }
         [Test, Order(3)]
         public void GetItems()
         {
-            var cntRepo = repoLifeEvent.GetItems().ToList().Count;
-            var cntModel = modelLifeEvent.GetItems(new GetLifeEventListRequest()).LifeEvents.Count;
+            var cntRepo = repoLifeEvent.GetItems(0, RepositoryDefaults.PageSize).ToList().Count;
+            var cntModel = modelLifeEvent.GetItems(new GetLifeEventListRequest() { PageSize = RepositoryDefaults.PageSize }).LifeEvents.Count;
             Assert.AreEqual(cntRepo, cntModel);
 
         }

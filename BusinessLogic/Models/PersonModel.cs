@@ -25,10 +25,15 @@ namespace PersonDiary.BusinessLogic
         }
         public GetPersonListResponse GetItems(GetPersonListRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Person model GetItems method argument is invalid");
+
+            request.PageSize = (request.PageSize == 0) ? RepositoryDefaults.PageSize : request.PageSize;
+
             var resp = new GetPersonListResponse();
             try
             {
-                resp.Persons = mapper.Map<List<PersonContract>>(
+                 resp.Persons = mapper.Map<List<PersonContract>>(
                     repoPerson.GetItems(request.PageNo,request.PageSize).ToList()
                     );
             }

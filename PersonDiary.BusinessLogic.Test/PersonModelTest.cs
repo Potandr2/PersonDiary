@@ -58,7 +58,7 @@ namespace PersonDiary.BusinessLogic.Test
         {
             var model_tmp = new PersonModel(new UnitOfWork(), mapper);
             var updated = "_Updated";
-            var person_last = model_tmp.GetItems(new GetPersonListRequest()).Persons.Last();
+            var person_last = model_tmp.GetItems(new GetPersonListRequest() { PageSize = RepositoryDefaults.PageSize }).Persons.Last();
             person_last.Name += updated;
             person_last.Surname += updated;
 
@@ -70,27 +70,27 @@ namespace PersonDiary.BusinessLogic.Test
         public void Delete()
         {
             Create();
-            var person_last = modelPerson.GetItems(new GetPersonListRequest()).Persons.Last();
+            var person_last = modelPerson.GetItems(new GetPersonListRequest() { PageSize = RepositoryDefaults.PageSize }).Persons.Last();
             modelPerson.Delete(new DeletePersonRequest() { Id = person_last.Id });
             Assert.IsNull(repoPerson.GetItem(person_last.Id));
         }
         [Test, Order(3)]
         public void GetItems()
         {
-            
-            var cntRepo = repoPerson.GetItems().ToList().Count;
-            var cntModel = modelPerson.GetItems(new GetPersonListRequest()).Persons.Count;
+            var cntRepo = repoPerson.GetItems(0, RepositoryDefaults.PageSize).ToList().Count;
+            var cntModel = modelPerson.GetItems(new GetPersonListRequest() { PageSize = RepositoryDefaults.PageSize }).Persons.Count;
             Assert.AreEqual(cntRepo, cntModel);
         }
         [Test, Order(4)]
         public void GetItemsWithLifeEvents()
         {
             var repoLifeEvents = unit.LifeEvents;
-            modelPerson.GetItems(new GetPersonListRequest()).Persons.ForEach(p =>
+            modelPerson.GetItems(new GetPersonListRequest() ).Persons.ForEach(p =>
             {
+                var person = unit.Persons.GetItem(p.Id);
                 Assert.AreEqual(
-                    repoLifeEvents.GetItems().Where(le => le.PersonId == p.Id).Count(),
-                    p.LifeEvents.Count
+                    repoLifeEvents.GetPersonItems(p.Id).Count(),
+                    person.LifeEvents.Count
                     );
             });
         }
