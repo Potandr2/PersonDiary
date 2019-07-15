@@ -77,6 +77,7 @@ namespace PersonDiary.BusinessLogic.Test
         [Test, Order(3)]
         public void GetItems()
         {
+            
             var cntRepo = repoPerson.GetItems().ToList().Count;
             var cntModel = modelPerson.GetItems(new GetPersonListRequest()).Persons.Count;
             Assert.AreEqual(cntRepo, cntModel);
@@ -85,7 +86,7 @@ namespace PersonDiary.BusinessLogic.Test
         public void GetItemsWithLifeEvents()
         {
             var repoLifeEvents = unit.LifeEvents;
-            modelPerson.GetItems(new GetPersonListRequest() { withLifeEvents = true }).Persons.ForEach(p =>
+            modelPerson.GetItems(new GetPersonListRequest()).Persons.ForEach(p =>
             {
                 Assert.AreEqual(
                     repoLifeEvents.GetItems().Where(le => le.PersonId == p.Id).Count(),

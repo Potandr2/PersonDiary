@@ -74,6 +74,7 @@ namespace LifeEventDiary.BusinessLogic.Test
             var cntRepo = repoLifeEvent.GetItems().ToList().Count;
             var cntModel = modelLifeEvent.GetItems(new GetLifeEventListRequest()).LifeEvents.Count;
             Assert.AreEqual(cntRepo, cntModel);
+
         }
 
     }

@@ -6,7 +6,7 @@ namespace PersonDiary.Interfaces
 {
     public interface IRepository<T> : IDisposable
     {
-        IEnumerable<T> GetItems(int PageNo,int PageSize);
+        IEnumerable<T> GetItems(int PageNo=0,int PageSize=30);
         T GetItem(int id);
         void Create(T item);
         void Update(T item);
