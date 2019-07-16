@@ -19,17 +19,14 @@ export const actionCreators = {
     requestPerson: id => async (dispatch, getState) => {
 
         dispatch({ type: requestPersonType, id });
-
-        //const person = getState().reducerPerson.persons.filter(p => p.id == id)[0];
         const url = `api/person/${id}`;
         const response = await fetch(url);
-        const resp_person = await response.json();
-        const person = resp_person.person;
+        let resp_person = await response.json();
+        let person = resp_person.person;
 
         dispatch({ type: receivePersonType, person });
     },
     savePerson: person => async (dispatch, getState) => {
-        getState().reducerPerson.persons.find(p => p.id == person.id).id = person.id;
         const url = `api/Person/${person.id}`;
         const response = await fetch(url, {
             method: 'PUT',
@@ -37,9 +34,10 @@ export const actionCreators = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(person)
+            body: JSON.stringify({person})
         });
-        dispatch({ type: savePersonType, person });
+        
+        dispatch({ type: savePersonType});
     }
 };
 
@@ -80,7 +78,6 @@ export const reducer = (state, action) => {
     if (action.type === savePersonType) {
         return {
             ...state,
-            person: action.person,
             isLoading: false
         };
     }
