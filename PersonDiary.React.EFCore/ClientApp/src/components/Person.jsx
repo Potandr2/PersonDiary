@@ -6,20 +6,7 @@ import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { Upload, message, Button, Icon } from 'antd';
 
-const uploadprops = {
-    name: 'file',
-    action: 'http://localhost:44396/api/personfile/', 
-    onChange(info) {
-        if (info.file.status !== 'uploading') {
-            console.log(info.file, info.fileList);
-        }
-        if (info.file.status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
+
 
 
 class Person extends Component {
@@ -35,6 +22,23 @@ class Person extends Component {
         const id = parseInt(this.props.match.params.id, 10) || 0;
         this.props.requestPerson(id);
         this.id = id;
+
+        this.uploadprops = {
+            name: 'Biography',
+            data: JSON.stringify({ json: { PersonId: 111 } }),
+            multiple: false,
+            action: 'http://localhost:44396/api/personfile/',
+            onChange(info) {
+                if (info.file.status !== 'uploading') {
+                    console.log(info.file, info.fileList);
+                }
+                if (info.file.status === 'done') {
+                    message.success(`${info.file.name} file uploaded successfully`);
+                } else if (info.file.status === 'error') {
+                    message.error(`${info.file.name} file upload failed.`);
+                }
+            },
+        };
     }
 
     onChange(e) {
@@ -101,7 +105,7 @@ class Person extends Component {
                         <input type="text" name="surname" value={this.state.surname} onChange={this.onChange} className="form-control" />
                     </div>
                     <div className="form-group">
-                    <Upload {...uploadprops}>
+                    <Upload {...this.uploadprops}>
                         <Button>
                             <Icon type="upload" /> Click to Upload
                         </Button>
