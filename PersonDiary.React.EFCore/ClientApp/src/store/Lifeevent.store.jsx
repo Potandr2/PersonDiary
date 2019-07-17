@@ -19,28 +19,26 @@ export const actionCreators = {
     requestLifeEvent: id => async (dispatch, getState) => {
 
         dispatch({ type: requestLifeEventType, id });
-
-        const lifeevent = getState().reducerLifeEvent.lifeevents.filter(u => u.id == id)[0];
+        const url = `api/lifeevent/${id}`;
+        const response = await fetch(url);
+        const resp = await response.json();
+        const lifeevent = resp.lifeevent;
 
         dispatch({ type: receiveLifeEventType, lifeevent });
     },
-    saveLifeEvent: upload => async (dispatch, getState) => {
+    saveLifeEvent: lifeevent => async (dispatch, getState) => {
 
-        //getState().uploads_reducer.upload = upload;
-        //getState().uploads_reducer.forecasts.find(u => u.id == upload.id).fileName = upload.fileName;
-        //getState().uploads_reducer.forecasts[0] = upload;
-        dispatch({ type: saveLifeEventType, upload });
-        /*
-        const url = `api/Upload/${upload.id}`;
+        const url = `api/lifeevent/${lifeevent.id}`;
         const response = await fetch(url, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(upload)
+            body: JSON.stringify({ lifeevent })
         });
-        */
+
+        dispatch({ type: saveLifeEventType });
     }
 };
 
@@ -59,7 +57,7 @@ export const reducer = (state, action) => {
         return {
             ...state,
             startDateIndex: action.startDateIndex,
-            forecasts: action.forecasts,
+            lifeevents: action.lifeevents,
             isLoading: false
         };
     }
@@ -74,14 +72,14 @@ export const reducer = (state, action) => {
     if (action.type === receiveLifeEventType) {
         return {
             ...state,
-            upload: action.upload,
+            lifeevent: action.lifeevent,
             isLoading: false
         };
     }
     if (action.type === saveLifeEventType) {
         return {
             ...state,
-            upload: action.upload,
+            lifeevent: action.lifeevent,
             isLoading: false
         };
     }

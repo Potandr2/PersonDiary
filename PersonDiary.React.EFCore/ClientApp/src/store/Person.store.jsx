@@ -21,8 +21,8 @@ export const actionCreators = {
         dispatch({ type: requestPersonType, id });
         const url = `api/person/${id}`;
         const response = await fetch(url);
-        let resp_person = await response.json();
-        let person = resp_person.person;
+        const resp_person = await response.json();
+        const person = resp_person.person;
 
         dispatch({ type: receivePersonType, person });
     },

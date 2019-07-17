@@ -2,7 +2,24 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Person.store';
+import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { Upload, message, Button, Icon } from 'antd';
 
+const uploadprops = {
+    name: 'file',
+    action: 'http://localhost:44396/api/personfile/', 
+    onChange(info) {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+};
 
 
 class Person extends Component {
@@ -56,8 +73,9 @@ class Person extends Component {
                     <tbody>
                         {lifeevents.map(lifeevent =>
                             <tr key={lifeevent.id}>
-                                <td>{lifeevent.name}</td>
-                                <td>{lifeevent.eventdate}</td>
+                                <td><Link to={"/lifeevent/" + lifeevent.id}>{lifeevent.name}</Link></td>
+                                <td><Link to={"/lifeevent/" + lifeevent.id}>{lifeevent.eventdate}</Link></td>
+                                
                             </tr>
                         )}
                     </tbody>
@@ -81,6 +99,13 @@ class Person extends Component {
                     <div className="form-group">
                         <label>Surname</label>
                         <input type="text" name="surname" value={this.state.surname} onChange={this.onChange} className="form-control" />
+                    </div>
+                    <div className="form-group">
+                    <Upload {...uploadprops}>
+                        <Button>
+                            <Icon type="upload" /> Click to Upload
+                        </Button>
+                        </Upload>
                     </div>
                     <div className="form-group">
                         <input type="button" value="Сохранить" onClick={this.save} className="btn btn-success" />
