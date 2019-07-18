@@ -34,6 +34,7 @@ class Person extends Component {
                 return false;
             }, 
             onChange(info) {
+                
                 if (info.file.status !== 'uploading') {
                     console.log(info.file, info.fileList);
                 }
@@ -69,6 +70,7 @@ class Person extends Component {
     }
     handleUpload = () => {
         const { fileList } = this.state;
+        
         const formData = new FormData();
         fileList.forEach(file => {
             formData.append('files[]', file);
@@ -125,7 +127,8 @@ class Person extends Component {
             },
             beforeUpload: file => {
                 this.setState(state => ({
-                    fileList: [...state.fileList, file],
+                    //fileList: [...state.fileList, file],
+                    fileList: [file],
                 }));
                 return false;
             },
