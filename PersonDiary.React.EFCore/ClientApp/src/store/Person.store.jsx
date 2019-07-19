@@ -81,6 +81,6 @@ export const reducer = (state, action) => {
             isLoading: false
         };
     }
-
+    
     return state;
 };

@@ -58,9 +58,8 @@ class Person extends Component {
         }
     }
     onChange(e) {
-        var fieldname = e.target.name;
         var newstate = {};
-        newstate[fieldname] = e.target.value;
+        newstate[e.target.name] = e.target.value;
         this.setState(newstate);
     }
     
@@ -75,15 +74,15 @@ class Person extends Component {
         fileList.forEach(file => {
             formData.append('files[]', file);
         });
-        formData.append('json',"{PersonId:1}");
-
+        
+        var _this = this;
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", "ajax_page.php", true);
+        oReq.open("POST", "/api/personfile/?json="+JSON.stringify({ PersonId: _this.id }), true);
         oReq.onload = function (oEvent) {
             if (oReq.status === 200) {
                 console.log('upload succes', oReq.responseText);
 
-                this.setState({
+                _this.setState({
                     uploading: true,
                 });
 
@@ -92,7 +91,6 @@ class Person extends Component {
             }
         };
         oReq.send(formData);
-
 
         // You can use any AJAX library you like
         this.setState({
@@ -166,11 +164,14 @@ class Person extends Component {
                     <div className="form-group">
                         <label>Biography file</label>
                         <div className="row">
+                            <div className="col">
                             <Upload {...props}>
                                 <Button>
                                     <Icon type="upload" /> Select File
                                 </Button>
-                            </Upload>
+                                </Upload>
+                            </div>
+                            <div className="col">
                             <Button
                                 type="primary"
                                 onClick={this.handleUpload}
@@ -180,7 +181,7 @@ class Person extends Component {
                             >
                                 {uploading ? 'Uploading' : 'Start Upload'}
                             </Button>
-                            
+                            </div>
                         </div>
                     </div>
                     <div className="form-group">
