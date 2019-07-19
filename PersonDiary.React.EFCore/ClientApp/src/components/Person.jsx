@@ -75,10 +75,24 @@ class Person extends Component {
         fileList.forEach(file => {
             formData.append('files[]', file);
         });
+        formData.append('json',"{PersonId:1}");
 
-        this.setState({
-            uploading: true,
-        });
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", "ajax_page.php", true);
+        oReq.onload = function (oEvent) {
+            if (oReq.status === 200) {
+                console.log('upload succes', oReq.responseText);
+
+                this.setState({
+                    uploading: true,
+                });
+
+            } else {
+                console.log("Error " + oReq.status + " occurred when trying to upload your file.<br \/>");
+            }
+        };
+        oReq.send(formData);
+
 
         // You can use any AJAX library you like
         this.setState({
