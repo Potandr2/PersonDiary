@@ -29,29 +29,6 @@ class Person extends Component {
         const id = parseInt(this.props.match.params.id, 10) || 0;
         this.props.requestPerson(id);
         this.id = id;
-        
-        this.uploadprops = {
-            name: 'Biography',
-            multiple: false,
-            beforeUpload: file => {
-                this.setState(state => ({
-                    fileList: [...state.fileList, file],
-                }));
-                return false;
-            },
-            onChange(info) {
-
-                if (info.file.status !== 'uploading') {
-                    console.log(info.file, info.fileList);
-                }
-                if (info.file.status === 'done') {
-                    message.success(`${info.file.name} file uploaded successfully`);
-                } else if (info.file.status === 'error') {
-                    message.error(`${info.file.name} file upload failed.`);
-                }
-            }
-
-        };
     }
     componentWillReceiveProps(nextProps) {
         // This method runs when incoming props (e.g., route params) change
@@ -91,12 +68,18 @@ class Person extends Component {
         oReq.onload = function (oEvent) {
             if (oReq.status === 200) {
                 console.log('upload succes', oReq.responseText);
-                let messageText = "";
-                var messages = JSON.parse(oReq.response);
+                var resp = JSON.parse(oReq.response);
 
-                messages.map(message => messageText += message.Text);
+
+                if (resp.messages.filter(x => x.type == 1).length > 0) {
+                    var messageTextSummary = "";
+                    resp.messages.forEach(function (message, idx) {
+                        messageTextSummary += " "+message.text;
+                    });
+                    alert("Error," + messageTextSummary);
+                } else alert("Success!, File uploaded");
                 _this.setState({
-                    uploading: true,
+                    uploading: false,
                 });
 
             } else {
@@ -139,6 +122,7 @@ class Person extends Component {
     render() {
         const { uploading, fileList } = this.state;
         const props = {
+            accept: ".docx,.doc",
             onRemove: file => {
                 this.setState(state => {
                     const index = state.fileList.indexOf(file);
@@ -151,7 +135,6 @@ class Person extends Component {
             },
             beforeUpload: file => {
                 this.setState(state => ({
-                    //fileList: [...state.fileList, file],
                     fileList: [file],
                 }));
                 return false;
