@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../store/Lifeevent.store';
 import { DatePicker } from 'antd';
 import moment from 'moment';
+import { Upload, message, Button, Icon } from 'antd';
 
 
 const { MonthPicker, RangePicker } = DatePicker;
@@ -63,11 +64,12 @@ class Lifeevent extends Component {
                         <input type="text" name="name" value={this.state.name} onChange={this.onChange} className="form-control" />
                     </div>
                     <div className="form-group">
-                        <label>Date</label>
+                        <label>Date</label><br/>
                         <DatePicker defaultValue={moment(this.state.eventdate, dateFormat)} format={dateFormat} onChange={this.onChangeDate} />
                     </div>
                     <div className="form-group">
-                        <input type="button" value="Сохранить" onClick={this.save} className="btn btn-success" />
+                        <Button type="primary" onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
+                        <Button type="danger" onClick={this.save}>Delete</Button>
                     </div>
                    
                 </div>

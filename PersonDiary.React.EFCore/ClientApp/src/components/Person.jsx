@@ -16,14 +16,20 @@ class Person extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: undefined, surname: undefined, lifeevents: undefined, fileList: [], uploading: false }
+            name: undefined,
+            surname: undefined,
+            lifeevents: undefined,
+            fileList: [],
+            uploading: false,
+            uploadMesageText: undefined
+        }
         this.onChange = this.onChange.bind(this);
         this.save = this.save.bind(this);
                     
         const id = parseInt(this.props.match.params.id, 10) || 0;
         this.props.requestPerson(id);
         this.id = id;
-
+        
         this.uploadprops = {
             name: 'Biography',
             multiple: false,
@@ -32,9 +38,9 @@ class Person extends Component {
                     fileList: [...state.fileList, file],
                 }));
                 return false;
-            }, 
+            },
             onChange(info) {
-                
+
                 if (info.file.status !== 'uploading') {
                     console.log(info.file, info.fileList);
                 }
@@ -44,7 +50,7 @@ class Person extends Component {
                     message.error(`${info.file.name} file upload failed.`);
                 }
             }
-            
+
         };
     }
     componentWillReceiveProps(nextProps) {
@@ -67,21 +73,26 @@ class Person extends Component {
         var person = {id:this.id, name: this.state.name, surname: this.state.surname };
         this.props.savePerson(person);
     }
+    delete(e) {
+        var person = { id: this.id, name: this.state.name, surname: this.state.surname };
+        //this.props.deletePerson(person);
+    }
     handleUpload = () => {
         const { fileList } = this.state;
-        
+
         const formData = new FormData();
         fileList.forEach(file => {
             formData.append('files[]', file);
         });
-        
+
         var _this = this;
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", "/api/personfile/?json="+JSON.stringify({ PersonId: _this.id }), true);
+        oReq.open("POST", "/api/personfile/?json=" + JSON.stringify({ PersonId: _this.id }), true);
         oReq.onload = function (oEvent) {
             if (oReq.status === 200) {
                 console.log('upload succes', oReq.responseText);
-
+                let messageText = "";
+                oReq.response.messages.map(message => messageText += message.Text);
                 _this.setState({
                     uploading: true,
                 });
@@ -98,7 +109,6 @@ class Person extends Component {
             uploading: false,
         });
     };
-    
 
     static renderLifeEvents(lifeevents) {
         if (lifeevents)
@@ -151,7 +161,7 @@ class Person extends Component {
             let contents = Person.renderLifeEvents(this.state.lifeevents);
 
             return (
-                <div>
+                <form>
                     <h1>Person</h1>
                     <div className="form-group">
                         <label>Name</label>
@@ -162,34 +172,31 @@ class Person extends Component {
                         <input type="text" name="surname" value={this.state.surname} onChange={this.onChange} className="form-control" />
                     </div>
                     <div className="form-group">
-                        <label>Biography file</label>
-                        <div className="row">
                             <div className="col">
-                            <Upload {...props}>
-                                <Button>
-                                    <Icon type="upload" /> Select File
+                                <Upload {...props}>
+                                    <Button>
+                                        <Icon type="upload" /> Select File
                                 </Button>
                                 </Upload>
                             </div>
                             <div className="col">
-                            <Button
-                                type="primary"
-                                onClick={this.handleUpload}
-                                disabled={fileList.length === 0}
-                                loading={uploading}
-                                style={{ marginTop: 16 }}
-                            >
-                                {uploading ? 'Uploading' : 'Start Upload'}
-                            </Button>
+                                <Button
+                                    type="primary"
+                                    onClick={this.handleUpload}
+                                    disabled={fileList.length === 0}
+                                    loading={uploading}
+                                    style={{ marginTop: 16 }}
+                                >
+                                    {uploading ? 'Uploading' : 'Start Upload'}
+                                </Button>
                             </div>
-                        </div>
                     </div>
                     <div className="form-group">
-                        <input type="button" value="Save" onClick={this.save} className="btn btn-success" />
-                        <input type="button" value="Delete" onClick={this.save} className="btn btn-danger" />
+                        <Button type="primary" onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
+                        <Button type="danger" onClick={this.save}>Delete</Button>
                     </div>
                     {contents}
-                </div>
+                </form>
             )
         }
         else return "loading...";
