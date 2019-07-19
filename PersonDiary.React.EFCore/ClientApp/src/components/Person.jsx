@@ -92,7 +92,9 @@ class Person extends Component {
             if (oReq.status === 200) {
                 console.log('upload succes', oReq.responseText);
                 let messageText = "";
-                oReq.response.messages.map(message => messageText += message.Text);
+                var messages = JSON.parse(oReq.response);
+
+                messages.map(message => messageText += message.Text);
                 _this.setState({
                     uploading: true,
                 });
