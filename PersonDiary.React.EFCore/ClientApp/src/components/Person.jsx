@@ -2,11 +2,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Person.store';
-import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { Upload, message, Button, Icon } from 'antd';
-
-
 
 
 
@@ -18,8 +15,10 @@ class Person extends Component {
         
         this.onChange = this.onChange.bind(this);
         this.save = this.save.bind(this);
+        this.delete = this.delete.bind(this);
         this.downldoadfile = this.downldoadfile.bind(this);
-                    
+        this.deletefile = this.deletefile.bind(this);
+        
         const id = parseInt(this.props.match.params.id, 10) || 0;
         this.props.requestPerson(id);
         this.id = id;
@@ -52,13 +51,13 @@ class Person extends Component {
         this.setState(newstate);
     }
     
-    save(e) {
+    save() {
         var person = {id:this.id, name: this.state.name, surname: this.state.surname };
         this.props.savePerson(person);
     }
-    delete(e) {
+    delete() {
         var person = { id: this.id, name: this.state.name, surname: this.state.surname };
-        //this.props.deletePerson(person);
+        this.props.deletePerson(person);
     }
     handleUpload = () => {
         const { fileList } = this.state;
@@ -80,10 +79,13 @@ class Person extends Component {
                 if (resp.messages.filter(x => x.type == 1).length > 0) {
                     var messageTextSummary = "";
                     resp.messages.forEach(function (message, idx) {
-                        messageTextSummary += " "+message.text;
+                        messageTextSummary += " " + message.text;
                     });
                     message.error("Error " + messageTextSummary);
-                } else message.success("Success!, File uploaded");
+                } else {
+                    _this.setState({ hasFile: true });
+                    message.success("Success!, File uploaded");
+                }
                 _this.setState({
                     uploading: false,
                 });
@@ -101,9 +103,24 @@ class Person extends Component {
         });
     };
     deletefile() {
+        fetch(`api/PersonfILE/${this.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                this.setState({ hasFile: false });
+                message.success("Success!, File has been deleted");
+            }
+        }).catch(() => {
+            message.error("Error!, File has not been deleted");
+        });
+        
     }
     downldoadfile() {
-        return <Redirect to={`/api/personfile/${this.id}`} />;
+        return <Link to={`/api/personfile/${this.id}`} />;
     }
     getDownloadLink() {
         return `/api/personfile/${this.id}`;
@@ -193,13 +210,15 @@ class Person extends Component {
                     }
                     {this.state.hasFile &&
                         <div className="form-group">
-                        <Button type="primary" onClick={this.downldoadfile} style={{ marginRight: "5px" }}>Download biography</Button>
+                        <Button type="primary" onClick={this.downldoadfile} style={{ marginRight: "5px" }}>
+                            <Link target="_blank" to={`/api/personfile/${this.id}`} >Download biography</Link>
+                        </Button>
                         <Button type="danger" onClick={this.deletefile}>Delete biography</Button>
                         </div>
                     }
                     <div className="form-group">
                         <Button type="primary" onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
-                        <Button type="danger" onClick={this.save}>Delete</Button>
+                        <Button type="danger" onClick={this.delete}>Delete</Button>
                     </div>
                     {contents}
                 </form>

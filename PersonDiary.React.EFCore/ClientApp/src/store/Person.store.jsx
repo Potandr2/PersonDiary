@@ -3,6 +3,7 @@ const receivePersonsType = 'RECEIVE_PERSONS';
 const requestPersonType = 'REQUEST_PERSON';
 const receivePersonType = 'RECEIVE_PERSON';
 const savePersonType = 'SAVE_PERSON';
+const deletePersonType = 'DELETE_PERSON';
 const initialState = { persons: [], person: undefined, isLoading: false };
 
 export const actionCreators = {
@@ -38,6 +39,18 @@ export const actionCreators = {
         });
         
         dispatch({ type: savePersonType});
+    },
+    deletePerson: person => async (dispatch, getState) => {
+        const url = `api/Person/${person.id}`;
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        dispatch({ type: deletePersonType });
+        //dispatch(push("/persons"));
     }
 };
 
@@ -76,6 +89,12 @@ export const reducer = (state, action) => {
         };
     }
     if (action.type === savePersonType) {
+        return {
+            ...state,
+            isLoading: false
+        };
+    }
+    if (action.type === deletePersonType) {
         return {
             ...state,
             isLoading: false
