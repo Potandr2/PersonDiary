@@ -21,7 +21,8 @@ class Person extends Component {
             lifeevents: undefined,
             fileList: [],
             uploading: false,
-            uploadMesageText: undefined
+            uploadMesageText: undefined,
+            hasFile: false
         }
         this.onChange = this.onChange.bind(this);
         this.save = this.save.bind(this);
@@ -36,7 +37,8 @@ class Person extends Component {
             this.setState({
                 name: nextProps.person.name,
                 surname: nextProps.person.surname,
-                lifeevents: nextProps.person.lifeEvents
+                lifeevents: nextProps.person.lifeEvents,
+                hasFile: nextProps.person.hasFile
             });
         }
     }
@@ -76,8 +78,8 @@ class Person extends Component {
                     resp.messages.forEach(function (message, idx) {
                         messageTextSummary += " "+message.text;
                     });
-                    alert("Error," + messageTextSummary);
-                } else alert("Success!, File uploaded");
+                    message.error("Error " + messageTextSummary);
+                } else message.success("Success!, File uploaded");
                 _this.setState({
                     uploading: false,
                 });
@@ -94,6 +96,10 @@ class Person extends Component {
             uploading: false,
         });
     };
+    deletefile() {
+    }
+    downldoadfile() {
+    }
 
     static renderLifeEvents(lifeevents) {
         if (lifeevents)
@@ -156,26 +162,34 @@ class Person extends Component {
                         <label>Surname</label>
                         <input type="text" name="surname" value={this.state.surname} onChange={this.onChange} className="form-control" />
                     </div>
-                    <div className="form-group">
-                            <div className="col">
-                                <Upload {...props}>
-                                    <Button>
-                                        <Icon type="upload" /> Select File
-                                </Button>
-                                </Upload>
-                            </div>
-                            <div className="col">
-                                <Button
-                                    type="primary"
-                                    onClick={this.handleUpload}
-                                    disabled={fileList.length === 0}
-                                    loading={uploading}
-                                    style={{ marginTop: 16 }}
-                                >
-                                    {uploading ? 'Uploading' : 'Start Upload'}
-                                </Button>
-                            </div>
-                    </div>
+                    {!this.state.hasFile &&
+                        < div className="form-group">
+                                <div className="col">
+                            <Upload {...props}>
+                                <Button>
+                                    <Icon type="upload" /> Select File
+                                    </Button>
+                            </Upload>
+                        </div>
+                        <div className="col">
+                            <Button
+                                type="primary"
+                                onClick={this.handleUpload}
+                                disabled={fileList.length === 0}
+                                loading={uploading}
+                                style={{ marginTop: 16 }}
+                            >
+                                {uploading ? 'Uploading' : 'Start Upload'}
+                            </Button>
+                        </div>
+                        </div>
+                    }
+                    {this.state.hasFile &&
+                        <div className="form-group">
+                        <Button type="primary" onClick={this.downldoad} style={{ marginRight: "5px" }}>Download</Button>
+                        <Button type="danger" onClick={this.deletefile}>Delete file</Button>
+                        </div>
+                    }
                     <div className="form-group">
                         <Button type="primary" onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
                         <Button type="danger" onClick={this.save}>Delete</Button>
