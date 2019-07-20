@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Person.store';
 import { Link } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Upload, message, Button, Icon } from 'antd';
 
 
@@ -15,7 +15,17 @@ class Person extends Component {
 
     constructor(props) {
         super(props);
+        
+        this.onChange = this.onChange.bind(this);
+        this.save = this.save.bind(this);
+        this.downldoadfile = this.downldoadfile.bind(this);
+                    
+        const id = parseInt(this.props.match.params.id, 10) || 0;
+        this.props.requestPerson(id);
+        this.id = id;
+
         this.state = {
+            id : this.id,
             name: undefined,
             surname: undefined,
             lifeevents: undefined,
@@ -24,12 +34,6 @@ class Person extends Component {
             uploadMesageText: undefined,
             hasFile: false
         }
-        this.onChange = this.onChange.bind(this);
-        this.save = this.save.bind(this);
-                    
-        const id = parseInt(this.props.match.params.id, 10) || 0;
-        this.props.requestPerson(id);
-        this.id = id;
     }
     componentWillReceiveProps(nextProps) {
         // This method runs when incoming props (e.g., route params) change
@@ -99,8 +103,11 @@ class Person extends Component {
     deletefile() {
     }
     downldoadfile() {
+        return <Redirect to={`/api/personfile/${this.id}`} />;
     }
-
+    getDownloadLink() {
+        return `/api/personfile/${this.id}`;
+    }
     static renderLifeEvents(lifeevents) {
         if (lifeevents)
             return (
@@ -186,8 +193,8 @@ class Person extends Component {
                     }
                     {this.state.hasFile &&
                         <div className="form-group">
-                        <Button type="primary" onClick={this.downldoad} style={{ marginRight: "5px" }}>Download</Button>
-                        <Button type="danger" onClick={this.deletefile}>Delete file</Button>
+                        <Button type="primary" onClick={this.downldoadfile} style={{ marginRight: "5px" }}>Download biography</Button>
+                        <Button type="danger" onClick={this.deletefile}>Delete biography</Button>
                         </div>
                     }
                     <div className="form-group">
