@@ -1,21 +1,23 @@
-﻿const requestPersonsType = 'REQUEST_PERSONS';
+﻿
+const requestPersonsType = 'REQUEST_PERSONS';
 const receivePersonsType = 'RECEIVE_PERSONS';
 const requestPersonType = 'REQUEST_PERSON';
 const receivePersonType = 'RECEIVE_PERSON';
 const savePersonType = 'SAVE_PERSON';
 const deletePersonType = 'DELETE_PERSON';
-const initialState = { persons: [], person: undefined, isLoading: false };
+const initialState = { persons: [], person: undefined, isLoading: false, startIndex:0 };
 
 export const actionCreators = {
-    requestPersons: startDateIndex => async (dispatch) => {
+    requestPersons: startDataIndex => async (dispatch,getState) => {
 
-        dispatch({ type: requestPersonsType, startDateIndex });
-        const url = `api/person/?json=${JSON.stringify({PageNo:0,PageSize:10})}`;
+        dispatch({ type: requestPersonsType, startDataIndex });
+        getState().startIndex = startDataIndex;
+        const url = `api/person/?json=${JSON.stringify({ PageNo: startDataIndex,PageSize:10})}`;
         const response = await fetch(url);
         const resp_person = await response.json();
         const persons = resp_person.persons;
 
-        dispatch({ type: receivePersonsType, startDateIndex, persons });
+        dispatch({ type: receivePersonsType, startDataIndex, persons });
     },
     requestPerson: id => async (dispatch, getState) => {
 
@@ -49,8 +51,16 @@ export const actionCreators = {
                 'Content-Type': 'application/json'
             }
         });
-        dispatch({ type: deletePersonType });
-        //dispatch(push("/persons"));
+        const resp = await response.json();
+        var err_messages = resp.messages.filter(x => x.type == 1);
+        if (err_messages.length == 0) {
+            dispatch({ type: deletePersonType });
+            getState().requestPersons();
+        } else {
+
+        }
+        
+        
     }
 };
 
@@ -60,7 +70,7 @@ export const reducer = (state, action) => {
     if (action.type === requestPersonsType) {
         return {
             ...state,
-            startDateIndex: action.startDateIndex,
+            startDataIndex: action.startDataIndex,
             isLoading: true
         };
     }
@@ -68,7 +78,7 @@ export const reducer = (state, action) => {
     if (action.type === receivePersonsType) {
         return {
             ...state,
-            startDateIndex: action.startDateIndex,
+            startDataIndex: action.startDataIndex,
             persons: action.persons,
             isLoading: false
         };

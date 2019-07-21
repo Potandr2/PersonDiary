@@ -55,9 +55,10 @@ class Person extends Component {
         var person = {id:this.id, name: this.state.name, surname: this.state.surname };
         this.props.savePerson(person);
     }
-    delete() {
+    delete = () => {
         var person = { id: this.id, name: this.state.name, surname: this.state.surname };
         this.props.deletePerson(person);
+        this.props.history.push("/persons");
     }
     handleUpload = () => {
         const { fileList } = this.state;
@@ -101,8 +102,8 @@ class Person extends Component {
             fileList: [],
             uploading: false,
         });
-    };
-    deletefile() {
+    }
+    deletefile = () =>  {
         fetch(`api/PersonfILE/${this.id}`, {
             method: 'DELETE',
             headers: {
