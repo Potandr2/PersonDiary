@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Person.store';
 import { Link} from 'react-router-dom';
-import { Upload, message, Button, Icon } from 'antd';
+import { Upload, message, Button, Icon,Alert } from 'antd';
 
 
 
@@ -31,7 +31,8 @@ class Person extends Component {
             fileList: [],
             uploading: false,
             uploadMesageText: undefined,
-            hasFile: false
+            hasFile: false,
+            person: undefined
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -41,7 +42,10 @@ class Person extends Component {
                 name: nextProps.person.name,
                 surname: nextProps.person.surname,
                 lifeevents: nextProps.person.lifeEvents,
-                hasFile: nextProps.person.hasFile
+                hasFile: nextProps.person.hasFile,
+                hasDeleteError: nextProps.hasDeleteError,
+                hasSaveError: nextProps.hasSaveError,
+                person: nextProps.person
             });
         }
     }
@@ -52,13 +56,14 @@ class Person extends Component {
     }
     
     save() {
-        var person = {id:this.id, name: this.state.name, surname: this.state.surname };
-        this.props.savePerson(person);
+        //var person = {id:this.id, name: this.state.name, surname: this.state.surname };
+        this.state.person.name = this.state.name;
+        this.state.person.surname = this.state.surname;
+        this.props.savePerson(this.state.person);
     }
     delete = () => {
-        var person = { id: this.id, name: this.state.name, surname: this.state.surname };
-        this.props.deletePerson(person);
-        this.props.history.push("/persons");
+        this.props.deletePerson(this.state.person);
+//        this.props.history.push("/persons");
     }
     handleUpload = () => {
         const { fileList } = this.state;
@@ -122,9 +127,6 @@ class Person extends Component {
     }
     downldoadfile() {
         return <Link to={`/api/personfile/${this.id}`} />;
-    }
-    getDownloadLink() {
-        return `/api/personfile/${this.id}`;
     }
     static renderLifeEvents(lifeevents) {
         if (lifeevents)
@@ -221,6 +223,15 @@ class Person extends Component {
                         <Button type="primary" onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
                         <Button type="danger" onClick={this.delete}>Delete</Button>
                     </div>
+                    {this.state.hasDeleteError===true &&
+                        <Alert message="Error! Person has not been deleted" type="error" />
+                    }
+                    {this.state.hasSaveError===true &&
+                        <Alert message="Error! Person has not been saved" type="error" />
+                    }
+                    {this.state.hasSaveError === false &&
+                        <Alert message="Success! Person has been succcessfully saved" type="success" />
+                    }
                     {contents}
                 </form>
             )

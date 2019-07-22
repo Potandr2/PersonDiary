@@ -39,8 +39,9 @@ export const actionCreators = {
             },
             body: JSON.stringify({person})
         });
-        
-        dispatch({ type: savePersonType});
+        const resp = await response.json();
+        const hasSaveError = resp.messages.filter(x => x.type == 1).length > 0;
+        dispatch({ type: savePersonType, person, hasSaveError});
     },
     deletePerson: person => async (dispatch, getState) => {
         const url = `api/Person/${person.id}`;
@@ -52,15 +53,8 @@ export const actionCreators = {
             }
         });
         const resp = await response.json();
-        var err_messages = resp.messages.filter(x => x.type == 1);
-        if (err_messages.length == 0) {
-            dispatch({ type: deletePersonType });
-            getState().requestPersons();
-        } else {
-
-        }
-        
-        
+        const hasDeleteError = resp.messages.filter(x => x.type == 1).length > 0;
+        dispatch({ type: deletePersonType, person, hasDeleteError});
     }
 };
 
@@ -101,13 +95,15 @@ export const reducer = (state, action) => {
     if (action.type === savePersonType) {
         return {
             ...state,
-            isLoading: false
+            person: action.person,
+            hasSaveError: action.hasSaveError
         };
     }
     if (action.type === deletePersonType) {
         return {
             ...state,
-            isLoading: false
+            person: action.person,
+            hasDeleteError: action.hasDeleteError
         };
     }
     
