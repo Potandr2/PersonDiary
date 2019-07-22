@@ -31,3 +31,8 @@ export class PersonFullName extends Component {
         return <Link to={`/person/${this.id}`}>{this.state.fullname}</Link>;
     }
 }
+
+export default connect(
+    state => state.reducerPerson,
+    dispatch => bindActionCreators(actionCreators, dispatch)
+)(PersonFullName);

@@ -13,8 +13,8 @@ export const actionCreators = {
         getState().startIndex = startDataIndex;
         const url = `api/lifeevent/?json=${JSON.stringify({ PageNo: startDataIndex, PageSize: 10 })}`;
         const response = await fetch(url);
-        const lifeevents = await response.json();
-
+        const resp = await response.json();
+        const lifeevents = resp.lifeEvents;
         dispatch({ type: receiveLifeEventsType, startDataIndex, lifeevents });
     },
     requestLifeEvent: id => async (dispatch, getState) => {

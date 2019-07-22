@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { actionCreators } from '../store/Lifeevent.store';
 import { PersonFullName } from '../components/PersonFullName';
 
-class Persons extends Component {
+class LifeEvents extends Component {
     componentDidMount() {
         // This method is called when the component is first added to the document
         this.ensureDataFetched();
@@ -24,11 +24,13 @@ class Persons extends Component {
 
     render() {
         return (
+            
             <div>
                 <h1>Event list</h1>
                 {renderLifeEventsTable(this.props)}
                 {renderPagination(this.props)}
-            </div>
+            </div >
+
         );
     }
 }
@@ -38,16 +40,17 @@ function renderLifeEventsTable(props) {
         <table className='table table-striped'>
             <thead>
                 <tr>
-                    <th>Id</th>
+                    
                     <th>Name</th>
                     <th>Surname</th>
                 </tr>
             </thead>
             <tbody>
-                {props.persons.map(lifeevent =>
+                {props.lifeevents.map(lifeevent =>
                     <tr key={lifeevent.id}>
-                        <td><Link to={"/lifevent/" + lifeevent.id}><PersonFullName id="person.id"/> </Link></td>
-                        <td><NavLink to={"/lifevent/" + lifeevent.id}>{lifeevent.eventdate}</NavLink></td>
+                        <td><NavLink to={"/lifevent/" + lifeevent.id}><PersonFullName id={lifeevent.personId} /></NavLink></td>
+                        <td><NavLink to={"/lifevent/" + lifeevent.id}>{lifeevent.name}</NavLink></td>
+                        <td><NavLink to={"/lifevent/" + lifeevent.id}>{lifeevent.eventDate}</NavLink></td>
                     </tr>
                 )}
             </tbody>
@@ -62,11 +65,11 @@ function renderPagination(props) {
     return <p className='clearfix text-center'>
         <Link className='btn btn-default pull-left' to={`/lifevents/${prevStartDateIndex}`}>Previous</Link>
         <Link className='btn btn-default pull-right' to={`/lifeevents/${nextStartDateIndex}`}>Next</Link>
-        {props.persons.length == 0 ? <span>Loading...</span> : []}
+        {!props.lifeevents && <span>Loading...</span>}
     </p>;
 }
 
 export default connect(
-    state => state.reducerPerson,
+    state => state.reducerLifeEvent,
     dispatch => bindActionCreators(actionCreators, dispatch)
-)(Persons);
+)(LifeEvents);
