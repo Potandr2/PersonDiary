@@ -7,15 +7,15 @@ const deleteLifeEventType = 'DELETE_LIFEEVENT';
 const initialState = { lifeevents: [], lifeevent: undefined, isLoading: false };
 
 export const actionCreators = {
-    requestLifeEvents: startDateIndex => async (dispatch) => {
+    requestLifeEvents: startDataIndex => async (dispatch,getState) => {
 
-        dispatch({ type: requestLifeEventsType, startDateIndex });
-
-        const url = 'api/lifeevent/';
+        dispatch({ type: requestLifeEventsType, startDataIndex });
+        getState().startIndex = startDataIndex;
+        const url = `api/lifeevent/?json=${JSON.stringify({ PageNo: startDataIndex, PageSize: 10 })}`;
         const response = await fetch(url);
-        const forecasts = await response.json();
+        const lifeevents = await response.json();
 
-        dispatch({ type: receiveLifeEventsType, startDateIndex, forecasts });
+        dispatch({ type: receiveLifeEventsType, startDataIndex, lifeevents });
     },
     requestLifeEvent: id => async (dispatch, getState) => {
 
@@ -73,7 +73,7 @@ export const reducer = (state, action) => {
     if (action.type === receiveLifeEventsType) {
         return {
             ...state,
-            startDateIndex: action.startDateIndex,
+            startDataIndex: action.startDataIndex,
             lifeevents: action.lifeevents,
             isLoading: false
         };
