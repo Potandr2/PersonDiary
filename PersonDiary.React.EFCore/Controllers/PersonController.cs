@@ -47,22 +47,14 @@ namespace PersonDiary.React.EFCore.Controllers
         [HttpPut("{id}")]
         public async Task<UpdatePersonResponse> Put(int id, [FromBody] UpdatePersonRequest request)
         {
-            if (DateTime.Now.Second > 30)
-            {
-                return new UpdatePersonResponse();
-            }
-            else
-            {
-               return new UpdatePersonResponse().AddMessage(new Contracts.Message("asdfasdf"));
-            }
-            return new UpdatePersonResponse();//await Task.Run(()=>new PersonModel(unit, mapper).Update(request));
+            return await Task.Run(()=>new PersonModel(unit, mapper).Update(request));
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<DeletePersonResponse> Delete(int id)
         {
-            return new DeletePersonResponse().AddMessage(new Contracts.Message("asdfasdf"));// await Task.Run(() => new PersonModel(unit, mapper).Delete(new DeletePersonRequest() { Id = id }));
+            return await Task.Run(() => new PersonModel(unit, mapper).Delete(new DeletePersonRequest() { Id = id }));
         }
 
     }

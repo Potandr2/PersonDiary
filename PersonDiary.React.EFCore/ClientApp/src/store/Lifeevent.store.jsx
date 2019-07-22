@@ -3,6 +3,7 @@ const receiveLifeEventsType = 'RECEIVE_LIFEEVENTS';
 const requestLifeEventType = 'REQUEST_LIFEEVENT';
 const receiveLifeEventType = 'RECEIVE_LIFEEVENT';
 const saveLifeEventType = 'SAVE_LIFEEVENT';
+const deleteLifeEventType = 'DELETE_LIFEEVENT';
 const initialState = { lifeevents: [], lifeevent: undefined, isLoading: false };
 
 export const actionCreators = {
@@ -37,8 +38,24 @@ export const actionCreators = {
             },
             body: JSON.stringify({ lifeevent })
         });
+        const resp = await response.json();
+        const hasSaveError = resp.messages.filter(x => x.type == 1).length > 0;
+        dispatch({ type: saveLifeEventType, lifeevent, hasSaveError });
+    },
+    deleteLifeEvent: lifeevent => async (dispatch, getState) => {
 
-        dispatch({ type: saveLifeEventType });
+        const url = `api/lifeevent/${lifeevent.id}`;
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ lifeevent })
+        });
+        const resp = await response.json();
+        const hasDeleteError = resp.messages.filter(x => x.type == 1).length > 0;
+        dispatch({ type: deleteLifeEventType,lifeevent,hasDeleteError });
     }
 };
 
@@ -80,7 +97,14 @@ export const reducer = (state, action) => {
         return {
             ...state,
             lifeevent: action.lifeevent,
-            isLoading: false
+            hasSaveError:action.hasSaveError
+        };
+    }
+    if (action.type === deleteLifeEventType) {
+        return {
+            ...state,
+            lifeevent: action.lifeevent,
+            hasDeleteError: action.hasDeleteError
         };
     }
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../store/Lifeevent.store';
 import { DatePicker } from 'antd';
 import moment from 'moment';
-import { Upload, message, Button, Icon } from 'antd';
+import { Button, Alert } from 'antd';
 
 
 const { MonthPicker, RangePicker } = DatePicker;
@@ -27,7 +27,19 @@ class Lifeevent extends Component {
         this.id = id;
         this.PersonId = undefined;
     }
-
+    componentWillReceiveProps(nextProps) {
+        // This method runs when incoming props (e.g., route params) change
+        if (nextProps.lifeevent && nextProps.lifeevent.id == this.id) {
+            this.setState({
+                name: nextProps.lifeevent.name,
+                eventdate: nextProps.lifeevent.eventdate,
+                hasDeleteError: nextProps.hasDeleteError,
+                hasSaveError: nextProps.hasSaveError,
+                lifeevent: nextProps.lifeevent
+            });
+            this.personId = nextProps.lifeevent.personId;
+        }
+    }
     onChange(e) {
         var fieldname = e.target.name;
         var newstate = {};
@@ -38,19 +50,15 @@ class Lifeevent extends Component {
         this.setState({ eventdate: dateString });
     }
     save(e) {
-        var lifeevent = { id: this.id, name: this.state.name, eventdate: this.state.eventdate };
-        lifeevent.personId = this.personId;
-        this.props.saveLifeEvent(lifeevent);
+        //var lifeevent = { id: this.id, name: this.state.name, eventdate: this.state.eventdate };
+        this.state.lifeevent.name = this.state.name;
+        this.state.lifeevent.eventdate = this.state.eventdate;
+        //lifeevent.personId = this.personId;
+        this.props.saveLifeEvent(this.state.lifeevent);
     }
-    componentWillReceiveProps(nextProps) {
-        // This method runs when incoming props (e.g., route params) change
-        if (nextProps.lifeevent && nextProps.lifeevent.id == this.id) {
-            this.setState({
-                name: nextProps.lifeevent.name,
-                eventdate: nextProps.lifeevent.eventdate
-            });
-            this.personId = nextProps.lifeevent.personId;
-        }
+    delete = () => {
+        this.props.deleteLifeEvent(this.state.lifeevent);
+        //        this.props.history.push("/persons");
     }
 
     render() {
@@ -69,9 +77,17 @@ class Lifeevent extends Component {
                     </div>
                     <div className="form-group">
                         <Button type="primary" onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
-                        <Button type="danger" onClick={this.save}>Delete</Button>
+                        <Button type="danger" onClick={this.delete}>Delete</Button>
                     </div>
-                   
+                    {this.state.hasDeleteError === true &&
+                        <Alert message="Error! Event has not been deleted" type="error" />
+                    }
+                    {this.state.hasSaveError === true &&
+                        <Alert message="Error! Event has not been saved" type="error" />
+                    }
+                    {this.state.hasSaveError === false &&
+                        <Alert message="Success! Person has been succcessfully saved" type="success" />
+                    }
                 </div>
             )
         }

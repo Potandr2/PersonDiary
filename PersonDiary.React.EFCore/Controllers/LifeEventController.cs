@@ -51,7 +51,7 @@ namespace PersonDiary.React.EFCore.Controllers
         [HttpDelete("{id}")]
         public async Task<DeleteLifeEventResponse> Delete(int id)
         {
-            return await Task.Run(()=>new LifeEventModel(unit, mapper).Delete(new DeleteLifeEventRequest() { Id = id }));
+            return new DeleteLifeEventResponse().AddMessage(new Contracts.Message("asdfasdf")); //await Task.Run(()=>new LifeEventModel(unit, mapper).Delete(new DeleteLifeEventRequest() { Id = id }));
         }
     }
 }
