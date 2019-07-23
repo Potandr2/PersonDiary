@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { actionCreators } from '../store/Lifeevent.store';
-import { PersonFullName } from '../components/PersonFullName';
+
 
 class LifeEvents extends Component {
     componentDidMount() {
@@ -40,17 +40,17 @@ function renderLifeEventsTable(props) {
         <table className='table table-striped'>
             <thead>
                 <tr>
-                    
-                    <th>Name</th>
-                    <th>Surname</th>
+                    <th>Person</th>
+                    <th>Event</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
                 {props.lifeevents.map(lifeevent =>
                     <tr key={lifeevent.id}>
-                        <td><NavLink to={"/lifevent/" + lifeevent.id}><PersonFullName id={lifeevent.personId} /></NavLink></td>
+                        <td><NavLink to={"/lifevent/" + lifeevent.id}>{lifeevent.personfullname}</NavLink></td>
                         <td><NavLink to={"/lifevent/" + lifeevent.id}>{lifeevent.name}</NavLink></td>
-                        <td><NavLink to={"/lifevent/" + lifeevent.id}>{lifeevent.eventDate}</NavLink></td>
+                        <td><NavLink to={"/lifevent/" + lifeevent.id}>{lifeevent.eventdate}</NavLink></td>
                     </tr>
                 )}
             </tbody>

@@ -8,7 +8,6 @@ import Persons from './components/Persons';
 import Person from './components/Person';
 import Lifeevents from './components/Lifeevents';
 import Lifeevent from './components/Lifeevent';
-import PersonFullName from './components/PersonFullName';
 
 export default () => (
   <Layout>
@@ -18,7 +17,6 @@ export default () => (
     <Route path='/persons/:startDateIndex?' component={Persons} />
     <Route path='/person/:id' component={Person} />
     <Route path='/lifeevents/:startDateIndex?' component={Lifeevents} />
-        <Route path='/lifeevent/:id' component={Lifeevent} />
-        <Route path='/personfullname/:id' component={PersonFullName} />
+    <Route path='/lifeevent/:id' component={Lifeevent} />
   </Layout>
 );

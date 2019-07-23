@@ -5,6 +5,7 @@ using PersonDiary.Contracts.LifeEventContract;
 using Newtonsoft.Json;
 using PersonDiary.Interfaces;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PersonDiary.React.EFCore.Controllers
 {
@@ -23,7 +24,14 @@ namespace PersonDiary.React.EFCore.Controllers
         [HttpGet]
         public async Task<GetLifeEventListResponse> Get(string json)
         {
-            return await Task.Run(() => new LifeEventModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json)));
+            var resp = await Task.Run(() => new LifeEventModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json)));
+            await Task.Run(() =>
+                resp.LifeEvents.ForEach(l=>  {
+                    var person = new PersonModel(unit, mapper).GetItem(new Contracts.PersonContract.GetPersonRequest() { Id = l.PersonId }).Person;
+                    l.Personfullname = $"{person.Surname} {person.Name}";
+                })
+            );
+            return resp;
         }
 
         // GET: api/LifeEvent/5
