@@ -26,14 +26,18 @@ namespace PersonDiary.React.EFCore.Controllers
         {
             var resp = await Task.Run(() => new LifeEventModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json)));
             await Task.Run(() =>
-                resp.LifeEvents.ForEach(l=>  {
-                    var person = new PersonModel(unit, mapper).GetItem(new Contracts.PersonContract.GetPersonRequest() { Id = l.PersonId }).Person;
+                resp.LifeEvents.ForEach(l =>
+                {
+                    var person = new PersonModel(unit, mapper).GetItem(
+                        new Contracts.PersonContract.GetPersonRequest() { Id = l.PersonId, withLifeEvents = false }
+                    ).Person;
                     l.Personfullname = $"{person.Surname} {person.Name}";
                 })
             );
+            
             return resp;
         }
-
+        
         // GET: api/LifeEvent/5
         [HttpGet("{id}")]
         public async Task<GetLifeEventResponse> Get(int id)

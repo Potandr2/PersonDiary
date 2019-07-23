@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Person.store';
 import { Link} from 'react-router-dom';
-import { Upload, message, Button, Icon,Alert } from 'antd';
+import { Upload, message, Button, Icon,Alert, Modal } from 'antd';
 
-
+const { confirm } = Modal;
 
 class Person extends Component {
     displayName = Person.name
@@ -17,6 +17,7 @@ class Person extends Component {
         this.delete = this.delete.bind(this);
         this.downldoadfile = this.downldoadfile.bind(this);
         this.deletefile = this.deletefile.bind(this);
+        this.confirmDelete = this.confirmDelete.bind(this);
         
         const id = parseInt(this.props.match.params.id, 10) || 0;
         this.props.requestPerson(id);
@@ -46,7 +47,10 @@ class Person extends Component {
                 hasSaveError: nextProps.hasSaveError,
                 person: nextProps.person
             });
+            if (nextProps.hasDeleteError === false)
+                this.props.history.push("/persons");
         }
+       
     }
     onChange(e) {
         var newstate = {};
@@ -126,6 +130,17 @@ class Person extends Component {
     }
     downldoadfile() {
         return <Link to={`/api/personfile/${this.id}`} />;
+    }
+    confirmDelete() {
+        var _this = this;
+        confirm({
+            title: 'Do you want to delete these items?',
+            content: 'Are you sure you want delete this item?',
+            onOk() {
+                _this.delete();
+            },
+            onCancel() { },
+        });
     }
     static renderLifeEvents(lifeevents) {
         if (lifeevents)
@@ -220,7 +235,7 @@ class Person extends Component {
                     }
                     <div className="form-group">
                         <Button type="primary" onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
-                        <Button type="danger" onClick={this.delete}>Delete</Button>
+                        <Button type="danger" onClick={this.confirmDelete}>Delete</Button>
                     </div>
                     {this.state.hasDeleteError===true &&
                         <Alert message="Error! Person has not been deleted" type="error" />
