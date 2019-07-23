@@ -24,7 +24,17 @@
   <hr />
   <div class="form-group">
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
-    <input type="button" value="Delete person" (click)="delete()" class="btn btn-danger" *ngIf="person.id" />
+    <input type="button" value="Delete person" (click)="openModal(confirm_delete)" class="btn btn-danger" *ngIf="person.id" />
+    
+    
+    <ng-template #confirm_delete>
+      <div class="modal-body text-center">
+        <strong>You are about to delete person?</strong>
+        <p>Are you sure you want delete this person</p>
+        <button type="button" class="btn btn-default" (click)="delete()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="this.modalRef.hide()">No</button>
+      </div>
+    </ng-template>
   </div>
   <h2>Person events</h2>
   <ng-template [ngIf]="lifeevents">

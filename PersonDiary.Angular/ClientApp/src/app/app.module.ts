@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -47,7 +48,8 @@ import { FileUploadComponent } from './common/file-upload/file-upload.component'
     ]),
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [PersonService, LifeEventService, FileUploadService],
   bootstrap: [AppComponent]

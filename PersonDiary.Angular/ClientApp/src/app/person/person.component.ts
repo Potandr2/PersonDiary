@@ -1,10 +1,12 @@
-import { Component} from '@angular/core';
+import { Component, TemplateRef} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Person } from '../models/person';
 import { LifeEvent } from '../models/lifeevent';
 import { PersonService } from '../services/person.service';
 import { Router } from '@angular/router';
+import { ModalModule } from 'ngx-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -16,8 +18,14 @@ export class PersonEditComponent  {
   public person: Person;
   public lifeevents: LifeEvent[];
   private subscription: Subscription;
+  private modalRef: BsModalRef;
 
-  constructor(private activateRoute: ActivatedRoute, private dataService: PersonService, private router: Router) {
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private dataService: PersonService,
+    private router: Router,
+    private modalService: BsModalService
+  ) {
 
     this.subscription = activateRoute.params.subscribe(
       params => {
@@ -46,11 +54,16 @@ export class PersonEditComponent  {
     this.router.navigate(['/lifeevent-create', this.person.id]); 
   }
   delete() {
+    this.modalRef.hide();
+
     this.dataService.deletePerson(this.person.id).subscribe((data: any) => {
       let show_alert:boolean = data.messages.filter(m => m.type == 1).length > 0;
       if (!show_alert) { this.router.navigate(['/persons']); }
 
     });
+  }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 }
 
