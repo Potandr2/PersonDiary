@@ -14,7 +14,10 @@ export class PersonListComponent {
   public PageNo: number;
 
   constructor(http: HttpClient, private dataService: PersonService, private router: Router) {
-    this.PageNo = 1;
+    this.PageNo = 0;
+    this.getPageItems();
+  }
+  getPageItems() {
     this.dataService.getPersons(this.PageNo).subscribe((data: any) => {
       this.persons = data.persons;
       this.count = data.count;
@@ -22,8 +25,11 @@ export class PersonListComponent {
       error => console.error(error)
     );
   }
-
   add() {
     this.router.navigate(['/person']);
+  }
+  pageChanged(event: any): void {
+    this.PageNo = event.page-1;
+    this.getPageItems();
   }
 }

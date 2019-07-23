@@ -32,4 +32,5 @@
       </tr>
     </tbody>
   </table>
+  <pagination [totalItems]="this.count" [(ngModel)]="this.PageNo" (pageChanged)="pageChanged($event)"></pagination>
 </ng-template>

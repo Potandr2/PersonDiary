@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { FileUploadComponent } from './common/file-upload/file-upload.component';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { FileUploadComponent } from './common/file-upload/file-upload.component'
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
     AlertModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   providers: [PersonService, LifeEventService, FileUploadService],
   bootstrap: [AppComponent]
