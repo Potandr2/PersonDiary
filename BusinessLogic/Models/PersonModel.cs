@@ -36,6 +36,7 @@ namespace PersonDiary.BusinessLogic
                  resp.Persons = mapper.Map<List<PersonContract>>(
                     repoPerson.GetItems(request.PageNo,request.PageSize).ToList()
                     );
+                resp.Count = repoPerson.Count;
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;

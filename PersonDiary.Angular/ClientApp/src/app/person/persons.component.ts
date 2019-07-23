@@ -10,11 +10,14 @@ import { Router } from '@angular/router';
 })
 export class PersonListComponent {
   public persons: Person[];
+  public count: number;
+  public PageNo: number;
 
   constructor(http: HttpClient, private dataService: PersonService, private router: Router) {
-
-    this.dataService.getPersons().subscribe((data: any) => {
+    this.PageNo = 1;
+    this.dataService.getPersons(this.PageNo).subscribe((data: any) => {
       this.persons = data.persons;
+      this.count = data.count;
     },
       error => console.error(error)
     );

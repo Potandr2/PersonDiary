@@ -11,8 +11,8 @@ export class PersonService {
   constructor(private http: HttpClient) {
   }
 
-  getPersons() {
-    const p = new HttpParams().append('json', JSON.stringify({ PageNo:0,PageSize:10 }));
+  getPersons(PageNo:number) {
+    const p = new HttpParams().append('json', JSON.stringify({ PageNo,PageSize:10 }));
     return this.http.get(this.url, { params: p });
   }
 
