@@ -28,7 +28,7 @@ class LifeEvents extends Component {
             <div>
                 <h1>Event list</h1>
                 {renderLifeEventsTable(this.props)}
-                {renderPagination(this.props)}
+               
             </div >
 
         );
@@ -58,16 +58,7 @@ function renderLifeEventsTable(props) {
     );
 }
 
-function renderPagination(props) {
-    const prevStartDateIndex = (props.startDateIndex || 0) - 5;
-    const nextStartDateIndex = (props.startDateIndex || 0) + 5;
 
-    return <p className='clearfix text-center'>
-        <Link className='btn btn-default pull-left' to={`/lifevents/${prevStartDateIndex}`}>Previous</Link>
-        <Link className='btn btn-default pull-right' to={`/lifeevents/${nextStartDateIndex}`}>Next</Link>
-        {props.lifeevents.length==0 && <span>Loading...</span>}
-    </p>;
-}
 
 export default connect(
     state => state.reducerLifeEvent,

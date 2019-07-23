@@ -5,7 +5,7 @@ const requestPersonType = 'REQUEST_PERSON';
 const receivePersonType = 'RECEIVE_PERSON';
 const savePersonType = 'SAVE_PERSON';
 const deletePersonType = 'DELETE_PERSON';
-const initialState = { persons: [], person: undefined, isLoading: false, startIndex:0 };
+const initialState = { persons: [], person: undefined, isLoading: false, startDataIndex:0 };
 
 export const actionCreators = {
     requestPersons: startDataIndex => async (dispatch,getState) => {
@@ -16,8 +16,8 @@ export const actionCreators = {
         const response = await fetch(url);
         const resp_person = await response.json();
         const persons = resp_person.persons;
-
-        dispatch({ type: receivePersonsType, startDataIndex, persons });
+        const count = resp_person.count;
+        dispatch({ type: receivePersonsType, startDataIndex, persons, count });
     },
     requestPerson: id => async (dispatch, getState) => {
 
@@ -74,6 +74,7 @@ export const reducer = (state, action) => {
             ...state,
             startDataIndex: action.startDataIndex,
             persons: action.persons,
+            count: action.count,
             isLoading: false
         };
     }

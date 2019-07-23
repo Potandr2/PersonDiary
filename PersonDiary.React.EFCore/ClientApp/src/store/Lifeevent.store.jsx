@@ -11,7 +11,7 @@ export const actionCreators = {
 
         dispatch({ type: requestLifeEventsType, startDataIndex });
         getState().startIndex = startDataIndex;
-        const url = `api/lifeevent/?json=${JSON.stringify({ PageNo: startDataIndex, PageSize: 10 })}`;
+        const url = `api/lifeevent/?json=${JSON.stringify({ PageNo: startDataIndex, PageSize: 100 })}`;
         const response = await fetch(url);
         const resp = await response.json();
         const lifeevents = resp.lifeEvents;
