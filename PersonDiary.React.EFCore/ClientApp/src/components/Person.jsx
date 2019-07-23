@@ -9,7 +9,6 @@ import { Upload, message, Button, Icon,Alert } from 'antd';
 
 class Person extends Component {
     displayName = Person.name
-
     constructor(props) {
         super(props);
         
