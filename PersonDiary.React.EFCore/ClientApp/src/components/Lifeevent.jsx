@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../store/Lifeevent.store';
 import { DatePicker, Button, Alert  } from 'antd';
 import moment from 'moment';
+import { CommonUtils } from '../components/common/common.utils';
 
 
 
@@ -50,15 +51,12 @@ class Lifeevent extends Component {
         this.setState({ eventdate: dateString });
     }
     save(e) {
-        //var lifeevent = { id: this.id, name: this.state.name, eventdate: this.state.eventdate };
         this.state.lifeevent.name = this.state.name;
-        this.state.lifeevent.eventdate = this.state.eventdate;
-        //lifeevent.personId = this.personId;
+        this.state.lifeevent.eventdate = CommonUtils.correctDate2UTC(this.state.eventdate);
         this.props.saveLifeEvent(this.state.lifeevent);
     }
     delete = () => {
         this.props.deleteLifeEvent(this.state.lifeevent);
-        //        this.props.history.push("/persons");
     }
 
     render() {

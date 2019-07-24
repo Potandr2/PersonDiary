@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Person.store';
 import { Link} from 'react-router-dom';
-import { Upload, message, Button, Icon,Alert, Modal } from 'antd';
+import { Upload, message, Button, Icon, Alert, Modal } from 'antd';
+import { CommonUtils } from '../components/common/common.utils';
 
 const { confirm } = Modal;
 
@@ -36,7 +37,6 @@ class Person extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        // This method runs when incoming props (e.g., route params) change
         if (nextProps.person && nextProps.person.id == this.id) {
             this.setState({
                 name: nextProps.person.name,
@@ -59,14 +59,12 @@ class Person extends Component {
     }
     
     save() {
-        //var person = {id:this.id, name: this.state.name, surname: this.state.surname };
         this.state.person.name = this.state.name;
         this.state.person.surname = this.state.surname;
         this.props.savePerson(this.state.person);
     }
     delete = () => {
         this.props.deletePerson(this.state.person);
-//        this.props.history.push("/persons");
     }
     handleUpload = () => {
         const { fileList } = this.state;
@@ -111,7 +109,8 @@ class Person extends Component {
             uploading: false,
         });
     }
-    deletefile = () =>  {
+    deletefile = () => async () => {
+
         fetch(`api/PersonfILE/${this.id}`, {
             method: 'DELETE',
             headers: {
@@ -156,7 +155,7 @@ class Person extends Component {
                         {lifeevents.map(lifeevent =>
                             <tr key={lifeevent.id}>
                                 <td><Link to={"/lifeevent/" + lifeevent.id}>{lifeevent.name}</Link></td>
-                                <td><Link to={"/lifeevent/" + lifeevent.id}>{lifeevent.eventdate}</Link></td>
+                                <td><Link to={"/lifeevent/" + lifeevent.id}>{CommonUtils.formatDate(lifeevent.eventdate)}</Link></td>
                                 
                             </tr>
                         )}
