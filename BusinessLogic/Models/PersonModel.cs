@@ -9,7 +9,7 @@ using PersonContract = PersonDiary.Contracts.PersonContract.Person;
 
 namespace PersonDiary.BusinessLogic
 {
-    //Класс модели Персоны
+    //Модель Персоны
     public class PersonModel
     {
         private readonly IUnitOfWork unit;

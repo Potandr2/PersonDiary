@@ -9,7 +9,7 @@ using LifeEventContract = PersonDiary.Contracts.LifeEventContract.LifeEvent;
 
 namespace PersonDiary.BusinessLogic
 {
-    //Класс модели события персоны
+    //Модель события персоны
     public class LifeEventModel
     {
         private readonly IUnitOfWork unit;
