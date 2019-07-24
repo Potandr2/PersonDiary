@@ -1,4 +1,4 @@
-﻿
+﻿//Интерфейс архиватора doc/docx файлов биографии персоны
 namespace PersonDiary.Interfaces
 {
     public interface IArchivator

@@ -15,7 +15,7 @@ namespace PersonDiary.Angular.Controllers
     {
         private readonly IUnitOfWork unit;
         private readonly IMapper mapper;
-
+        //Впрыскиваем зависимости объектов уровня доступа к данным для впрыска в модель
         public PersonController(IUnitOfWork unit, IMapper mapper)
         {
             this.unit = unit;

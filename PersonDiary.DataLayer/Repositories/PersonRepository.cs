@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace PersonDiary.Repositories
 {
+    //Класс-реализация репозитория персон для MS SQL и EF Core
     public class PersonRepository : IPersonRepository
     {
         private SqlContext db;

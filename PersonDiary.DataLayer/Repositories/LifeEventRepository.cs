@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace PersonDiary.Repositories
 {
+    //реализация репозитория событий персоны для MS SQL и EF Core
     public class LifeEventRepository : ILifeEventRepository
     {
         private SqlContext db;

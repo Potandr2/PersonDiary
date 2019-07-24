@@ -14,21 +14,7 @@ class Persons extends Component {
         this.props.requestPersons(this.state.PageNo);
         this.onPageChange = this.onPageChange.bind(this);
     }
-    componentWillReceiveProps(nextProps) {
-        // This method runs when incoming props (e.g., route params) change
-        var iii=0;
-    }
-    componentDidMount() {
-     
-    }
-
-    componentDidUpdate() {
-       
-    }
-
-    ensureDataFetched() {
-       
-    }
+   
     onPageChange = page => {
         this.setState({
             PageNo: page,

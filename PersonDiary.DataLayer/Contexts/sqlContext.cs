@@ -4,6 +4,7 @@ using System;
 
 namespace PersonDiary.Contexts
 {
+    //Класс контекста базы данных
     public class SqlContext : DbContext
     {
         public DbSet<Person> Persons { get; set; }
@@ -18,6 +19,7 @@ namespace PersonDiary.Contexts
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=persondiarydb;Trusted_Connection=True;");
         }
+        //Устанавливаем правила удаления событий персоны с помощью Fluent API и набиваем БД тестовыми данными 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>().HasData(

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace PersonDiary.Interfaces
 {
+    //Структура для хранения настроек репозиториев
     public struct RepositoryDefaults
     {
         public const int PageNo = 0;

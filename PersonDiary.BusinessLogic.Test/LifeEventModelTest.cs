@@ -12,6 +12,7 @@ using LifeEventContract = PersonDiary.Contracts.LifeEventContract.LifeEvent;
 
 namespace LifeEventDiary.BusinessLogic.Test
 {
+   
     public class LifeEventModelTest
     {
         IUnitOfWork unit;

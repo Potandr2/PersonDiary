@@ -12,16 +12,18 @@ using System.Threading.Tasks;
 
 namespace PersonDiary.Angular.EFCore.Controllers
 {
+    //Контроллер для работы с файлами персон, работа с файлами выделена вотдельный контроллер согласно принципу SPR(SOLID)
     [Route("api/[controller]")]
     [ApiController]
     public class PersonFileController : ControllerBase
     {
         private readonly IUnitOfWork unit;
         private readonly IMapper mapper;
-        IHostingEnvironment hostingEnvironment;
+        private readonly IHostingEnvironment hostingEnvironment;
         
         public PersonFileController(IUnitOfWork unit, IMapper mapper, IHostingEnvironment hostingEnvironment)
         {
+
             this.unit = unit;
             this.mapper = mapper;
             this.hostingEnvironment = hostingEnvironment;

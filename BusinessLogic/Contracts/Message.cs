@@ -1,5 +1,6 @@
 ﻿namespace PersonDiary.Contracts
 {
+    //Сообщение которые получает клиент в ответе из бизнес логики
     public class Message
     {
         public Message() { }

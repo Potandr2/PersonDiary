@@ -66,6 +66,7 @@ class Person extends Component {
     delete = () => {
         this.props.deletePerson(this.state.person);
     }
+    //загрузка файла биографии на сервер
     handleUpload = () => {
         const { fileList } = this.state;
 
@@ -102,13 +103,12 @@ class Person extends Component {
             }
         };
         oReq.send(formData);
-
-        // You can use any AJAX library you like
         this.setState({
             fileList: [],
             uploading: false,
         });
     }
+    //Удаление файла биографии
     deletefile = () => async () => {
 
         fetch(`api/PersonfILE/${this.id}`, {

@@ -9,15 +9,19 @@ using PersonContract = PersonDiary.Contracts.PersonContract.Person;
 
 namespace PersonDiary.BusinessLogic
 {
+    //Класс модели Персоны
     public class PersonModel
     {
         private readonly IUnitOfWork unit;
         private IPersonRepository repoPerson;
         private IMapper mapper;
+        //Впрыскиваем зависимости объектов уровня доступа к данным 
         public PersonModel(IUnitOfWork unit, IMapper mapper)
         {
             if (unit == null)
-                throw new ArgumentNullException("Unit and persons repository is null");
+                throw new ArgumentNullException("Unit in PersonModel is null");
+            if (mapper == null)
+                throw new ArgumentNullException("Mapper in PersonModel is null");
             this.unit = unit;
             repoPerson = unit.Persons;
 
@@ -26,7 +30,7 @@ namespace PersonDiary.BusinessLogic
         public GetPersonListResponse GetItems(GetPersonListRequest request)
         {
             if (request == null)
-                throw new ArgumentNullException("Person model GetItems method argument is invalid");
+                throw new ArgumentNullException("Person model GetPersonListRequest is invalid");
 
             request.PageSize = (request.PageSize == 0) ? RepositoryDefaults.PageSize : request.PageSize;
 
@@ -44,6 +48,8 @@ namespace PersonDiary.BusinessLogic
         }
         public GetPersonResponse GetItem(GetPersonRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
             var resp = new GetPersonResponse();
             try
             {
@@ -56,6 +62,8 @@ namespace PersonDiary.BusinessLogic
         }
         public UpdatePersonResponse Create(UpdatePersonRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Person model UpdatePersonRequest  is invalid");
             var resp = new UpdatePersonResponse();
             try
             {
@@ -69,6 +77,8 @@ namespace PersonDiary.BusinessLogic
         }
         public UpdatePersonResponse Update(UpdatePersonRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Person model UpdatePersonRequest  is invalid");
             var resp = new UpdatePersonResponse();
             try
             {
@@ -81,6 +91,8 @@ namespace PersonDiary.BusinessLogic
         }
         public DeletePersonResponse Delete(DeletePersonRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Person model DeletePersonRequest  is invalid");
             var resp = new DeletePersonResponse();
             try
             {
@@ -92,6 +104,8 @@ namespace PersonDiary.BusinessLogic
         }
         public PersonUploadResponse Upload(PersonUploadRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Person model PersonUploadRequest  is invalid");
             var resp = new PersonUploadResponse();
             try
             {
@@ -105,6 +119,8 @@ namespace PersonDiary.BusinessLogic
         }
         public byte[] Download(GetPersonRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
             var resp = new PersonDownloadResponse();
             var person = unit.Persons.GetItem(request.Id);
             return person.Biography;
@@ -112,6 +128,8 @@ namespace PersonDiary.BusinessLogic
         }
         public DeletePersonResponse DeleteBiography(DeletePersonRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Person model DeletePersonRequest  is invalid");
             var resp = new DeletePersonResponse();
             try
             {

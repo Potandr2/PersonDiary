@@ -9,15 +9,19 @@ using LifeEventContract = PersonDiary.Contracts.LifeEventContract.LifeEvent;
 
 namespace PersonDiary.BusinessLogic
 {
+    //Класс модели события персоны
     public class LifeEventModel
     {
         private readonly IUnitOfWork unit;
         private ILifeEventRepository repoLifeEvent;
         private IMapper mapper;
+        //Впрыскиваем зависимости объектов уровня доступа к данным
         public LifeEventModel(IUnitOfWork unit, IMapper mapper)
         {
             if (unit == null)
-                throw new ArgumentNullException("Unit and LifeEvents repository is null");
+                throw new ArgumentNullException("Unit in LifeEventModel is null");
+            if (mapper == null)
+                throw new ArgumentNullException("Mapper in LifeEventModel is null");
             this.unit = unit;
             repoLifeEvent = unit.LifeEvents;
 
@@ -26,6 +30,8 @@ namespace PersonDiary.BusinessLogic
 
         public GetLifeEventResponse GetItem(GetLifeEventRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model GetLifeEventRequest  is invalid");
             var resp = new GetLifeEventResponse();
             try
             {
@@ -38,6 +44,8 @@ namespace PersonDiary.BusinessLogic
         }
         public GetLifeEventListResponse GetItems(GetLifeEventListRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model GetLifeEventListRequest  is invalid");
             var resp = new GetLifeEventListResponse();
             try
             {
@@ -51,6 +59,8 @@ namespace PersonDiary.BusinessLogic
         }
         public UpdateLifeEventResponse Create(UpdateLifeEventRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model UpdateLifeEventRequest  is invalid");
             var resp = new UpdateLifeEventResponse();
             try
             {
@@ -63,6 +73,8 @@ namespace PersonDiary.BusinessLogic
         }
         public UpdateLifeEventResponse Update(UpdateLifeEventRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model UpdateLifeEventRequest  is invalid");
             var resp = new UpdateLifeEventResponse();
             try
             {
@@ -75,6 +87,8 @@ namespace PersonDiary.BusinessLogic
         }
         public DeleteLifeEventResponse Delete(DeleteLifeEventRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model DeleteLifeEventRequest  is invalid");
             var resp = new DeleteLifeEventResponse();
             try
             {
