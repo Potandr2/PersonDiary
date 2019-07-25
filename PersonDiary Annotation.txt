@@ -7,8 +7,8 @@
 Человек/Персона (имя, фамилия, .doc-файл биографии) и события его жизни (название события, дата события). 
 
 Реализация:
-1) PersonDiary.Angular.EFCore   - Asp.Net core web application Angular 6, с data-сервисами, клиентское приложение.  
-2) PersonDiary.React.EFCore     - Asp.Net core web application ReactJS and Redux, клиентское приложение.
+1) PersonDiary.Angular.EFCore   - клиентское приложение, Asp.Net core web application Angular 6, с data-сервисами.
+2) PersonDiary.React.EFCore     - клиентское приложение, Asp.Net core web application ReactJS and Redux.
 3) PersonDiary.BusinessLogic    - Net.Core библиотека бизнес логики, с которой работают оба клиентских приложения, 
 в конструкторы моделей которой впрыскиваются зависимости уровня доступа к данным и архиватора .doc файлов
 4) PersonDiary.DataLayer.EFCore - Net.Core библиотека уровня доступа к данным (MS SQL/EF Core).
