@@ -44,7 +44,7 @@ class Persons extends Component {
                         )}
                     </tbody>
                 </table>
-                <Pagination current={this.state.PageNo} onChange={this.onPageChange} total={this.props.count} />
+                {this.props.persons.length > 0 && <Pagination current={this.state.PageNo} onChange={this.onPageChange} total={this.props.count} />}
                 {this.props.persons.length == 0 && "Loading..."}
             </div>
         );

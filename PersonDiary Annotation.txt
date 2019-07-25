@@ -15,6 +15,6 @@
 5) PersonDiary.Interfaces       - Net.Core библиотека, в которой описаны интерфейсы, 
 которые должны реализовывать зависимости, так же тут находятся сущности.
 6) PersonDiary.BusinessLogic    - Юнит-тесты бизнес логики.
-7) PersonDiary.Archivator - Net.Core библиотека архиватора .doc файлов (находится в разработке)
+7) PersonDiary.Archivator       - Net.Core библиотека архиватора .doc файлов (находится в разработке)
 
 

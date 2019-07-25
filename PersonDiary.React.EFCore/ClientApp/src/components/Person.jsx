@@ -29,12 +29,16 @@ class Person extends Component {
             name: undefined,
             surname: undefined,
             lifeevents: undefined,
-            fileList: [],
+            file_list: [],
             uploading: false,
-            uploadMesageText: undefined,
-            hasFile: false,
+            has_file: false,
+            is_name_valid: true,
+            is_surname_valid:true,
             person: undefined
         }
+    }
+    validateTextField(value) {
+        return (value)?true: false;
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.person && nextProps.person.id == this.id) {
@@ -55,6 +59,7 @@ class Person extends Component {
     onChange(e) {
         var newstate = {};
         newstate[e.target.name] = e.target.value;
+        newstate["is_" + e.target.name + "_valid"] = this.validateTextField(e.target.value);
         this.setState(newstate);
     }
     
@@ -68,10 +73,10 @@ class Person extends Component {
     }
     //загрузка файла биографии на сервер
     handleUpload = () => {
-        const { fileList } = this.state;
+        const { file_list } = this.state;
 
         const formData = new FormData();
-        fileList.forEach(file => {
+        file_list.forEach(file => {
             formData.append('files[]', file);
         });
 
@@ -104,12 +109,12 @@ class Person extends Component {
         };
         oReq.send(formData);
         this.setState({
-            fileList: [],
+            file_list: [],
             uploading: false,
         });
     }
     //Удаление файла биографии
-    deletefile = () => async () => {
+    deletefile = () => {
 
         fetch(`api/PersonfILE/${this.id}`, {
             method: 'DELETE',
@@ -166,26 +171,26 @@ class Person extends Component {
     }
 
     render() {
-        const { uploading, fileList } = this.state;
+        const { uploading, file_list } = this.state;
         const props = {
             accept: ".docx,.doc",
             onRemove: file => {
                 this.setState(state => {
-                    const index = state.fileList.indexOf(file);
-                    const newFileList = state.fileList.slice();
-                    newFileList.splice(index, 1);
+                    const index = state.file_list.indexOf(file);
+                    const newfile_list = state.file_list.slice();
+                    newfile_list.splice(index, 1);
                     return {
-                        fileList: newFileList,
+                        file_list: newfile_list,
                     };
                 });
             },
             beforeUpload: file => {
                 this.setState(state => ({
-                    fileList: [file],
+                    file_list: [file],
                 }));
                 return false;
             },
-            fileList,
+            file_list,
         };
 
         if (this.state.lifeevents) {
@@ -197,12 +202,18 @@ class Person extends Component {
                     <div className="form-group">
                         <label>Name</label>
                         <input type="text" name="name" value={this.state.name} onChange={this.onChange} className="form-control" />
+                        {!this.state.is_name_valid === true &&
+                            <Alert message="Name must be filled" type="error" />
+                        }
                     </div>
                     <div className="form-group">
                         <label>Surname</label>
                         <input type="text" name="surname" value={this.state.surname} onChange={this.onChange} className="form-control" />
+                        {!this.state.is_surname_valid === true &&
+                            <Alert message="Surname must be filled" type="error" />
+                        }
                     </div>
-                    {!this.state.hasFile &&
+                    {!this.state.has_file &&
                         < div className="form-group">
                                 <div className="col">
                             <Upload {...props}>
@@ -215,7 +226,7 @@ class Person extends Component {
                             <Button
                                 type="primary"
                                 onClick={this.handleUpload}
-                                disabled={fileList.length === 0}
+                                disabled={file_list.length === 0}
                                 loading={uploading}
                                 style={{ marginTop: 16 }}
                             >
@@ -224,7 +235,7 @@ class Person extends Component {
                         </div>
                         </div>
                     }
-                    {this.state.hasFile &&
+                    {this.state.has_file &&
                         <div className="form-group">
                         <Button type="primary" onClick={this.downldoadfile} style={{ marginRight: "5px" }}>
                             <Link target="_blank" to={`/api/personfile/${this.id}`} >Download biography</Link>
@@ -233,7 +244,7 @@ class Person extends Component {
                         </div>
                     }
                     <div className="form-group">
-                        <Button type="primary" onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
+                        <Button type="primary" disabled={!this.state.is_name_valid || !this.state.is_surname_valid} onClick={this.save} style={{ marginRight: "5px" }}>Save</Button>
                         <Button type="danger" onClick={this.confirmDelete}>Delete</Button>
                     </div>
                     {this.state.hasDeleteError===true &&
