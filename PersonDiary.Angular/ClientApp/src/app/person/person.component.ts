@@ -7,6 +7,7 @@ import { PersonService } from '../services/person.service';
 import { Router } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { CommonUtils } from '../common/common.utils';
 
 
 @Component({
@@ -19,6 +20,9 @@ export class PersonEditComponent  {
   public lifeevents: LifeEvent[];
   private subscription: Subscription;
   private modalRef: BsModalRef;
+  public show_alert: boolean = false;
+  public show_ok: boolean = false;
+  public messages: string;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -44,10 +48,17 @@ export class PersonEditComponent  {
  
   save() {
     (this.person.id) ?
-      this.dataService.updatePerson(this.person).subscribe((data: any) => { }) :
+      this.dataService.updatePerson(this.person).subscribe((data: any) => {
+        this.show_alert = data.messages.filter(m => m.type == 1).length > 0;
+        if (this.show_alert) { this.messages = CommonUtils.getErorrMessagesText(data.messages); }
+        this.show_ok = !this.show_alert;
+      }) :
       this.dataService.createPerson(this.person).subscribe((data: any) => {
         this.person = data.person;
         this.lifeevents = data.person.lifeEvents;
+        this.show_alert = data.messages.filter(m => m.type == 1).length > 0;
+        if (this.show_alert) { this.messages = CommonUtils.getErorrMessagesText(data.messages); }
+        this.show_ok = !this.show_alert;
       });
   }
   add_lifeevent() {

@@ -34,6 +34,12 @@
         <button type="button" class="btn btn-default" (click)="delete()">Yes</button>
         <button type="button" class="btn btn-primary" (click)="this.modalRef.hide()">No</button>
       </div>
+      <alert type="danger" *ngIf="show_alert">
+        <strong>Error!</strong> {{messages}}.
+      </alert>
+      <alert type="success" *ngIf="show_ok">
+        <strong>Success!</strong> event successfully saved.
+      </alert>
     </ng-template>
   </div>
   <h2>Person events</h2>

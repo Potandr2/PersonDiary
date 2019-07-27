@@ -26,7 +26,7 @@ namespace PersonDiary.Angular
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
             //set automapper service
             var mappingConfig = new MapperConfiguration(mc =>
             {

@@ -14,18 +14,20 @@ namespace PersonDiary.BusinessLogic
     public class PersonModel
     {
         private readonly IUnitOfWork unit;
+        private readonly IUnitOfWorkFactory factory;
         private IPersonRepository repoPerson;
-        private IMapper mapper;
+        private readonly IMapper mapper;
         //Впрыскиваем зависимости объектов уровня доступа к данным 
-        public PersonModel(IUnitOfWork unit, IMapper mapper)
+        public PersonModel(IUnitOfWorkFactory factory,IMapper mapper)
         {
-            if (unit == null)
-                throw new ArgumentNullException("Unit in PersonModel is null");
             if (mapper == null)
                 throw new ArgumentNullException("Mapper in PersonModel is null");
-            this.unit = unit;
+            if (factory == null)
+                throw new ArgumentNullException("UnitOfWorkFactory in PersonModel is null");
+            
+            this.factory = factory;
+            this.unit = this.factory.CreateUnitOfWork();
             repoPerson = unit.Persons;
-
             this.mapper = mapper;
         }
         public GetPersonListResponse GetItems(GetPersonListRequest request)
@@ -73,7 +75,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.Person = mapper.Map<PersonContract>(
-                    repoPerson.GetItem(request.Id)
+                    factory.CreateUnitOfWork().Persons.GetItem(request.Id)
                 );
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };

@@ -17,14 +17,13 @@ namespace PersonDiary.Angular.EFCore.Controllers
     [ApiController]
     public class PersonFileController : ControllerBase
     {
-        private readonly IUnitOfWork unit;
+        private readonly IUnitOfWorkFactory factory;
         private readonly IMapper mapper;
         private readonly IHostingEnvironment hostingEnvironment;
         
-        public PersonFileController(IUnitOfWork unit, IMapper mapper, IHostingEnvironment hostingEnvironment)
+        public PersonFileController(IUnitOfWorkFactory factory, IMapper mapper, IHostingEnvironment hostingEnvironment)
         {
-
-            this.unit = unit;
+            this.factory = factory;
             this.mapper = mapper;
             this.hostingEnvironment = hostingEnvironment;
         }
@@ -39,7 +38,7 @@ namespace PersonDiary.Angular.EFCore.Controllers
         [HttpGet("{id}")]
         public async Task<FileResult> Get(int id)
         {
-            byte[] bytes = await new PersonModel(unit, mapper).DownloadAsync(new GetPersonRequest() { Id = id });
+            byte[] bytes = await new PersonModel(factory, mapper).DownloadAsync(new GetPersonRequest() { Id = id });
             return File(bytes, "application/octet-stream", "biographi.docx");
         }
         // POST: api/PersonFile
@@ -60,7 +59,7 @@ namespace PersonDiary.Angular.EFCore.Controllers
         [HttpDelete("{id}")]
         public async Task<DeletePersonResponse> Delete(int id)
         {
-            return await Task.Run(()=>new PersonModel(unit, mapper).DeleteBiography(new DeletePersonRequest() { Id = id }));
+            return await Task.Run(()=>new PersonModel(factory, mapper).DeleteBiography(new DeletePersonRequest() { Id = id }));
         }
         private async Task<PersonUploadResponse> UploadBiography(PersonUploadRequest request)
         {
@@ -73,7 +72,7 @@ namespace PersonDiary.Angular.EFCore.Controllers
                 using (var binaryReader = new BinaryReader(file.OpenReadStream()))
                 {
                     request.Biography = binaryReader.ReadBytes((int)file.Length);
-                    return await new PersonModel(unit, mapper).UploadAsync(request);
+                    return await new PersonModel(factory, mapper).UploadAsync(request);
                 }
             }
             catch (Exception e)

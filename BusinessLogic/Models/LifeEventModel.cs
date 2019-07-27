@@ -13,17 +13,19 @@ namespace PersonDiary.BusinessLogic
     //Модель события персоны
     public class LifeEventModel
     {
-        private readonly IUnitOfWork unit;
+        private IUnitOfWorkFactory factory;
+        private IUnitOfWork unit;
         private ILifeEventRepository repoLifeEvent;
         private IMapper mapper;
         //Впрыскиваем зависимости объектов уровня доступа к данным
-        public LifeEventModel(IUnitOfWork unit, IMapper mapper)
+        public LifeEventModel(IUnitOfWorkFactory factory, IMapper mapper)
         {
-            if (unit == null)
-                throw new ArgumentNullException("Unit in LifeEventModel is null");
+            if (factory == null)
+                throw new ArgumentNullException("UnitOfWorkFactory in LifeEventModel is null");
             if (mapper == null)
                 throw new ArgumentNullException("Mapper in LifeEventModel is null");
-            this.unit = unit;
+            this.factory = factory;
+            this.unit = this.factory.CreateUnitOfWork();
             repoLifeEvent = unit.LifeEvents;
 
             this.mapper = mapper;
