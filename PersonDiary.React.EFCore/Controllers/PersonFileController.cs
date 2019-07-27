@@ -10,18 +10,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace PersonDiary.React.EFCore.Controllers
+namespace PersonDiary.Angular.EFCore.Controllers
 {
+    //Контроллер для работы с файлами персон, работа с файлами выделена вотдельный контроллер согласно принципу SPR(SOLID)
     [Route("api/[controller]")]
     [ApiController]
     public class PersonFileController : ControllerBase
     {
         private readonly IUnitOfWork unit;
         private readonly IMapper mapper;
-        IHostingEnvironment hostingEnvironment;
-        
+        private readonly IHostingEnvironment hostingEnvironment;
+
         public PersonFileController(IUnitOfWork unit, IMapper mapper, IHostingEnvironment hostingEnvironment)
         {
+
             this.unit = unit;
             this.mapper = mapper;
             this.hostingEnvironment = hostingEnvironment;
@@ -37,8 +39,8 @@ namespace PersonDiary.React.EFCore.Controllers
         [HttpGet("{id}")]
         public async Task<FileResult> Get(int id)
         {
-            byte[] bytes = new PersonModel(unit, mapper).Download(new GetPersonRequest() { Id = id });
-            return await Task.Run(()=>File(bytes, "application/octet-stream", "biographi.docx"));
+            byte[] bytes = await new PersonModel(unit, mapper).DownloadAsync(new GetPersonRequest() { Id = id });
+            return File(bytes, "application/octet-stream", "biographi.docx");
         }
         // POST: api/PersonFile
         [HttpPost]
@@ -58,9 +60,9 @@ namespace PersonDiary.React.EFCore.Controllers
         [HttpDelete("{id}")]
         public async Task<DeletePersonResponse> Delete(int id)
         {
-            return await Task.Run(()=>new PersonModel(unit, mapper).DeleteBiography(new DeletePersonRequest() { Id = id }));
+            return await Task.Run(() => new PersonModel(unit, mapper).DeleteBiography(new DeletePersonRequest() { Id = id }));
         }
-        private PersonUploadResponse UploadBiography(PersonUploadRequest request)
+        private async Task<PersonUploadResponse> UploadBiography(PersonUploadRequest request)
         {
             try
             {
@@ -71,7 +73,7 @@ namespace PersonDiary.React.EFCore.Controllers
                 using (var binaryReader = new BinaryReader(file.OpenReadStream()))
                 {
                     request.Biography = binaryReader.ReadBytes((int)file.Length);
-                    return new PersonModel(unit, mapper).Upload(request);
+                    return await new PersonModel(unit, mapper).UploadAsync(request);
                 }
             }
             catch (Exception e)
@@ -79,9 +81,9 @@ namespace PersonDiary.React.EFCore.Controllers
                 return new PersonUploadResponse().AddMessage(new Contracts.Message(e.Message));
             }
         }
-        private  Task<PersonUploadResponse> UploadBiographyAsync(PersonUploadRequest request)
+        private async Task<PersonUploadResponse> UploadBiographyAsync(PersonUploadRequest request)
         {
-            return Task.Run(() => UploadBiography(request));
+            return await UploadBiographyAsync(request);
         }
     }
 }

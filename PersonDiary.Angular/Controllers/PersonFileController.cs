@@ -39,8 +39,8 @@ namespace PersonDiary.Angular.EFCore.Controllers
         [HttpGet("{id}")]
         public async Task<FileResult> Get(int id)
         {
-            byte[] bytes = new PersonModel(unit, mapper).Download(new GetPersonRequest() { Id = id });
-            return await Task.Run(()=>File(bytes, "application/octet-stream", "biographi.docx"));
+            byte[] bytes = await new PersonModel(unit, mapper).DownloadAsync(new GetPersonRequest() { Id = id });
+            return File(bytes, "application/octet-stream", "biographi.docx");
         }
         // POST: api/PersonFile
         [HttpPost]
@@ -62,7 +62,7 @@ namespace PersonDiary.Angular.EFCore.Controllers
         {
             return await Task.Run(()=>new PersonModel(unit, mapper).DeleteBiography(new DeletePersonRequest() { Id = id }));
         }
-        private PersonUploadResponse UploadBiography(PersonUploadRequest request)
+        private async Task<PersonUploadResponse> UploadBiography(PersonUploadRequest request)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace PersonDiary.Angular.EFCore.Controllers
                 using (var binaryReader = new BinaryReader(file.OpenReadStream()))
                 {
                     request.Biography = binaryReader.ReadBytes((int)file.Length);
-                    return new PersonModel(unit, mapper).Upload(request);
+                    return await new PersonModel(unit, mapper).UploadAsync(request);
                 }
             }
             catch (Exception e)
@@ -81,9 +81,9 @@ namespace PersonDiary.Angular.EFCore.Controllers
                 return new PersonUploadResponse().AddMessage(new Contracts.Message(e.Message));
             }
         }
-        private  Task<PersonUploadResponse> UploadBiographyAsync(PersonUploadRequest request)
+        private  async Task<PersonUploadResponse> UploadBiographyAsync(PersonUploadRequest request)
         {
-            return Task.Run(() => UploadBiography(request));
+            return await UploadBiographyAsync(request);
         }
     }
 }
