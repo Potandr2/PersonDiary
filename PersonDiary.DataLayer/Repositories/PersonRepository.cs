@@ -5,6 +5,7 @@ using PersonDiary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PersonDiary.Repositories
 {
@@ -21,9 +22,17 @@ namespace PersonDiary.Repositories
            
             return db.Persons.OrderByDescending(p => p.Id).Skip(PageNo * PageSize).Take(PageSize);
         }
+        public async Task<IEnumerable<Person>> GetItemsAsync(int PageNo, int PageSize)
+        {
+            return await db.Persons.OrderByDescending(p => p.Id).Skip(PageNo * PageSize).Take(PageSize).ToListAsync();
+        }
         public Person GetItem(int id)
         {
             return db.Persons.Include(p => p.LifeEvents).FirstOrDefault(p => p.Id == id);
+        }
+        public async Task<Person> GetItemAsync(int id)
+        {
+            return await db.Persons.Include(p => p.LifeEvents).FirstOrDefaultAsync(p => p.Id == id);
         }
         public void Create(Person item)
         {
@@ -43,9 +52,18 @@ namespace PersonDiary.Repositories
         {
             db.SaveChanges();
         }
+        public async Task<int> SaveAsync()
+        {
+            return await db.SaveChangesAsync();
+        }
         public int Count{
             get {return db.Persons.Count(); }
         }
+        public Task<int> CountAsync
+        {
+            get { return db.Persons.CountAsync(); }
+        }
+
         private bool disposed = false;
         public virtual void Dispose(bool disposing)
         {

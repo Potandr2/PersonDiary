@@ -5,6 +5,7 @@ using PersonDiary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PersonDiary.Repositories
 {
@@ -18,7 +19,11 @@ namespace PersonDiary.Repositories
         }
         public IEnumerable<LifeEvent> GetItems(int PageNo, int PageSize)
         {
-            return db.LifeEvents.OrderByDescending(p => p.Id).Skip(PageNo * PageSize).Take(PageSize); ;
+            return db.LifeEvents.OrderByDescending(p => p.Id).Skip(PageNo * PageSize).Take(PageSize);
+        }
+        public async Task<IEnumerable<LifeEvent>> GetItemsAsync(int PageNo, int PageSize)
+        {
+            return await db.LifeEvents.OrderByDescending(p => p.Id).Skip(PageNo * PageSize).Take(PageSize).ToListAsync();
         }
         public IEnumerable<LifeEvent> GetPersonItems(int PersonId)
         {
@@ -27,6 +32,10 @@ namespace PersonDiary.Repositories
         public LifeEvent GetItem(int id)
         {
             return db.LifeEvents.Include(le => le.Person).FirstOrDefault(le => le.Id == id);
+        }
+        public async Task<LifeEvent> GetItemAsync(int id)
+        {
+            return await db.LifeEvents.Include(le => le.Person).FirstOrDefaultAsync(le => le.Id == id);
         }
         public void Create(LifeEvent item)
         {
@@ -46,9 +55,17 @@ namespace PersonDiary.Repositories
         {
             db.SaveChanges();
         }
+        public async Task<int> SaveAsync()
+        {
+           return await db.SaveChangesAsync();
+        }
         public int Count
         {
             get { return db.LifeEvents.Count(); }
+        }
+        public Task<int> CountAsync
+        {
+            get { return db.LifeEvents.CountAsync(); }
         }
         private bool disposed = false;
         public virtual void Dispose(bool disposing)

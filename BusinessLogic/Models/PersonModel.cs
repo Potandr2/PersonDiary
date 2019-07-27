@@ -4,6 +4,7 @@ using PersonDiary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using PersonContract = PersonDiary.Contracts.PersonContract.Person;
 
 
@@ -44,6 +45,24 @@ namespace PersonDiary.BusinessLogic
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
+        }
+        public async Task<GetPersonListResponse> GetItemsAsync(GetPersonListRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("Person model GetPersonListRequest is invalid");
+
+            request.PageSize = (request.PageSize == 0) ? RepositoryDefaults.PageSize : request.PageSize;
+
+            var resp = new GetPersonListResponse();
+            try
+            {
+                resp.Persons = mapper.Map<List<PersonContract>>(
+                    await repoPerson.GetItemsAsync(request.PageNo, request.PageSize)
+                   );
+                resp.Count = repoPerson.Count;
+            }
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
+            return resp;
 
         }
         public GetPersonResponse GetItem(GetPersonRequest request)
@@ -55,6 +74,20 @@ namespace PersonDiary.BusinessLogic
             {
                 resp.Person = mapper.Map<PersonContract>(
                     repoPerson.GetItem(request.Id)
+                );
+            }
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
+            return resp;
+        }
+        public async Task<GetPersonResponse> GetItemAsync(GetPersonRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
+            var resp = new GetPersonResponse();
+            try
+            {
+                resp.Person = mapper.Map<PersonContract>(
+                   await repoPerson.GetItemAsync(request.Id)
                 );
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
