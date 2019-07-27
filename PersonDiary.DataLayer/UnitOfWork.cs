@@ -1,6 +1,7 @@
 ﻿using PersonDiary.Contexts;
 using PersonDiary.Interfaces;
 using System;
+using System.Threading.Tasks;
 
 namespace PersonDiary.Repositories
 {
@@ -33,6 +34,12 @@ namespace PersonDiary.Repositories
         public void Save()
         {
             db.SaveChanges();
+            
+        }
+        public async Task<int> SaveAsync()
+        {
+            return await db.SaveChangesAsync();
+
         }
 
         private bool disposed = false;

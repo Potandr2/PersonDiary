@@ -108,6 +108,21 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        public async Task<UpdatePersonResponse> CreateAsync(UpdatePersonRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("Person model UpdatePersonRequest  is invalid");
+            var resp = new UpdatePersonResponse();
+            try
+            {
+                var item = mapper.Map<Entities.Person>(request.Person);
+                repoPerson.Create(item);
+                await unit.SaveAsync();
+                resp.Person = mapper.Map<Person>(repoPerson.GetItem(item.Id));
+            }
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
+            return resp;
+        }
         public UpdatePersonResponse Update(UpdatePersonRequest request)
         {
             if (request == null)
@@ -122,6 +137,20 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        public async Task<UpdatePersonResponse> UpdateAsync(UpdatePersonRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("Person model UpdatePersonRequest  is invalid");
+            var resp = new UpdatePersonResponse();
+            try
+            {
+                var item = mapper.Map<Entities.Person>(request.Person);
+                unit.Persons.Update(item);
+                await unit.SaveAsync();
+            }
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
+            return resp;
+        }
         public DeletePersonResponse Delete(DeletePersonRequest request)
         {
             if (request == null)
@@ -131,6 +160,19 @@ namespace PersonDiary.BusinessLogic
             {
                 repoPerson.Delete(request.Id);
                 unit.Save();
+            }
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
+            return resp;
+        }
+        public async Task<DeletePersonResponse> DeleteAsync(DeletePersonRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("Person model DeletePersonRequest  is invalid");
+            var resp = new DeletePersonResponse();
+            try
+            {
+                repoPerson.Delete(request.Id);
+                await unit.SaveAsync();
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
@@ -150,12 +192,36 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        public async Task<PersonUploadResponse> UploadAsync(PersonUploadRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("Person model PersonUploadRequest  is invalid");
+            var resp = new PersonUploadResponse();
+            try
+            {
+                var person = await unit.Persons.GetItemAsync(request.PersonId);
+                person.Biography = request.Biography;
+                unit.Persons.Update(person);
+                unit.Save();
+            }
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
+            return resp;
+        }
         public byte[] Download(GetPersonRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
             var resp = new PersonDownloadResponse();
             var person = unit.Persons.GetItem(request.Id);
+            return person.Biography;
+
+        }
+        public async Task<byte[]> DownloadAsync(GetPersonRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
+            var resp = new PersonDownloadResponse();
+            var person = await unit.Persons.GetItemAsync(request.Id);
             return person.Biography;
 
         }
@@ -170,6 +236,21 @@ namespace PersonDiary.BusinessLogic
                 person.Biography = null;
                 unit.Persons.Update(person);
                 unit.Save();
+            }
+            catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
+            return resp;
+        }
+        public async Task<DeletePersonResponse> DeleteBiographyAsync(DeletePersonRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("Person model DeletePersonRequest  is invalid");
+            var resp = new DeletePersonResponse();
+            try
+            {
+                var person = await unit.Persons.GetItemAsync(request.Id);
+                person.Biography = null;
+                unit.Persons.Update(person);
+                await unit.SaveAsync();
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;

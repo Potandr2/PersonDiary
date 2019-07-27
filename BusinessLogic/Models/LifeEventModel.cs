@@ -5,6 +5,7 @@ using PersonDiary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LifeEventContract = PersonDiary.Contracts.LifeEventContract.LifeEvent;
 
 namespace PersonDiary.BusinessLogic
@@ -42,6 +43,20 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
+        public async Task<GetLifeEventResponse> GetItemAsync(GetLifeEventRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model GetLifeEventRequest  is invalid");
+            var resp = new GetLifeEventResponse();
+            try
+            {
+                resp.lifeevent = mapper.Map<LifeEventContract>(
+                    await repoLifeEvent.GetItemAsync(request.Id)
+                );
+            }
+            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            return resp;
+        }
         public GetLifeEventListResponse GetItems(GetLifeEventListRequest request)
         {
             if (request == null)
@@ -57,7 +72,36 @@ namespace PersonDiary.BusinessLogic
             return resp;
 
         }
+        public async Task<GetLifeEventListResponse> GetItemsAsync(GetLifeEventListRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model GetLifeEventListRequest  is invalid");
+            var resp = new GetLifeEventListResponse();
+            try
+            {
+                resp.LifeEvents = mapper.Map<List<LifeEventContract>>(
+                    await repoLifeEvent.GetItemsAsync(request.PageNo, request.PageSize)
+                );
+            }
+            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            return resp;
+
+        }
         public UpdateLifeEventResponse Create(UpdateLifeEventRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model UpdateLifeEventRequest  is invalid");
+            var resp = new UpdateLifeEventResponse();
+            try
+            {
+                var item = mapper.Map<PersonDiary.Entities.LifeEvent>(request.LifeEvent);
+                repoLifeEvent.Create(item);
+                unit.Save();
+            }
+            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            return resp;
+        }
+        public UpdateLifeEventResponse CreateAsync(UpdateLifeEventRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException("LifeEventModel model UpdateLifeEventRequest  is invalid");
@@ -85,6 +129,20 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
+        public UpdateLifeEventResponse UpdateAsync(UpdateLifeEventRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model UpdateLifeEventRequest  is invalid");
+            var resp = new UpdateLifeEventResponse();
+            try
+            {
+                var item = mapper.Map<PersonDiary.Entities.LifeEvent>(request.LifeEvent);
+                unit.LifeEvents.Update(item);
+                unit.Save();
+            }
+            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            return resp;
+        }
         public DeleteLifeEventResponse Delete(DeleteLifeEventRequest request)
         {
             if (request == null)
@@ -98,6 +156,19 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
-        
+        public DeleteLifeEventResponse DeleteAsync(DeleteLifeEventRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model DeleteLifeEventRequest  is invalid");
+            var resp = new DeleteLifeEventResponse();
+            try
+            {
+                repoLifeEvent.Delete(request.Id);
+                unit.Save();
+            }
+            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            return resp;
+        }
+
     }
 }
