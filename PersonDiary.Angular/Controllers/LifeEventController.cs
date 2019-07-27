@@ -24,35 +24,35 @@ namespace LifeEventDiary.Angular.EFCore.Controllers
         [HttpGet]
         public async Task<GetLifeEventListResponse> Get(string json)
         {
-            return await Task.Run(() => new LifeEventModel(unit, mapper).GetItems(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json)));
+            return await new LifeEventModel(unit, mapper).GetItemsAsync(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json));
         }
 
         // GET: api/LifeEvent/5
         [HttpGet("{id}")]
         public async Task<GetLifeEventResponse> Get(int id)
         {
-            return await Task.Run(()=>new LifeEventModel(unit, mapper).GetItem(new GetLifeEventRequest() { Id = id }));
+            return await new LifeEventModel(unit, mapper).GetItemAsync(new GetLifeEventRequest() { Id = id });
         }
 
         // POST: api/LifeEvent
         [HttpPost]
         public async Task<UpdateLifeEventResponse> Post([FromBody]  UpdateLifeEventRequest request)
         {
-            return await Task.Run(()=>new LifeEventModel(unit, mapper).Create(request));
+            return await new LifeEventModel(unit, mapper).CreateAsync(request);
         }
 
         // PUT: api/LifeEvent/5
         [HttpPut("{id}")]
         public async Task<UpdateLifeEventResponse> Put(int id, [FromBody] UpdateLifeEventRequest request)
         {
-            return await Task.Run(()=>new LifeEventModel(unit, mapper).Update(request));
+            return await new LifeEventModel(unit, mapper).UpdateAsync(request);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<DeleteLifeEventResponse> Delete(int id)
         {
-            return await Task.Run(()=>new LifeEventModel(unit, mapper).Delete(new DeleteLifeEventRequest() { Id = id }));
+            return await new LifeEventModel(unit, mapper).DeleteAsync(new DeleteLifeEventRequest() { Id = id });
         }
     }
 }

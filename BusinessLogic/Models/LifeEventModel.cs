@@ -101,7 +101,7 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
-        public UpdateLifeEventResponse CreateAsync(UpdateLifeEventRequest request)
+        public async Task<UpdateLifeEventResponse> CreateAsync(UpdateLifeEventRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException("LifeEventModel model UpdateLifeEventRequest  is invalid");
@@ -110,7 +110,7 @@ namespace PersonDiary.BusinessLogic
             {
                 var item = mapper.Map<PersonDiary.Entities.LifeEvent>(request.LifeEvent);
                 repoLifeEvent.Create(item);
-                unit.Save();
+                await unit.SaveAsync();
             }
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
@@ -129,7 +129,7 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
-        public UpdateLifeEventResponse UpdateAsync(UpdateLifeEventRequest request)
+        public async Task<UpdateLifeEventResponse> UpdateAsync(UpdateLifeEventRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException("LifeEventModel model UpdateLifeEventRequest  is invalid");
@@ -138,7 +138,7 @@ namespace PersonDiary.BusinessLogic
             {
                 var item = mapper.Map<PersonDiary.Entities.LifeEvent>(request.LifeEvent);
                 unit.LifeEvents.Update(item);
-                unit.Save();
+                await unit.SaveAsync();
             }
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
@@ -156,7 +156,7 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
-        public DeleteLifeEventResponse DeleteAsync(DeleteLifeEventRequest request)
+        public async Task<DeleteLifeEventResponse> DeleteAsync(DeleteLifeEventRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException("LifeEventModel model DeleteLifeEventRequest  is invalid");
@@ -164,7 +164,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 repoLifeEvent.Delete(request.Id);
-                unit.Save();
+                await unit.SaveAsync();
             }
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
