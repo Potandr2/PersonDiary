@@ -218,7 +218,6 @@ namespace PersonDiary.BusinessLogic
         {
             if (request == null)
                 throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
-            var resp = new PersonDownloadResponse();
             var person = factory.CreateUnitOfWork().Persons.GetItem(request.Id);
             return person.Biography;
 
@@ -227,7 +226,6 @@ namespace PersonDiary.BusinessLogic
         {
             if (request == null)
                 throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
-            var resp = new PersonDownloadResponse();
             var person = await factory.CreateUnitOfWork().Persons.GetItemAsync(request.Id);
             return person.Biography;
 
