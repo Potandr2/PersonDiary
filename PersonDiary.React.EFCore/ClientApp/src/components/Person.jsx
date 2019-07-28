@@ -46,7 +46,7 @@ class Person extends Component {
                 name: nextProps.person.name,
                 surname: nextProps.person.surname,
                 lifeevents: nextProps.person.lifeEvents,
-                hasFile: nextProps.person.hasFile,
+                has_file: nextProps.person.hasFile,
                 hasDeleteError: nextProps.hasDeleteError,
                 hasSaveError: nextProps.hasSaveError,
                 person: nextProps.person
@@ -87,8 +87,6 @@ class Person extends Component {
             if (oReq.status === 200) {
                 console.log('upload succes', oReq.responseText);
                 var resp = JSON.parse(oReq.response);
-
-
                 if (resp.messages.filter(x => x.type == 1).length > 0) {
                     var messageTextSummary = "";
                     resp.messages.forEach(function (message, idx) {
@@ -96,7 +94,7 @@ class Person extends Component {
                     });
                     message.error("Error " + messageTextSummary);
                 } else {
-                    _this.setState({ hasFile: true });
+                    _this.setState({ has_file: true });
                     message.success("Success!, File uploaded");
                 }
                 _this.setState({
@@ -124,7 +122,7 @@ class Person extends Component {
             }
         }).then(response => {
             if (response.status === 200) {
-                this.setState({ hasFile: false });
+                this.setState({ has_file: false });
                 message.success("Success!, File has been deleted");
             }
         }).catch(() => {

@@ -20,7 +20,7 @@ namespace PersonDiary.Angular.EFCore.Controllers
         private readonly IUnitOfWorkFactory factory;
         private readonly IMapper mapper;
         private readonly IHostingEnvironment hostingEnvironment;
-        
+
         public PersonFileController(IUnitOfWorkFactory factory, IMapper mapper, IHostingEnvironment hostingEnvironment)
         {
             this.factory = factory;
@@ -47,19 +47,19 @@ namespace PersonDiary.Angular.EFCore.Controllers
         public async Task<PersonUploadResponse> Post(string json)
         {
             PersonUploadRequest request = JsonConvert.DeserializeObject<PersonUploadRequest>(json);
-            return await UploadBiographyAsync(request);
+            return await UploadBiography(request);
         }
         // PUT: api/PersonFile/5
         [HttpPut("{id}")]
         public async Task<PersonUploadResponse> Put(int id)
         {
-            return await UploadBiographyAsync(new PersonUploadRequest() { PersonId = id });
+            return await UploadBiography(new PersonUploadRequest() { PersonId = id });
         }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<DeletePersonResponse> Delete(int id)
         {
-            return await Task.Run(()=>new PersonModel(factory, mapper).DeleteBiography(new DeletePersonRequest() { Id = id }));
+            return await Task.Run(() => new PersonModel(factory, mapper).DeleteBiography(new DeletePersonRequest() { Id = id }));
         }
         private async Task<PersonUploadResponse> UploadBiography(PersonUploadRequest request)
         {
@@ -80,9 +80,7 @@ namespace PersonDiary.Angular.EFCore.Controllers
                 return new PersonUploadResponse().AddMessage(new Contracts.Message(e.Message));
             }
         }
-        private  async Task<PersonUploadResponse> UploadBiographyAsync(PersonUploadRequest request)
-        {
-            return await UploadBiographyAsync(request);
-        }
+
+
     }
 }
