@@ -13,9 +13,7 @@ namespace PersonDiary.BusinessLogic
     //Модель Персоны
     public class PersonModel
     {
-        private readonly IUnitOfWork unit;
         private readonly IUnitOfWorkFactory factory;
-        private IPersonRepository repoPerson;
         private readonly IMapper mapper;
         //Впрыскиваем зависимости объектов уровня доступа к данным 
         public PersonModel(IUnitOfWorkFactory factory,IMapper mapper)
@@ -26,8 +24,6 @@ namespace PersonDiary.BusinessLogic
                 throw new ArgumentNullException("UnitOfWorkFactory in PersonModel is null");
             
             this.factory = factory;
-            this.unit = this.factory.CreateUnitOfWork();
-            repoPerson = unit.Persons;
             this.mapper = mapper;
         }
         public GetPersonListResponse GetItems(GetPersonListRequest request)
@@ -38,12 +34,13 @@ namespace PersonDiary.BusinessLogic
             request.PageSize = (request.PageSize == 0) ? RepositoryDefaults.PageSize : request.PageSize;
 
             var resp = new GetPersonListResponse();
+            var unit = factory.CreateUnitOfWork();
             try
             {
-                 resp.Persons = mapper.Map<List<PersonContract>>(
-                    repoPerson.GetItems(request.PageNo,request.PageSize).ToList()
+                resp.Persons = mapper.Map<List<PersonContract>>(
+                    unit.Persons.GetItems(request.PageNo,request.PageSize).ToList()
                     );
-                resp.Count = repoPerson.Count;
+                resp.Count = unit.Persons.Count;
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
@@ -54,14 +51,14 @@ namespace PersonDiary.BusinessLogic
                 throw new ArgumentNullException("Person model GetPersonListRequest is invalid");
 
             request.PageSize = (request.PageSize == 0) ? RepositoryDefaults.PageSize : request.PageSize;
-
+            var unit = factory.CreateUnitOfWork();
             var resp = new GetPersonListResponse();
             try
             {
                 resp.Persons = mapper.Map<List<PersonContract>>(
-                    await repoPerson.GetItemsAsync(request.PageNo, request.PageSize)
+                    await unit.Persons.GetItemsAsync(request.PageNo, request.PageSize)
                    );
-                resp.Count = repoPerson.Count;
+                resp.Count = unit.Persons.Count;
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
@@ -89,7 +86,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.Person = mapper.Map<PersonContract>(
-                   await repoPerson.GetItemAsync(request.Id)
+                   await factory.CreateUnitOfWork().Persons.GetItemAsync(request.Id)
                 );
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
@@ -102,10 +99,11 @@ namespace PersonDiary.BusinessLogic
             var resp = new UpdatePersonResponse();
             try
             {
+                var unit = factory.CreateUnitOfWork();
                 var item = mapper.Map<Entities.Person>(request.Person);
-                repoPerson.Create(item);
+                unit.Persons.Create(item);
                 unit.Save();
-                resp.Person = mapper.Map<Person>(repoPerson.GetItem(item.Id));
+                resp.Person = mapper.Map<Person>(unit.Persons.GetItem(item.Id));
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
@@ -117,10 +115,11 @@ namespace PersonDiary.BusinessLogic
             var resp = new UpdatePersonResponse();
             try
             {
+                var unit = factory.CreateUnitOfWork();
                 var item = mapper.Map<Entities.Person>(request.Person);
-                repoPerson.Create(item);
+                unit.Persons.Create(item);
                 await unit.SaveAsync();
-                resp.Person = mapper.Map<Person>(repoPerson.GetItem(item.Id));
+                resp.Person = mapper.Map<Person>(unit.Persons.GetItem(item.Id));
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
@@ -132,6 +131,7 @@ namespace PersonDiary.BusinessLogic
             var resp = new UpdatePersonResponse();
             try
             {
+                var unit = factory.CreateUnitOfWork();
                 var item = mapper.Map<Entities.Person>(request.Person);
                 unit.Persons.Update(item);
                 unit.Save();
@@ -146,6 +146,7 @@ namespace PersonDiary.BusinessLogic
             var resp = new UpdatePersonResponse();
             try
             {
+                var unit = factory.CreateUnitOfWork();
                 var item = mapper.Map<Entities.Person>(request.Person);
                 unit.Persons.Update(item);
                 await unit.SaveAsync();
@@ -160,7 +161,8 @@ namespace PersonDiary.BusinessLogic
             var resp = new DeletePersonResponse();
             try
             {
-                repoPerson.Delete(request.Id);
+                var unit = factory.CreateUnitOfWork();
+                unit.Persons.Delete(request.Id);
                 unit.Save();
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
@@ -173,7 +175,8 @@ namespace PersonDiary.BusinessLogic
             var resp = new DeletePersonResponse();
             try
             {
-                repoPerson.Delete(request.Id);
+                var unit = factory.CreateUnitOfWork();
+                unit.Persons.Delete(request.Id);
                 await unit.SaveAsync();
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
@@ -186,6 +189,7 @@ namespace PersonDiary.BusinessLogic
             var resp = new PersonUploadResponse();
             try
             {
+                var unit = factory.CreateUnitOfWork();
                 var person = unit.Persons.GetItem(request.PersonId);
                 person.Biography = request.Biography;
                 unit.Persons.Update(person);
@@ -201,6 +205,7 @@ namespace PersonDiary.BusinessLogic
             var resp = new PersonUploadResponse();
             try
             {
+                var unit = factory.CreateUnitOfWork();
                 var person = await unit.Persons.GetItemAsync(request.PersonId);
                 person.Biography = request.Biography;
                 unit.Persons.Update(person);
@@ -214,7 +219,7 @@ namespace PersonDiary.BusinessLogic
             if (request == null)
                 throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
             var resp = new PersonDownloadResponse();
-            var person = unit.Persons.GetItem(request.Id);
+            var person = factory.CreateUnitOfWork().Persons.GetItem(request.Id);
             return person.Biography;
 
         }
@@ -223,7 +228,7 @@ namespace PersonDiary.BusinessLogic
             if (request == null)
                 throw new ArgumentNullException("Person model GetPersonRequest  is invalid");
             var resp = new PersonDownloadResponse();
-            var person = await unit.Persons.GetItemAsync(request.Id);
+            var person = await factory.CreateUnitOfWork().Persons.GetItemAsync(request.Id);
             return person.Biography;
 
         }
@@ -234,6 +239,7 @@ namespace PersonDiary.BusinessLogic
             var resp = new DeletePersonResponse();
             try
             {
+                var unit = factory.CreateUnitOfWork();
                 var person = unit.Persons.GetItem(request.Id);
                 person.Biography = null;
                 unit.Persons.Update(person);
@@ -249,6 +255,7 @@ namespace PersonDiary.BusinessLogic
             var resp = new DeletePersonResponse();
             try
             {
+                var unit = factory.CreateUnitOfWork();
                 var person = await unit.Persons.GetItemAsync(request.Id);
                 person.Biography = null;
                 unit.Persons.Update(person);
