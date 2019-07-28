@@ -38,9 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\PersonDiary.BusinessLogic.csproj" />
-    <ProjectReference Include="..\Interfaces\PersonDiary.Interfaces.csproj" />
+    <ProjectReference Include="..\PersonDiary.BusinessLogic\PersonDiary.BusinessLogic.csproj" />
     <ProjectReference Include="..\PersonDiary.DataLayer\PersonDiary.DataLayer.EFCore.csproj" />
+    <ProjectReference Include="..\PersonDiary.Interfaces\PersonDiary.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

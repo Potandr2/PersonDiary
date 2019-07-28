@@ -15,7 +15,7 @@ namespace LifeEventDiary.BusinessLogic.Test
    
     public class LifeEventModelTest
     {
-        IUnitOfWork unit;
+        IUnitOfWorkFactory factory;
         ILifeEventRepository repoLifeEvent;
         LifeEventModel modelLifeEvent;
         IMapper mapper;
@@ -27,14 +27,14 @@ namespace LifeEventDiary.BusinessLogic.Test
                 mc.AddProfile(new MappingProfile());
             }).CreateMapper();
 
-            unit = new UnitOfWork();
-            repoLifeEvent = unit.LifeEvents;
-            modelLifeEvent = new LifeEventModel(unit, mapper);
+            factory = new UnitOfWorkFactory();
+            repoLifeEvent = factory.CreateUnitOfWork().LifeEvents;
+            modelLifeEvent = new LifeEventModel(factory, mapper);
         }
         [Test, Order(0)]
         public void Create()
         {
-            var person_last = new PersonModel(new UnitOfWork(), mapper).GetItems(new GetPersonListRequest() { PageSize = RepositoryDefaults.PageSize }).Persons.Last();
+            var person_last = new PersonModel(new UnitOfWorkFactory(), mapper).GetItems(new GetPersonListRequest() { PageSize = RepositoryDefaults.PageSize }).Persons.Last();
 
             var suffix = DateTime.Now.ToString("dd.MM.yyyy_mm_HH_ss");
 
@@ -52,7 +52,7 @@ namespace LifeEventDiary.BusinessLogic.Test
         [Test, Order(1)]
         public void Update()
         {
-            var model_tmp = new LifeEventModel(new UnitOfWork(), mapper);
+            var model_tmp = new LifeEventModel(new UnitOfWorkFactory(), mapper);
             var updated = "_Updated";
             var LifeEvent_last = model_tmp.GetItems(new GetLifeEventListRequest() { PageSize = RepositoryDefaults.PageSize }).LifeEvents.Last();
             LifeEvent_last.Name += updated;

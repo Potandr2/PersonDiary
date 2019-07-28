@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Interfaces\PersonDiary.Interfaces.csproj" />
+    <ProjectReference Include="..\PersonDiary.Interfaces\PersonDiary.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
