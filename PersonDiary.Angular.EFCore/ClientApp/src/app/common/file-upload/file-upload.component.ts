@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, ElementRef} from '@angular/core';
 import { HttpEventType  } from '@angular/common/http'
 import { FileUploadService } from '../../services/fileupload.service';
 import { Router } from '@angular/router';
-
+//Компонент загрузки файла на сервер.
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',

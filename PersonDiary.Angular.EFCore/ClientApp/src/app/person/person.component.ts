@@ -15,14 +15,14 @@ import { CommonUtils } from '../common/common.utils';
   templateUrl: './person.component.html'
 })
 export class PersonEditComponent  {
-  public id: any;
-  public person: Person;
-  public lifeevents: LifeEvent[];
+  private id: any;
+  private person: Person;
+  private lifeevents: LifeEvent[];
   private subscription: Subscription;
   private modalRef: BsModalRef;
-  public show_alert: boolean = false;
-  public show_ok: boolean = false;
-  public messages: string;
+  private show_alert: boolean = false;
+  private show_ok: boolean = false;
+  private messages: string;
 
   constructor(
     private activateRoute: ActivatedRoute,

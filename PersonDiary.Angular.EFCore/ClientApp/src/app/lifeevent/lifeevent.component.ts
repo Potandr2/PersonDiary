@@ -14,12 +14,12 @@ import { Router } from '@angular/router';
   templateUrl: './lifeevent.component.html'
 })
 export class LifeEventEditComponent {
-  public id: number;
-  public personid: number;
-  public lifeevent: LifeEvent;
-  public show_alert: boolean = false;
-  public show_ok: boolean = false;
-  public messages: string;
+  private id: number;
+  private personid: number;
+  private lifeevent: LifeEvent;
+  private show_alert: boolean = false;
+  private show_ok: boolean = false;
+  private messages: string;
   private subscription: Subscription;
   
 
