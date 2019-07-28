@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.BusinessLogic.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Archivator", "PersonDiary.Archivator\PersonDiary.Archivator.csproj", "{68583BCA-D169-428A-8E37-6D288B084D9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Angular.EFCore", "PersonDiary.Angular\PersonDiary.Angular.EFCore.csproj", "{F6226012-AF94-4AAE-8336-52CF5E6222C9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.React.EFCore", "PersonDiary.React.EFCore\PersonDiary.React.EFCore.csproj", "{8EF60A7C-D264-43CC-862F-AE36FA91F29B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Annotation", "Annotation", "{E39A7DF4-300D-4B6F-B288-BF652CE3C378}"
@@ -21,6 +19,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Interfaces", "PersonDiary.Interfaces\PersonDiary.Interfaces.csproj", "{521E6F80-9362-4899-85B3-826E263BBBF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.BusinessLogic", "PersonDiary.BusinessLogic\PersonDiary.BusinessLogic.csproj", "{CA5727E4-00DB-4BE6-97F3-32C93C126138}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonDiary.Angular.EFCore", "PersonDiary.Angular.EFCore\PersonDiary.Angular.EFCore.csproj", "{FD45E0EE-0047-4F5A-93CA-873BC7CA6AC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +40,6 @@ Global
 		{68583BCA-D169-428A-8E37-6D288B084D9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68583BCA-D169-428A-8E37-6D288B084D9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68583BCA-D169-428A-8E37-6D288B084D9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6226012-AF94-4AAE-8336-52CF5E6222C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EF60A7C-D264-43CC-862F-AE36FA91F29B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EF60A7C-D264-43CC-862F-AE36FA91F29B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EF60A7C-D264-43CC-862F-AE36FA91F29B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,6 +52,10 @@ Global
 		{CA5727E4-00DB-4BE6-97F3-32C93C126138}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA5727E4-00DB-4BE6-97F3-32C93C126138}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA5727E4-00DB-4BE6-97F3-32C93C126138}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD45E0EE-0047-4F5A-93CA-873BC7CA6AC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD45E0EE-0047-4F5A-93CA-873BC7CA6AC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD45E0EE-0047-4F5A-93CA-873BC7CA6AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD45E0EE-0047-4F5A-93CA-873BC7CA6AC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
