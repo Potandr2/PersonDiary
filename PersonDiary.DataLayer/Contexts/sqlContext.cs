@@ -19,7 +19,10 @@ namespace PersonDiary.Contexts
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=persondiarydb;Trusted_Connection=True;");
         }
-        //Устанавливаем правила удаления событий персоны с помощью Fluent API и набиваем БД тестовыми данными 
+        /// <summary>
+        /// Устанавливаем правила удаления событий персоны с помощью Fluent API и набиваем БД тестовыми данными 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>().HasData(

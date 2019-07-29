@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace PersonDiary.Repositories
 {
+    /// <summary>
+    /// Реализация паттерна UnitOfWork
+    /// </summary>
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
         private SqlContext db = new SqlContext();

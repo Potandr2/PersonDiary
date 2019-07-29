@@ -25,35 +25,11 @@ namespace PersonDiary.BusinessLogic
             this.factory = factory;
             this.mapper = mapper;
         }
-
-        public GetLifeEventResponse GetItem(GetLifeEventRequest request)
-        {
-            if (request == null)
-                throw new ArgumentNullException("LifeEventModel model GetLifeEventRequest  is invalid");
-            var resp = new GetLifeEventResponse();
-            try
-            {
-                resp.lifeevent = mapper.Map<LifeEventContract>(
-                    factory.CreateUnitOfWork().LifeEvents.GetItem(request.Id)
-                );
-            }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
-            return resp;
-        }
-        public async Task<GetLifeEventResponse> GetItemAsync(GetLifeEventRequest request)
-        {
-            if (request == null)
-                throw new ArgumentNullException("LifeEventModel model GetLifeEventRequest  is invalid");
-            var resp = new GetLifeEventResponse();
-            try
-            {
-                resp.lifeevent = mapper.Map<LifeEventContract>(
-                    await factory.CreateUnitOfWork().LifeEvents.GetItemAsync(request.Id)
-                );
-            }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
-            return resp;
-        }
+        /// <summary>
+        /// Осуществляет постраничную выборку списка событий в жизни персоны
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public GetLifeEventListResponse GetItems(GetLifeEventListRequest request)
         {
             if (request == null)
@@ -62,13 +38,18 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.LifeEvents = mapper.Map<List<LifeEventContract>>(
-                    factory.CreateUnitOfWork().LifeEvents.GetItems(request.PageNo,request.PageSize).ToList()
+                    factory.CreateUnitOfWork().LifeEvents.GetItems(request.PageNo, request.PageSize).ToList()
                 );
             }
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
 
         }
+        /// <summary>
+        /// Осуществляет постраничную выборку списка событий в жизни персоны, асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<GetLifeEventListResponse> GetItemsAsync(GetLifeEventListRequest request)
         {
             if (request == null)
@@ -84,6 +65,49 @@ namespace PersonDiary.BusinessLogic
             return resp;
 
         }
+        /// <summary>
+        /// Осуществляет выборку события в жизни персоны
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public GetLifeEventResponse GetItem(GetLifeEventRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model GetLifeEventRequest  is invalid");
+            var resp = new GetLifeEventResponse();
+            try
+            {
+                resp.lifeevent = mapper.Map<LifeEventContract>(
+                    factory.CreateUnitOfWork().LifeEvents.GetItem(request.Id)
+                );
+            }
+            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            return resp;
+        }
+        /// <summary>
+        /// Осуществляет выборку события в жизни персоны асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GetLifeEventResponse> GetItemAsync(GetLifeEventRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("LifeEventModel model GetLifeEventRequest  is invalid");
+            var resp = new GetLifeEventResponse();
+            try
+            {
+                resp.lifeevent = mapper.Map<LifeEventContract>(
+                    await factory.CreateUnitOfWork().LifeEvents.GetItemAsync(request.Id)
+                );
+            }
+            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            return resp;
+        }
+        /// <summary>
+        /// Создаёт новое событие 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public UpdateLifeEventResponse Create(UpdateLifeEventRequest request)
         {
             if (request == null)
@@ -99,6 +123,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
+        /// <summary>
+        /// Создаёт новое событие асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<UpdateLifeEventResponse> CreateAsync(UpdateLifeEventRequest request)
         {
             if (request == null)
@@ -114,6 +143,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
+        /// <summary>
+        /// Обновляет событие в жизни персоны
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public UpdateLifeEventResponse Update(UpdateLifeEventRequest request)
         {
             if (request == null)
@@ -129,6 +163,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
+        /// <summary>
+        /// Обновляет событие в жизни персоны асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<UpdateLifeEventResponse> UpdateAsync(UpdateLifeEventRequest request)
         {
             if (request == null)
@@ -144,6 +183,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
+        /// <summary>
+        /// Удаляет событие из жизни персоны
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public DeleteLifeEventResponse Delete(DeleteLifeEventRequest request)
         {
             if (request == null)
@@ -158,6 +202,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
             return resp;
         }
+        /// <summary>
+        /// Удаляет событие из жизни персоны асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<DeleteLifeEventResponse> DeleteAsync(DeleteLifeEventRequest request)
         {
             if (request == null)
