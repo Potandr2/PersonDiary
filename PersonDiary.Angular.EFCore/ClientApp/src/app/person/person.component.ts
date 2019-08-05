@@ -14,7 +14,7 @@ import { CommonUtils } from '../common/common.utils';
   selector: 'app-person',
   templateUrl: './person.component.html'
 })
-export class PersonEditComponent  {
+export class PersonComponent  {
   private id: any;
   private person: Person;
   private lifeevents: LifeEvent[];

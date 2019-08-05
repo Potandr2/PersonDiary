@@ -8,7 +8,7 @@ import { LifeEventService } from '../services/lifeevent.service';
   selector: 'app-lifeevents',
   templateUrl: './lifeevents.component.html'
 })
-export class LifeEventListComponent {
+export class LifeEventsComponent {
   public lifeevents: LifeEvent[];
 
   constructor(http: HttpClient, private dataService: LifeEventService) {

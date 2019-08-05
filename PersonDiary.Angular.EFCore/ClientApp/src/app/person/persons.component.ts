@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-persons',
   templateUrl: './persons.component.html'
 })
-export class PersonListComponent {
+export class PersonsComponent {
   public persons: Person[];
   public count: number;
   public PageNo: number;

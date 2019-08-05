@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   selector: 'app-lifeevent',
   templateUrl: './lifeevent.component.html'
 })
-export class LifeEventEditComponent {
+export class LifeEventComponent {
   private id: number;
   private personid: number;
   private lifeevent: LifeEvent;
