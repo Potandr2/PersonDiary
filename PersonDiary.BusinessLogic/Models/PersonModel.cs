@@ -10,7 +10,7 @@ using PersonContract = PersonDiary.Contracts.PersonContract.Person;
 
 namespace PersonDiary.BusinessLogic
 {
-    //Модель Персоны
+    //Модель Персоны, реализует CRUD функционал для персоны.
     public class PersonModel
     {
         private readonly IUnitOfWorkFactory factory;
@@ -26,6 +26,11 @@ namespace PersonDiary.BusinessLogic
             this.factory = factory;
             this.mapper = mapper;
         }
+        /// <summary>
+        /// Осуществляет постраничную выборку списка персон
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public GetPersonListResponse GetItems(GetPersonListRequest request)
         {
             if (request == null)
@@ -45,6 +50,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Осуществляет постраничную выборку списка персон асинхронно/ 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<GetPersonListResponse> GetItemsAsync(GetPersonListRequest request)
         {
             if (request == null)
@@ -58,12 +68,17 @@ namespace PersonDiary.BusinessLogic
                 resp.Persons = mapper.Map<List<PersonContract>>(
                     await unit.Persons.GetItemsAsync(request.PageNo, request.PageSize)
                    );
-                resp.Count = unit.Persons.Count;
+                resp.Count = await unit.Persons.CountAsync();
             }
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
 
         }
+        /// <summary>
+        /// Осуществляет выборку персоны из бд вместе с дочерними коллекциями (eager loading)
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public GetPersonResponse GetItem(GetPersonRequest request)
         {
             if (request == null)
@@ -78,6 +93,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Осуществляет выборку персоны из бд вместе с дочерними коллекциями (eager loading) асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<GetPersonResponse> GetItemAsync(GetPersonRequest request)
         {
             if (request == null)
@@ -92,6 +112,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Создаёт новую персону
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public UpdatePersonResponse Create(UpdatePersonRequest request)
         {
             if (request == null)
@@ -108,6 +133,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Создаёт новую персону асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<UpdatePersonResponse> CreateAsync(UpdatePersonRequest request)
         {
             if (request == null)
@@ -124,6 +154,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Обновляет данные персоны
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public UpdatePersonResponse Update(UpdatePersonRequest request)
         {
             if (request == null)
@@ -139,6 +174,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Обновляет данные персоны асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<UpdatePersonResponse> UpdateAsync(UpdatePersonRequest request)
         {
             if (request == null)
@@ -154,6 +194,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Удаляет данные персоны
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public DeletePersonResponse Delete(DeletePersonRequest request)
         {
             if (request == null)
@@ -168,6 +213,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Удаляет данные персоны асинхронно 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<DeletePersonResponse> DeleteAsync(DeletePersonRequest request)
         {
             if (request == null)
@@ -182,6 +232,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Загружает файл биографии персоны.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public PersonUploadResponse Upload(PersonUploadRequest request)
         {
             if (request == null)
@@ -198,6 +253,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Загружает файл биографии персоны асинхронно.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<PersonUploadResponse> UploadAsync(PersonUploadRequest request)
         {
             if (request == null)
@@ -214,6 +274,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Отдаёт клиенту на скачивание файл биографии персоны
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public byte[] Download(GetPersonRequest request)
         {
             if (request == null)
@@ -222,6 +287,11 @@ namespace PersonDiary.BusinessLogic
             return person.Biography;
 
         }
+        /// <summary>
+        /// Отдаёт клиенту на скачивание файл биографии персоны асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<byte[]> DownloadAsync(GetPersonRequest request)
         {
             if (request == null)
@@ -230,6 +300,11 @@ namespace PersonDiary.BusinessLogic
             return person.Biography;
 
         }
+        /// <summary>
+        /// Удаляет файл биографии персоны
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public DeletePersonResponse DeleteBiography(DeletePersonRequest request)
         {
             if (request == null)
@@ -246,6 +321,11 @@ namespace PersonDiary.BusinessLogic
             catch (Exception e) { resp.AddMessage(new Contracts.Message(e.Message)); };
             return resp;
         }
+        /// <summary>
+        /// Отдаёт клиенту на скачивание файл биографии персоны, асинхронно
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<DeletePersonResponse> DeleteBiographyAsync(DeletePersonRequest request)
         {
             if (request == null)

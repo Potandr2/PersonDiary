@@ -18,7 +18,7 @@ namespace PersonDiary.BusinessLogic.Test
 
     public class PersonModelTest
     {
-        IUnitOfWork unit;
+        IUnitOfWorkFactory factory;
         IPersonRepository repoPerson;
         PersonModel modelPerson;
         IMapper mapper;
@@ -29,10 +29,9 @@ namespace PersonDiary.BusinessLogic.Test
             {
                 mc.AddProfile(new MappingProfile());
             }).CreateMapper();
-
-            unit = new UnitOfWork();
-            repoPerson = unit.Persons;
-            modelPerson = new PersonModel(unit, mapper);
+            factory = new UnitOfWorkFactory();
+            repoPerson = factory.CreateUnitOfWork().Persons;
+            modelPerson = new PersonModel(factory, mapper);
         }
         [Test, Order(0)]
         public void Create()
@@ -56,7 +55,7 @@ namespace PersonDiary.BusinessLogic.Test
         [Test, Order(1)]
         public void Update()
         {
-            var model_tmp = new PersonModel(new UnitOfWork(), mapper);
+            var model_tmp = new PersonModel(factory, mapper);
             var updated = "_Updated";
             var person_last = model_tmp.GetItems(new GetPersonListRequest() { PageSize = RepositoryDefaults.PageSize }).Persons.Last();
             person_last.Name += updated;
@@ -84,10 +83,10 @@ namespace PersonDiary.BusinessLogic.Test
         [Test, Order(4)]
         public void GetItemsWithLifeEvents()
         {
-            var repoLifeEvents = unit.LifeEvents;
+            var repoLifeEvents = factory.CreateUnitOfWork().LifeEvents;
             modelPerson.GetItems(new GetPersonListRequest() ).Persons.ForEach(p =>
             {
-                var person = unit.Persons.GetItem(p.Id);
+                var person = factory.CreateUnitOfWork().Persons.GetItem(p.Id);
                 Assert.AreEqual(
                     repoLifeEvents.GetPersonItems(p.Id).Count(),
                     person.LifeEvents.Count

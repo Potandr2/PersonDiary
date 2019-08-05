@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 
 namespace PersonDiary.Interfaces
 {
-    
+    /// <summary>
+    /// Интерфейс репозитория
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IRepository<T> : IDisposable
     {
         //постраничное чтение данных из репозитория
@@ -19,7 +22,7 @@ namespace PersonDiary.Interfaces
         Task<int> SaveAsync();
         //Количество данных в репозитории, для постраничного вывода.
         int Count { get; }
-        Task<int> CountAsync { get; }
+        Task<int> CountAsync(); 
 
     }
 }

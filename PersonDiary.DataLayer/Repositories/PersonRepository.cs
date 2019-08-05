@@ -19,7 +19,6 @@ namespace PersonDiary.Repositories
         }
         public IEnumerable<Person> GetItems(int PageNo, int PageSize)
         {
-           
             return db.Persons.OrderByDescending(p => p.Id).Skip(PageNo * PageSize).Take(PageSize);
         }
         public async Task<IEnumerable<Person>> GetItemsAsync(int PageNo, int PageSize)
@@ -42,6 +41,10 @@ namespace PersonDiary.Repositories
         {
             db.Entry(item).State = EntityState.Modified;
         }
+        /// <summary>
+        /// Удаление персоны, удаление дочерних коллекций сделает EFCore, т.к. связь между сущностями жёсткая (not null)
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(int id)
         {
             Person Person = db.Persons.Find(id);
@@ -59,9 +62,9 @@ namespace PersonDiary.Repositories
         public int Count{
             get {return db.Persons.Count(); }
         }
-        public Task<int> CountAsync
+        public async Task<int> CountAsync()
         {
-            get { return db.Persons.CountAsync(); }
+            return await db.Persons.CountAsync();
         }
 
         private bool disposed = false;

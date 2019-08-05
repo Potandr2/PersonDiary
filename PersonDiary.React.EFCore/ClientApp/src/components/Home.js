@@ -3,20 +3,23 @@ import { connect } from 'react-redux';
 
 const Home = props => (
   <div>
-    <h1>Hello, world!</h1>
-    <p>Welcome to your new single-page application, built with:</p>
-    <ul>
-      <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-      <li><a href='https://facebook.github.io/react/'>React</a> and <a href='https://redux.js.org/'>Redux</a> for client-side code</li>
-      <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-    </ul>
-    <p>To help you get started, we've also set up:</p>
-    <ul>
-      <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-      <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-      <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-    </ul>
-    <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
+        <h1>Person's Diary (React/Redux cient)</h1>
+        <p>
+            Данный проект написан в ходе чтения книги Марка Симана "Внедрение зависимостей в .Net". Цель: реализовать бизнес логику, к которой можно было бы подключать различные реализации уровня доступа к данным и различные реализации клиентов без переписывания самой бизнес логики, т.е. создать систему со слабо связанным кодом. Так же учтены некоторые рекомендации из "Асинхронного программирования в C# 5.0" Алекса Дэвиса
+        </p>
+
+        <p>  Предметная область: Человек/Персона (имя, фамилия, .doc-файл биографии) и события его жизни (название события, дата события).</p>
+
+        <p> Реализация:</p>
+        <ul>
+        <li>PersonDiary.Angular.EFCore - клиентское приложение, Asp.Net core web application Angular 6, с data-сервисами.</li>
+        <li>PersonDiary.React.EFCore - клиентское приложение, Asp.Net core web application ReactJS and Redux.</li>
+        <li>PersonDiary.BusinessLogic - Net.Core библиотека бизнес логики, с которой работают оба клиентских приложения, в конструкторы моделей которой впрыскиваются зависимости уровня доступа к данным и архиватора .doc файлов</li>
+        <li>PersonDiary.DataLayer.EFCore - Net.Core библиотека уровня доступа к данным (MS SQL/EF Core).</li>
+        <li>PersonDiary.Interfaces - Net.Core библиотека, в которой описаны интерфейсы, которые должны реализовывать зависимости, так же тут находятся сущности.</li>
+        <li>PersonDiary.BusinessLogic - Юнит-тесты бизнес логики.</li>
+        <li>PersonDiary.Archivator - Net.Core библиотека архиватора .doc файлов (находится в разработке)</li>
+        </ul>
   </div>
 );
 

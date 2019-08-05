@@ -5,6 +5,9 @@ using PersonContract = PersonDiary.Contracts.PersonContract.Person;
 
 namespace PersonDiary.Mapping
 {
+    /// <summary>
+    /// Описание карт отображения сущностей на контракты и наоборот.
+    /// </summary>
     public class MappingProfile : Profile
     {
         public MappingProfile()
