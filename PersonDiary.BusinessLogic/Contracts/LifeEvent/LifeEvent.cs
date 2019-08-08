@@ -2,6 +2,7 @@
 
 namespace PersonDiary.Contracts.LifeEventContract
 {
+    //DTO события
     public class LifeEvent
     {
         public int Id { get; set; }

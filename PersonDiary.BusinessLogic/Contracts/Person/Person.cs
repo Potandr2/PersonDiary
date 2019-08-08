@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace PersonDiary.Contracts.PersonContract
 {
+    //DTO персоны
     public class Person
     {
         public int Id { get; set; }
