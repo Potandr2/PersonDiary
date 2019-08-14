@@ -23,7 +23,7 @@
   </div>
   <hr />
   <div class="form-group">
-    <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+    <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" [disabled]="name.invalid || surname.invalid" />
     <input type="button" value="Delete person" (click)="openModal(confirm_delete)" class="btn btn-danger" *ngIf="person.id" />
     <alert type="danger" *ngIf="show_alert">
       <strong>Error!</strong> {{messages}}.
