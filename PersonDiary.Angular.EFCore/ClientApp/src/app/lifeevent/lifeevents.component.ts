@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { LifeEvent } from '../models/lifeevent';
 import { LifeEventService } from '../services/lifeevent.service';
 
@@ -11,7 +10,7 @@ import { LifeEventService } from '../services/lifeevent.service';
 export class LifeEventsComponent {
   public lifeevents: LifeEvent[];
 
-  constructor(http: HttpClient, private dataService: LifeEventService) {
+  constructor(private dataService: LifeEventService) {
 
     this.dataService.getLifeEvents().subscribe((data: any) => {
       this.lifeevents = data.lifeEvents;

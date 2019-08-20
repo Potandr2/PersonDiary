@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Person } from '../models/person';
 import { LifeEvent } from '../models/lifeevent';
 import { LifeEventService } from '../services/lifeevent.service';
 import { PersonService } from '../services/person.service';
@@ -23,8 +21,8 @@ export class LifeEventComponent {
   private subscription: Subscription;
   
 
-  constructor(http: HttpClient, private activateRoute: ActivatedRoute, private dataService: LifeEventService, private personService: PersonService, private router: Router) {
-    this.subscription = activateRoute.params.subscribe(
+  constructor(private activateRoute: ActivatedRoute, private dataService: LifeEventService, private personService: PersonService, private router: Router) {
+    this.subscription = this.activateRoute.params.subscribe(
       params => {
         if (this.router.url.indexOf("lifeevent-create")>-1) {
           this.personid = params['id'];

@@ -18,7 +18,7 @@ export class PersonComponent  {
   private id: any;
   private person: Person;
   private lifeevents: LifeEvent[];
-  private subscription: Subscription;
+
   private modalRef: BsModalRef;
   private show_alert: boolean = false;
   private show_ok: boolean = false;
@@ -31,7 +31,7 @@ export class PersonComponent  {
     private modalService: BsModalService
   ) {
 
-    this.subscription = activateRoute.params.subscribe(
+    this.activateRoute.params.subscribe(
       params => {
         this.id = params['id'];
         if (this.id) {

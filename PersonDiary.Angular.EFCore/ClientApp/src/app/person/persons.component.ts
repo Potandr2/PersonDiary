@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Person } from '../models/person';
 import { PersonService } from '../services/person.service';
 import { Router } from '@angular/router';
@@ -13,7 +12,7 @@ export class PersonsComponent {
   public count: number;
   public PageNo: number;
 
-  constructor(http: HttpClient, private dataService: PersonService, private router: Router) {
+  constructor(private dataService: PersonService, private router: Router) {
     this.PageNo = 0;
     this.getPageItems();
   }

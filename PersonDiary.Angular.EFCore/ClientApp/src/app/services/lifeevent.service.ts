@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Person } from '../models/Person';
 import { LifeEvent } from '../models/LifeEvent';
 import { CommonUtils } from '../common/common.utils';
 

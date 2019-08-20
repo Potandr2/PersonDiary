@@ -9,11 +9,7 @@ import { PersonService } from '../services/person.service';
 export class PersonFullNameComponent{
   @Input() id: number;
   public personfullname: string;
-  
-
   constructor(private dataService: PersonService) {
-    
-  
   }
   ngOnInit() {
     if (this.id) {
