@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PersonDiary.Angular.EFCore.Binders;
 using PersonDiary.Interfaces;
 using PersonDiary.Mapping;
 using PersonDiary.Repositories;
@@ -25,6 +26,7 @@ namespace PersonDiary.Angular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(config => config.ModelBinderProviders.Insert(0, new PersonDiaryBinderProvider()));
 
             services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
             //set automapper service

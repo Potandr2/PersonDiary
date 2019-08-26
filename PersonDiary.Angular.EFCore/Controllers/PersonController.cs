@@ -23,9 +23,9 @@ namespace PersonDiary.Angular.Controllers
         }
         // GET: api/Person
         [HttpGet]
-        public async Task<GetPersonListResponse> Get(string json)
+        public async Task<GetPersonListResponse> Get(GetPersonListRequest request)
         {
-            return await new PersonModel(factory, mapper).GetItemsAsync(JsonConvert.DeserializeObject<GetPersonListRequest>(json));
+            return await new PersonModel(factory, mapper).GetItemsAsync(request);
         }
 
         // GET: api/Person/5
