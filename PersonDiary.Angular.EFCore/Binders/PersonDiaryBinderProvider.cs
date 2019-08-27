@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PersonDiary.Contracts.PersonContract;
+using PersonDiary.Contracts.LifeEventContract;
 
 namespace PersonDiary.Angular.EFCore.Binders
 {
@@ -13,6 +10,8 @@ namespace PersonDiary.Angular.EFCore.Binders
         {
             if (context.Metadata.ModelType == typeof(GetPersonListRequest))
                 return new GerPersonListRequestDiaryBinder ();
+            if (context.Metadata.ModelType == typeof(GetLifeEventListRequest))
+                return new GerLifeEventListRequestDiaryBinder();
 
             return null;
         }
