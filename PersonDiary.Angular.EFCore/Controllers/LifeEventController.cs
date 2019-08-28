@@ -22,9 +22,9 @@ namespace LifeEventDiary.Angular.EFCore.Controllers
         }
         // GET: api/LifeEvent
         [HttpGet]
-        public async Task<GetLifeEventListResponse> Get(string json)
+        public async Task<GetLifeEventListResponse> Get(GetLifeEventListRequest request)
         {
-            return await new LifeEventModel(factory, mapper).GetItemsAsync(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json));
+            return await new LifeEventModel(factory, mapper).GetItemsAsync(request);
         }
 
         // GET: api/LifeEvent/5
