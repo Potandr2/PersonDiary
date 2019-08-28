@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Threading.Tasks;
+using PersonDiary.Contracts.PersonContract;
+using Newtonsoft.Json;
 
 namespace PersonDiary.Angular.EFCore.Binders
 {
