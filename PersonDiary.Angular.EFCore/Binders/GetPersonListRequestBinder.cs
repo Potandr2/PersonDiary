@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using PersonDiary.Contracts.PersonContract;
 using Newtonsoft.Json;
+using PersonDiary.Contracts.PersonContract;
+using System.Threading.Tasks;
 
 namespace PersonDiary.Angular.EFCore.Binders
 {
-    public class GerPersonListRequestDiaryBinder :IModelBinder
+    public class GerPersonListRequestDiaryBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {

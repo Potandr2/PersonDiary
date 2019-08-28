@@ -1,5 +1,4 @@
 ﻿using PersonDiary.Entities;
-using System.Collections.Generic;
 namespace PersonDiary.Interfaces
 {
     /// <summary>
@@ -7,6 +6,6 @@ namespace PersonDiary.Interfaces
     /// </summary>
     public interface IPersonRepository : IRepository<Person>
     {
-        
+
     }
 }

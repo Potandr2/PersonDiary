@@ -80,7 +80,7 @@ namespace PersonDiary.Angular.EFCore.Controllers
                 return new PersonUploadResponse().AddMessage(new Contracts.Message(e.Message));
             }
         }
-        
-        
+
+
     }
 }

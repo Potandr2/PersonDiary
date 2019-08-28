@@ -212,7 +212,7 @@ class Person extends Component {
                         }
                     </div>
                     {!this.state.has_file &&
-                        < div className="form-group">
+                        <div className="form-group">
                                 <div className="col">
                             <Upload {...props}>
                                 <Button>

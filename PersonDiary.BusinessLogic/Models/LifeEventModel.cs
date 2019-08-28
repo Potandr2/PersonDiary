@@ -13,17 +13,13 @@ namespace PersonDiary.BusinessLogic
     //Модель события персоны
     public class LifeEventModel
     {
-        private IUnitOfWorkFactory factory;
-        private IMapper mapper;
+        private readonly IUnitOfWorkFactory factory;
+        private readonly IMapper mapper;
         //Впрыскиваем зависимости объектов уровня доступа к данным
         public LifeEventModel(IUnitOfWorkFactory factory, IMapper mapper)
         {
-            if (factory == null)
-                throw new ArgumentNullException("UnitOfWorkFactory in LifeEventModel is null");
-            if (mapper == null)
-                throw new ArgumentNullException("Mapper in LifeEventModel is null");
-            this.factory = factory;
-            this.mapper = mapper;
+            this.factory = factory ?? throw new ArgumentNullException("UnitOfWorkFactory in LifeEventModel is null");
+            this.mapper = mapper ?? throw new ArgumentNullException("Mapper in LifeEventModel is null");
         }
         /// <summary>
         /// Осуществляет постраничную выборку списка событий в жизни персоны
@@ -41,7 +37,7 @@ namespace PersonDiary.BusinessLogic
                     factory.CreateUnitOfWork().LifeEvents.GetItems(request.PageNo, request.PageSize).ToList()
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
 
         }
@@ -61,7 +57,7 @@ namespace PersonDiary.BusinessLogic
                     await factory.CreateUnitOfWork().LifeEvents.GetItemsAsync(request.PageNo, request.PageSize)
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
 
         }
@@ -81,7 +77,7 @@ namespace PersonDiary.BusinessLogic
                     factory.CreateUnitOfWork().LifeEvents.GetItem(request.Id)
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
         }
         /// <summary>
@@ -100,7 +96,7 @@ namespace PersonDiary.BusinessLogic
                     await factory.CreateUnitOfWork().LifeEvents.GetItemAsync(request.Id)
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
         }
         /// <summary>
@@ -120,7 +116,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Create(item);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
         }
         /// <summary>
@@ -140,7 +136,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Create(item);
                 await unit.SaveAsync();
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
         }
         /// <summary>
@@ -160,7 +156,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Update(item);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
         }
         /// <summary>
@@ -180,7 +176,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Update(item);
                 await unit.SaveAsync();
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
         }
         /// <summary>
@@ -199,7 +195,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Delete(request.Id);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
         }
         /// <summary>
@@ -218,7 +214,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Delete(request.Id);
                 await unit.SaveAsync();
             }
-            catch (Exception e) { resp.Messages.Add(new Message() { Text = e.Message, Type = MessageTypeEnum.Error }); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
             return resp;
         }
 

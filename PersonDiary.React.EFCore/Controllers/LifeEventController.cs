@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.LifeEventContract;
-using Newtonsoft.Json;
 using PersonDiary.Interfaces;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
 
 
 namespace PersonDiary.React.EFCore.Controllers
@@ -27,18 +25,18 @@ namespace PersonDiary.React.EFCore.Controllers
         [HttpGet]
         public async Task<GetLifeEventListResponse> Get(string json)
         {
-           
+
             var resp = await new LifeEventModel(factory, mapper).GetItemsAsync(JsonConvert.DeserializeObject<GetLifeEventListRequest>(json));
             if (!Parallel.ForEach(resp.LifeEvents, l =>
                     {
-                        var responsePerson =  new PersonModel(factory, mapper).GetItem(
+                        var responsePerson = new PersonModel(factory, mapper).GetItem(
                             new Contracts.PersonContract.GetPersonRequest() { Id = l.PersonId, withLifeEvents = false }
                         );
                         l.Personfullname = $"{responsePerson.Person.Surname} {responsePerson.Person.Name}";
                     }
                 ).IsCompleted
             ) resp.AddMessage(new Contracts.Message("Person full name was not loaded"));
-            
+
             return resp;
         }
 

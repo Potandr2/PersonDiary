@@ -22,7 +22,7 @@ namespace PersonDiary.Interfaces
         Task<int> SaveAsync();
         //Количество данных в репозитории, для постраничного вывода.
         int Count { get; }
-        Task<int> CountAsync(); 
+        Task<int> CountAsync();
 
     }
 }

@@ -5,7 +5,6 @@ using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.PersonContract;
 using PersonDiary.Interfaces;
 using System.Threading.Tasks;
-using System;
 
 namespace PersonDiary.React.EFCore.Controllers
 {

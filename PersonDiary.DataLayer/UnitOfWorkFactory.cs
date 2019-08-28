@@ -1,5 +1,4 @@
-﻿using System;
-using PersonDiary.Interfaces;
+﻿using PersonDiary.Interfaces;
 
 namespace PersonDiary.Repositories
 {

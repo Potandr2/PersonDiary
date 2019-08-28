@@ -37,7 +37,7 @@ namespace PersonDiary.Repositories
         public void Save()
         {
             db.SaveChanges();
-            
+
         }
         public async Task<int> SaveAsync()
         {

@@ -84,14 +84,14 @@ namespace PersonDiary.BusinessLogic.Test
         public void GetItemsWithLifeEvents()
         {
             var repoLifeEvents = factory.CreateUnitOfWork().LifeEvents;
-            modelPerson.GetItems(new GetPersonListRequest() ).Persons.ForEach(p =>
-            {
-                var person = factory.CreateUnitOfWork().Persons.GetItem(p.Id);
-                Assert.AreEqual(
-                    repoLifeEvents.GetPersonItems(p.Id).Count(),
-                    person.LifeEvents.Count
-                    );
-            });
+            modelPerson.GetItems(new GetPersonListRequest()).Persons.ForEach(p =>
+           {
+               var person = factory.CreateUnitOfWork().Persons.GetItem(p.Id);
+               Assert.AreEqual(
+                   repoLifeEvents.GetPersonItems(p.Id).Count(),
+                   person.LifeEvents.Count
+                   );
+           });
         }
     }
 }

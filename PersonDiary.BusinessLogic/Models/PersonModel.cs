@@ -16,13 +16,13 @@ namespace PersonDiary.BusinessLogic
         private readonly IUnitOfWorkFactory factory;
         private readonly IMapper mapper;
         //Впрыскиваем зависимости объектов уровня доступа к данным 
-        public PersonModel(IUnitOfWorkFactory factory,IMapper mapper)
+        public PersonModel(IUnitOfWorkFactory factory, IMapper mapper)
         {
             if (mapper == null)
                 throw new ArgumentNullException("Mapper in PersonModel is null");
             if (factory == null)
                 throw new ArgumentNullException("UnitOfWorkFactory in PersonModel is null");
-            
+
             this.factory = factory;
             this.mapper = mapper;
         }
@@ -43,7 +43,7 @@ namespace PersonDiary.BusinessLogic
             try
             {
                 resp.Persons = mapper.Map<List<PersonContract>>(
-                    unit.Persons.GetItems(request.PageNo,request.PageSize).ToList()
+                    unit.Persons.GetItems(request.PageNo, request.PageSize).ToList()
                     );
                 resp.Count = unit.Persons.Count;
             }

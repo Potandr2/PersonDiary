@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.LifeEventContract;
-using Newtonsoft.Json;
 using PersonDiary.Interfaces;
 using System.Threading.Tasks;
 

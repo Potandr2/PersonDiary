@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonDiary.Interfaces
+﻿namespace PersonDiary.Interfaces
 {
     //Структура для хранения настроек репозиториев
     public struct RepositoryDefaults

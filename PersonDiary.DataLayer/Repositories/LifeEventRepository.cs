@@ -105,7 +105,7 @@ namespace PersonDiary.Repositories
         /// </summary>
         public async Task<int> SaveAsync()
         {
-           return await db.SaveChangesAsync();
+            return await db.SaveChangesAsync();
         }
         /// <summary>
         /// Выборка
