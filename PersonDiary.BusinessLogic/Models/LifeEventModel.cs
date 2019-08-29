@@ -37,7 +37,7 @@ namespace PersonDiary.BusinessLogic
                     factory.CreateUnitOfWork().LifeEvents.GetItems(request.PageNo, request.PageSize).ToList()
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
 
         }
@@ -57,7 +57,7 @@ namespace PersonDiary.BusinessLogic
                     await factory.CreateUnitOfWork().LifeEvents.GetItemsAsync(request.PageNo, request.PageSize)
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
 
         }
@@ -77,7 +77,7 @@ namespace PersonDiary.BusinessLogic
                     factory.CreateUnitOfWork().LifeEvents.GetItem(request.Id)
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
         }
         /// <summary>
@@ -96,7 +96,7 @@ namespace PersonDiary.BusinessLogic
                     await factory.CreateUnitOfWork().LifeEvents.GetItemAsync(request.Id)
                 );
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
         }
         /// <summary>
@@ -116,7 +116,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Create(item);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
         }
         /// <summary>
@@ -136,7 +136,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Create(item);
                 await unit.SaveAsync();
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
         }
         /// <summary>
@@ -156,7 +156,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Update(item);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
         }
         /// <summary>
@@ -176,7 +176,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Update(item);
                 await unit.SaveAsync();
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
         }
         /// <summary>
@@ -195,7 +195,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Delete(request.Id);
                 unit.Save();
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
         }
         /// <summary>
@@ -214,7 +214,7 @@ namespace PersonDiary.BusinessLogic
                 unit.LifeEvents.Delete(request.Id);
                 await unit.SaveAsync();
             }
-            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); };
+            catch (Exception e) { resp.Messages.Add(new Message(e.Message)); }
             return resp;
         }
 

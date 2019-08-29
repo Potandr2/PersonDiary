@@ -46,7 +46,7 @@ import { FileUploadComponent } from './common/file-upload/file-upload.component'
       { path: 'lifeevents', component: LifeEventsComponent },
       { path: 'lifeevent/:id', component: LifeEventComponent },
       { path: 'lifeevent-create/:id', component: LifeEventComponent },
-      { path: 'lifeevent', component: LifeEventComponent },
+      { path: 'lifeevent', component: LifeEventComponent }
     ]),
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),

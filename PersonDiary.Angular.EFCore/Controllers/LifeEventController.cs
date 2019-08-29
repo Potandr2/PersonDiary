@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using PersonDiary.BusinessLogic;
 using PersonDiary.Contracts.LifeEventContract;
 using PersonDiary.Interfaces;
@@ -14,7 +13,7 @@ namespace LifeEventDiary.Angular.EFCore.Controllers
     {
         private readonly IUnitOfWorkFactory factory;
         private readonly IMapper mapper;
-        //Впрыскиваем зависимости объектов уровня доступа к данным для впрыска в модель
+        ///Впрыскиваем зависимости объектов уровня доступа к данным для впрыска в модель
         public LifeEventController(IUnitOfWorkFactory factory, IMapper mapper)
         {
             this.factory = factory;

@@ -46,7 +46,7 @@ namespace LifeEventDiary.BusinessLogic.Test
                     Eventdate = DateTime.Now,
                     PersonId = person_last.Id
                 }
-            }); ;
+            }); 
             Assert.IsTrue(resp.Messages.Count == 0);
         }
         [Test, Order(1)]

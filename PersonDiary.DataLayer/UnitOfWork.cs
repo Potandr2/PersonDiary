@@ -10,7 +10,7 @@ namespace PersonDiary.Repositories
     /// </summary>
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
-        private SqlContext db = new SqlContext();
+        private readonly SqlContext db = new SqlContext();
         private PersonRepository repoPerson;
         private LifeEventRepository repoLifeEvent;
 
@@ -47,7 +47,7 @@ namespace PersonDiary.Repositories
 
         private bool disposed = false;
 
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

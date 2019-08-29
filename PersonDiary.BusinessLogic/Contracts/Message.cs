@@ -9,7 +9,7 @@
             this.Type = MessageTypeEnum.Error;
             this.Text = text;
         }
-        private string Text { get; set; }
-        private MessageTypeEnum Type { get; set; }
+        private string Text { get; }
+        private MessageTypeEnum Type { get;  }
     }
 }

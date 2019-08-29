@@ -59,10 +59,8 @@ namespace PersonDiary.Repositories
         {
             return await db.SaveChangesAsync();
         }
-        public int Count
-        {
-            get { return db.Persons.Count(); }
-        }
+        public int Count => db.Persons.Count(); 
+        
         public async Task<int> CountAsync()
         {
             return await db.Persons.CountAsync();

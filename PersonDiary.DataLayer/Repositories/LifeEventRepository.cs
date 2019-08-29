@@ -43,46 +43,32 @@ namespace PersonDiary.Repositories
         /// <param name="PageNo"></param>
         /// <param name="PageSize"></param>
         /// <returns></returns>
-        public IEnumerable<LifeEvent> GetPersonItems(int PersonId)
-        {
-            return db.LifeEvents.Where(i => i.PersonId == PersonId);
-        }
+        public IEnumerable<LifeEvent> GetPersonItems(int PersonId)=>db.LifeEvents.Where(i => i.PersonId == PersonId);
+        
         /// <summary>
         /// Выборка события по id
         /// </summary>
         /// <param name="PageNo"></param>
         /// <param name="PageSize"></param>
         /// <returns></returns>
-        public LifeEvent GetItem(int id)
-        {
-            return db.LifeEvents.Include(le => le.Person).FirstOrDefault(le => le.Id == id);
-        }
+        public LifeEvent GetItem(int id)=> db.LifeEvents.Include(le => le.Person).FirstOrDefault(le => le.Id == id);
         /// <summary>
         /// Выборка события по id асинхронно
         /// </summary>
         /// <param name="PageNo"></param>
         /// <param name="PageSize"></param>
         /// <returns></returns>
-        public async Task<LifeEvent> GetItemAsync(int id)
-        {
-            return await db.LifeEvents.Include(le => le.Person).FirstOrDefaultAsync(le => le.Id == id);
-        }
+        public async Task<LifeEvent> GetItemAsync(int id)=> await db.LifeEvents.Include(le => le.Person).FirstOrDefaultAsync(le => le.Id == id);
         /// <summary>
         /// создание события
         /// </summary>
         /// <param name="item"></param>
-        public void Create(LifeEvent item)
-        {
-            db.LifeEvents.Add(item);
-        }
+        public void Create(LifeEvent item)=>db.LifeEvents.Add(item);
         /// <summary>
         /// обновление события
         /// </summary>
         /// <param name="item"></param>
-        public void Update(LifeEvent item)
-        {
-            db.Entry(item).State = EntityState.Modified;
-        }
+        public void Update(LifeEvent item)=>db.Entry(item).State = EntityState.Modified;
         /// <summary>
         /// удаление события
         /// </summary>
@@ -96,30 +82,20 @@ namespace PersonDiary.Repositories
         /// <summary>
         /// Сохранение изменений
         /// </summary>
-        public void Save()
-        {
-            db.SaveChanges();
-        }
+        public void Save()=>db.SaveChanges();
         /// <summary>
         /// Сохранение изменений асинхронно
         /// </summary>
-        public async Task<int> SaveAsync()
-        {
-            return await db.SaveChangesAsync();
-        }
+        public async Task<int> SaveAsync()=> await db.SaveChangesAsync();
         /// <summary>
         /// Выборка
         /// </summary>
-        public int Count
-        {
-            get { return db.LifeEvents.Count(); }
-        }
-        public Task<int> CountAsync()
-        {
-            return db.LifeEvents.CountAsync();
-        }
+        public int Count => db.LifeEvents.Count();
+        
+        public Task<int> CountAsync()=> db.LifeEvents.CountAsync();
+        
         private bool disposed = false;
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

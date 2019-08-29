@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PersonDiary.BusinessLogic;
@@ -19,13 +18,13 @@ namespace PersonDiary.Angular.EFCore.Controllers
     {
         private readonly IUnitOfWorkFactory factory;
         private readonly IMapper mapper;
-        private readonly IHostingEnvironment hostingEnvironment;
+        
 
-        public PersonFileController(IUnitOfWorkFactory factory, IMapper mapper, IHostingEnvironment hostingEnvironment)
+        public PersonFileController(IUnitOfWorkFactory factory, IMapper mapper)
         {
             this.factory = factory;
             this.mapper = mapper;
-            this.hostingEnvironment = hostingEnvironment;
+            
         }
         // GET: api/PersonFile
         [HttpGet]
